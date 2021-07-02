@@ -1,21 +1,19 @@
 using System;
 using System.Threading.Tasks;
+using System.Text.Json;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ValVenalEstimator.Api.Models;
 using ValVenalEstimator.Api.ViewModels;
 using ValVenalEstimator.Api.Contracts;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
-
 namespace ValVenalEstimator.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ZonesController : ControllerBase
     {
-        private readonly IZoneRepository _iZoneRepository;
-        
+        private readonly IZoneRepository _iZoneRepository;   
         public ZonesController(IZoneRepository iZoneRepository)
         {
             _iZoneRepository = iZoneRepository;
@@ -25,23 +23,22 @@ namespace ValVenalEstimator.Api.Controllers
         public async Task<ActionResult> AddZone(ZoneDTO zoneDTO)
         {
             try{
-                  return Ok(await _iZoneRepository.AddZone(zoneDTO));
+                  return Ok(await _iZoneRepository.AddAsyncZone(zoneDTO));
             }catch(Exception e){
                  return NotFound(e.Message);
-            }
-            
+            }        
         }
 
         [HttpGet("{id}")]
         public async Task<Zone> GetZone(long id)
         {
-            return await _iZoneRepository.GetZone(id);
+            return await _iZoneRepository.GetAsyncZone(id);
         }
 
         [HttpGet]
         public async Task<IEnumerable<Zone>> GetAllZones()
         {
-            return await _iZoneRepository.GetAllZones();
+            return await _iZoneRepository.GetAsyncAllZones();
         }
 
         [HttpPut("{id}")]
@@ -51,18 +48,15 @@ namespace ValVenalEstimator.Api.Controllers
             {
                 return BadRequest();
             }
-
-            var z = await _iZoneRepository.GetZone(id);
+            var z = await _iZoneRepository.GetAsyncZone(id);
             if (z == null)
             {
                 return NotFound();
             }
-
             z.Name = zone.Name;
-
             try
             {
-                _iZoneRepository.SaveChange(); 
+                _iZoneRepository.SaveAsyncChange(); 
             }
             catch (DbUpdateConcurrencyException) when (!_iZoneRepository.ZoneExists(id))
             {
@@ -75,21 +69,21 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteZone(long id)
         {
-            var zone = await _iZoneRepository.GetZone(id);
+            var zone = await _iZoneRepository.GetAsyncZone(id);
 
             if (zone == null)
             {
                 return NotFound();    
             }     
             _iZoneRepository.Remove(zone);           
-            _iZoneRepository.SaveChange();                                   
+            _iZoneRepository.SaveAsyncChange();                                   
             return StatusCode(202);          
         }
 
         [HttpPost("{accessPath}")]
         public void LoadDataInDbByPost(string accessPath)
         {
-            _iZoneRepository.LoadDataInDbWithCsvFile(accessPath);
+            _iZoneRepository.LoadAsyncDataInDbWithCsvFile(accessPath);
         } 
     }
 }

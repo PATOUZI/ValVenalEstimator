@@ -1,30 +1,27 @@
-using ValVenalEstimator.Api.Contracts;
-using ValVenalEstimator.Api.Data;
-using ValVenalEstimator.Api.ViewModels;
 using System.Threading.Tasks;
-using ValVenalEstimator.Api.Models;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Globalization;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using CsvHelper;
 using System;
-
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using CsvHelper;
+using ValVenalEstimator.Api.Contracts;
+using ValVenalEstimator.Api.Data;
+using ValVenalEstimator.Api.ViewModels;
+using ValVenalEstimator.Api.Models;
 namespace ValVenalEstimator.Api.Repositories
 {
     public class ZoneRepository : IZoneRepository
     {
         readonly ValVenalEstimatorDbContext _valVenalEstDbContext; 
-        readonly IPrefectureRepository _iprefectureRepository;
-        
+        readonly IPrefectureRepository _iprefectureRepository;      
         public ZoneRepository(ValVenalEstimatorDbContext context, IPrefectureRepository iprefectureRepository)
         {  
             _valVenalEstDbContext = context;   
             _iprefectureRepository = iprefectureRepository;
         } 
-
         /*public async Task<Zone> AddZone(Zone zone)
         {
             var existingPrefecture = _iprefectureRepository.PrefectureExists(zone.PrefectureId);
@@ -41,10 +38,9 @@ namespace ValVenalEstimator.Api.Repositories
                 return null;
             }  
         }*/
-
-        public async Task<Zone> AddZone(ZoneDTO zoneDTO)
+        public async Task<Zone> AddAsyncZone(ZoneDTO zoneDTO)
         {
-            var prefecture = await _iprefectureRepository.GetPrefecture(zoneDTO.PrefectureId);
+            var prefecture = await _iprefectureRepository.GetAsyncPrefecture(zoneDTO.PrefectureId);
             if (prefecture != null)
             {
                 Zone zone = zoneDTO.ToZone();
@@ -59,8 +55,7 @@ namespace ValVenalEstimator.Api.Repositories
                 throw new Exception("La prefecture avec l'id "+zoneDTO.PrefectureId+" n'existe pas !!!");
             }  
         }
-
-        public async Task<Zone> GetZone(long id)
+        public async Task<Zone> GetAsyncZone(long id)
         {
             var zone = await _valVenalEstDbContext.Zones.FindAsync(id);
 
@@ -70,18 +65,15 @@ namespace ValVenalEstimator.Api.Repositories
             }
             return zone;
         }
-
-        public async Task<IEnumerable<Zone>> GetAllZones()
+        public async Task<IEnumerable<Zone>> GetAsyncAllZones()
         {
             return await _valVenalEstDbContext.Zones.Include(z => z.Prefecture).ToListAsync();
         }
-
-         public async Task<IEnumerable<Zone>> GetAllZonesByPrefectureId(long idPrefecture)
+         public async Task<IEnumerable<Zone>> GetAsyncAllZonesByPrefectureId(long idPrefecture)
         {
             return await _valVenalEstDbContext.Zones.Where(z => z.PrefectureId == idPrefecture).ToListAsync();
         }
-
-        public async Task<IActionResult> DeleteZone(long id)
+        public async Task<IActionResult> DeleteAsyncZone(long id)
         {
             var zone = await _valVenalEstDbContext.Zones.FindAsync(id);
 
@@ -93,8 +85,7 @@ namespace ValVenalEstimator.Api.Repositories
             await _valVenalEstDbContext.SaveChangesAsync();
             return null;
         }
-
-        public async void LoadDataInDbWithCsvFile(string accessPath)
+        public async void LoadAsyncDataInDbWithCsvFile(string accessPath)
         {
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -103,20 +94,16 @@ namespace ValVenalEstimator.Api.Repositories
             
                 foreach (var z in records)
                 {
-                    await AddZone(z);
+                    await AddAsyncZone(z);
                 
                 }
             }
         }
-        
-
-        public async void SaveChange()
+        public async void SaveAsyncChange()
         {
             await _valVenalEstDbContext.SaveChangesAsync();
         }
-
-        public bool ZoneExists(long id) => _valVenalEstDbContext.Zones.Any(z => z.Id == id);
-        
+        public bool ZoneExists(long id) => _valVenalEstDbContext.Zones.Any(z => z.Id == id);       
         public void Remove(Zone zone)
         {
             _valVenalEstDbContext.Zones.Remove(zone);   

@@ -1,21 +1,18 @@
-using ValVenalEstimator.Api.Models; 
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-
+using ValVenalEstimator.Api.Models; 
 namespace ValVenalEstimator.Api.Contracts
 {
     public interface IPrefectureRepository
     {
-        public Task<Prefecture> AddPrefecture(Prefecture prefecture);
-        public Task<Prefecture> GetPrefecture(long id);
-        public Task<IEnumerable<Prefecture>> GetAllPrefectures();
-        
+        public Task<Prefecture> AddAsyncPrefecture(Prefecture prefecture);
+        public Task<Prefecture> GetAsyncPrefecture(long id);
+        public Task<IEnumerable<Prefecture>> GetAsyncAllPrefectures();     
         // public Task<IEnumerable<Prefecture>> GetAllPrefecturesWithZones();
-
-        public Task<IActionResult> DeletePrefecture(long id);
-        public void LoadDataInDbWithCsvFile(string accessPath);
-        public void SaveChange();
+        public Task<IActionResult> DeleteAsyncPrefecture(long id);
+        public void LoadAsyncDataInDbWithCsvFile(string accessPath);
+        public void SaveAsyncChange();
         public bool PrefectureExists(long id);
         public void Remove(Prefecture prefecture);
     }

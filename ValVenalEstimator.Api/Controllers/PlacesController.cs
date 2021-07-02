@@ -1,11 +1,10 @@
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ValVenalEstimator.Api.Models;
 using ValVenalEstimator.Api.Contracts;
 using ValVenalEstimator.Api.ViewModels;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-
 namespace ValVenalEstimator.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -21,7 +20,7 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpPost]
         public async Task<Place> AddPlace(Place place)
         {
-            await _iPlaceRepository.AddPlace(place);
+            await _iPlaceRepository.AddAsyncPlace(place);
             /*return CreatedAtAction(
                 nameof(AddPlace),
                 new { id = place.Id },
@@ -33,19 +32,19 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpGet("{id}")]
         public async Task<Place> GetPlace(long id)
         {
-            return await _iPlaceRepository.GetPlace(id);
+            return await _iPlaceRepository.GetAsyncPlace(id);
         }
 
         [HttpGet]
         public async Task<IEnumerable<Place>> GetAllPlaces()
         {
-            return await _iPlaceRepository.GetAllPlaces();
+            return await _iPlaceRepository.GetAsyncAllPlaces();
         }
 
         [HttpGet ("zone/{idZone}")]
         public async Task<IEnumerable<Place>> GetPlacesByZoneId(long idZone)
         {
-            return await _iPlaceRepository.GetPlacesByZoneId(idZone);
+            return await _iPlaceRepository.GetAsyncPlacesByZoneId(idZone);
         }
 
         [HttpPut("{id}")]
@@ -55,7 +54,7 @@ namespace ValVenalEstimator.Api.Controllers
             {
                 return BadRequest();
             }
-            var p = await _iPlaceRepository.GetPlace(id);
+            var p = await _iPlaceRepository.GetAsyncPlace(id);
             if (p == null)
             {
                 return NotFound();
@@ -64,7 +63,7 @@ namespace ValVenalEstimator.Api.Controllers
             p.ZoneId = place.ZoneId;
             try
             {
-                _iPlaceRepository.SaveChange(); 
+                _iPlaceRepository.SaveAsyncChange(); 
             }
             catch (DbUpdateConcurrencyException) when (!_iPlaceRepository.PlaceExists(id))
             {
@@ -76,26 +75,26 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlace(long id)
         {
-            var place = await _iPlaceRepository.GetPlace(id);
+            var place = await _iPlaceRepository.GetAsyncPlace(id);
             if (place == null)
             {
                 return NotFound();    
             }
             _iPlaceRepository.Remove(place);            
-            _iPlaceRepository.SaveChange();                                   
+            _iPlaceRepository.SaveAsyncChange();                                   
             return StatusCode(202);
         }
     
         [HttpPost("{accessPath}", Name = "LoadDataInDbByPost")]
         public void LoadDataInDbByPost(string accessPath)
         {
-            _iPlaceRepository.LoadDataInDbWithCsvFile(accessPath);
+            _iPlaceRepository.LoadAsyncDataInDbWithCsvFile(accessPath);
         }                     
 
         [HttpPost("LoadDataInDataBase")]      
         public void Load(string accessPath)
         {
-            _iPlaceRepository.LoadDataInDbWithCsvFile(accessPath);
+            _iPlaceRepository.LoadAsyncDataInDbWithCsvFile(accessPath);
         }                                     
 
         /*[HttpGet("Load/{accessPath}")]
@@ -114,7 +113,7 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpGet("{id}/{area}", Name = "GetValVenal")]
         public async Task<ActionResult<ValVenalDTO>> GetValVenal(long id, int area)
         {
-            var place = await _iPlaceRepository.GetPlace(id);
+            var place = await _iPlaceRepository.GetAsyncPlace(id);
             if (place == null)
             {
                 return NotFound();
@@ -123,6 +122,5 @@ namespace ValVenalEstimator.Api.Controllers
             venaleValue.ValVenal = place.Zone.PricePerMeterSquare * area;
             return venaleValue;
         }
-
     }
 }
