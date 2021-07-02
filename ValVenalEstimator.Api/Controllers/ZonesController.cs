@@ -23,7 +23,7 @@ namespace ValVenalEstimator.Api.Controllers
         public async Task<ActionResult> AddZone(ZoneDTO zoneDTO)
         {
             try{
-                  return Ok(await _iZoneRepository.AddAsyncZone(zoneDTO));
+                  return Ok(await _iZoneRepository.AddZoneAsync(zoneDTO));
             }catch(Exception e){
                  return NotFound(e.Message);
             }        
@@ -32,13 +32,13 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpGet("{id}")]
         public async Task<Zone> GetZone(long id)
         {
-            return await _iZoneRepository.GetAsyncZone(id);
+            return await _iZoneRepository.GetZoneAsync(id);
         }
 
         [HttpGet]
         public async Task<IEnumerable<Zone>> GetAllZones()
         {
-            return await _iZoneRepository.GetAsyncAllZones();
+            return await _iZoneRepository.GetAllZonesAsync();
         }
 
         [HttpPut("{id}")]
@@ -48,7 +48,7 @@ namespace ValVenalEstimator.Api.Controllers
             {
                 return BadRequest();
             }
-            var z = await _iZoneRepository.GetAsyncZone(id);
+            var z = await _iZoneRepository.GetZoneAsync(id);
             if (z == null)
             {
                 return NotFound();
@@ -56,7 +56,7 @@ namespace ValVenalEstimator.Api.Controllers
             z.Name = zone.Name;
             try
             {
-                _iZoneRepository.SaveAsyncChange(); 
+                _iZoneRepository.SaveChangeAsync(); 
             }
             catch (DbUpdateConcurrencyException) when (!_iZoneRepository.ZoneExists(id))
             {
@@ -69,21 +69,21 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteZone(long id)
         {
-            var zone = await _iZoneRepository.GetAsyncZone(id);
+            var zone = await _iZoneRepository.GetZoneAsync(id);
 
             if (zone == null)
             {
                 return NotFound();    
             }     
             _iZoneRepository.Remove(zone);           
-            _iZoneRepository.SaveAsyncChange();                                   
+            _iZoneRepository.SaveChangeAsync();                                   
             return StatusCode(202);          
         }
 
         [HttpPost("{accessPath}")]
         public void LoadDataInDbByPost(string accessPath)
         {
-            _iZoneRepository.LoadAsyncDataInDbWithCsvFile(accessPath);
+            _iZoneRepository.LoadDataInDbWithCsvFileAsync(accessPath);
         } 
     }
 }

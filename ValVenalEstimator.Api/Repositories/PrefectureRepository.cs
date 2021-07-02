@@ -19,13 +19,13 @@ namespace ValVenalEstimator.Api.Repositories
         {  
             _valVenalEstDbContext = context;  
         } 
-        public async Task<Prefecture> AddAsyncPrefecture(Prefecture prefecture)
+        public async Task<Prefecture> AddPrefectureAsync(Prefecture prefecture)
         {
             _valVenalEstDbContext.Add(prefecture);
             await _valVenalEstDbContext.SaveChangesAsync();
             return prefecture;
         }
-        public async Task<Prefecture> GetAsyncPrefecture(long id)
+        public async Task<Prefecture> GetPrefectureAsync(long id)
         {
             var prefecture = await _valVenalEstDbContext.Prefectures.FindAsync(id);
 
@@ -35,11 +35,11 @@ namespace ValVenalEstimator.Api.Repositories
             }
             return prefecture;
         }
-        public async Task<IEnumerable<Prefecture>> GetAsyncAllPrefectures()
+        public async Task<IEnumerable<Prefecture>> GetAllPrefecturesAsync()
         {
             return await _valVenalEstDbContext.Prefectures.ToListAsync();
         }
-        public async Task<IActionResult> DeleteAsyncPrefecture(long id)
+        public async Task<IActionResult> DeletePrefectureAsync(long id)
         {
             var prefecture = await _valVenalEstDbContext.Prefectures.FindAsync(id);
 
@@ -51,7 +51,7 @@ namespace ValVenalEstimator.Api.Repositories
             await _valVenalEstDbContext.SaveChangesAsync();
             return null;
         }
-        public async void LoadAsyncDataInDbWithCsvFile(string accessPath)
+        public async void LoadDataInDbWithCsvFileAsync(string accessPath)
         {
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -66,7 +66,7 @@ namespace ValVenalEstimator.Api.Repositories
                 }
             }
         }
-        public async void SaveAsyncChange()
+        public async void SaveChangeAsync()
         {
             await _valVenalEstDbContext.SaveChangesAsync();
         }

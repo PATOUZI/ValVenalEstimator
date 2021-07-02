@@ -20,7 +20,7 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpPost]
         public async Task<Place> AddPlace(Place place)
         {
-            await _iPlaceRepository.AddAsyncPlace(place);
+            await _iPlaceRepository.AddPlaceAsync(place);
             /*return CreatedAtAction(
                 nameof(AddPlace),
                 new { id = place.Id },
@@ -32,19 +32,19 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpGet("{id}")]
         public async Task<Place> GetPlace(long id)
         {
-            return await _iPlaceRepository.GetAsyncPlace(id);
+            return await _iPlaceRepository.GetPlaceAsync(id);
         }
 
         [HttpGet]
         public async Task<IEnumerable<Place>> GetAllPlaces()
         {
-            return await _iPlaceRepository.GetAsyncAllPlaces();
+            return await _iPlaceRepository.GetAllPlacesAsync();
         }
 
         [HttpGet ("zone/{idZone}")]
         public async Task<IEnumerable<Place>> GetPlacesByZoneId(long idZone)
         {
-            return await _iPlaceRepository.GetAsyncPlacesByZoneId(idZone);
+            return await _iPlaceRepository.GetPlacesByZoneIdAsync(idZone);
         }
 
         [HttpPut("{id}")]
@@ -54,7 +54,7 @@ namespace ValVenalEstimator.Api.Controllers
             {
                 return BadRequest();
             }
-            var p = await _iPlaceRepository.GetAsyncPlace(id);
+            var p = await _iPlaceRepository.GetPlaceAsync(id);
             if (p == null)
             {
                 return NotFound();
@@ -63,7 +63,7 @@ namespace ValVenalEstimator.Api.Controllers
             p.ZoneId = place.ZoneId;
             try
             {
-                _iPlaceRepository.SaveAsyncChange(); 
+                _iPlaceRepository.SaveChangeAsync(); 
             }
             catch (DbUpdateConcurrencyException) when (!_iPlaceRepository.PlaceExists(id))
             {
@@ -75,26 +75,26 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlace(long id)
         {
-            var place = await _iPlaceRepository.GetAsyncPlace(id);
+            var place = await _iPlaceRepository.GetPlaceAsync(id);
             if (place == null)
             {
                 return NotFound();    
             }
             _iPlaceRepository.Remove(place);            
-            _iPlaceRepository.SaveAsyncChange();                                   
+            _iPlaceRepository.SaveChangeAsync();                                   
             return StatusCode(202);
         }
     
         [HttpPost("{accessPath}", Name = "LoadDataInDbByPost")]
         public void LoadDataInDbByPost(string accessPath)
         {
-            _iPlaceRepository.LoadAsyncDataInDbWithCsvFile(accessPath);
+            _iPlaceRepository.LoadDataInDbWithCsvFileAsync(accessPath);
         }                     
 
         [HttpPost("LoadDataInDataBase")]      
         public void Load(string accessPath)
         {
-            _iPlaceRepository.LoadAsyncDataInDbWithCsvFile(accessPath);
+            _iPlaceRepository.LoadDataInDbWithCsvFileAsync(accessPath);
         }                                     
 
         /*[HttpGet("Load/{accessPath}")]
@@ -113,7 +113,7 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpGet("{id}/{area}", Name = "GetValVenal")]
         public async Task<ActionResult<ValVenalDTO>> GetValVenal(long id, int area)
         {
-            var place = await _iPlaceRepository.GetAsyncPlace(id);
+            var place = await _iPlaceRepository.GetPlaceAsync(id);
             if (place == null)
             {
                 return NotFound();

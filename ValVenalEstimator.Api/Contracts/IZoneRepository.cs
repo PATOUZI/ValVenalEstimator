@@ -8,14 +8,13 @@ namespace ValVenalEstimator.Api.Contracts
     public interface IZoneRepository
     {
         //public Task<Zone> AddZone(Zone Zone);
-        public Task<Zone> AddAsyncZone(ZoneDTO ZoneDTO);
-        public Task<Zone> GetAsyncZone(long id);
-        public Task<IEnumerable<Zone>> GetAsyncAllZones();
-        public Task<IEnumerable<Zone>> GetAsyncAllZonesByPrefectureId(long prefectureId);
-
-        public Task<IActionResult> DeleteAsyncZone(long id);
-        public void LoadAsyncDataInDbWithCsvFile(string accessPath);
-        public void SaveAsyncChange();
+        public Task<Zone> AddZoneAsync(ZoneDTO ZoneDTO);
+        public Task<Zone> GetZoneAsync(long id);
+        public Task<IEnumerable<Zone>> GetAllZonesAsync();
+        public Task<IEnumerable<Zone>> GetAllZonesByPrefectureIdAsync(long prefectureId);
+        public Task<IActionResult> DeleteZoneAsync(long id);
+        public void LoadDataInDbWithCsvFileAsync(string accessPath);
+        public void SaveChangeAsync();
         public bool ZoneExists(long id);
         public void Remove(Zone Zone);
     }

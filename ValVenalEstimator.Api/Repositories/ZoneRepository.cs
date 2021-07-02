@@ -38,9 +38,9 @@ namespace ValVenalEstimator.Api.Repositories
                 return null;
             }  
         }*/
-        public async Task<Zone> AddAsyncZone(ZoneDTO zoneDTO)
+        public async Task<Zone> AddZoneAsync(ZoneDTO zoneDTO)
         {
-            var prefecture = await _iprefectureRepository.GetAsyncPrefecture(zoneDTO.PrefectureId);
+            var prefecture = await _iprefectureRepository.GetPrefectureAsync(zoneDTO.PrefectureId);
             if (prefecture != null)
             {
                 Zone zone = zoneDTO.ToZone();
@@ -55,7 +55,7 @@ namespace ValVenalEstimator.Api.Repositories
                 throw new Exception("La prefecture avec l'id "+zoneDTO.PrefectureId+" n'existe pas !!!");
             }  
         }
-        public async Task<Zone> GetAsyncZone(long id)
+        public async Task<Zone> GetZoneAsync(long id)
         {
             var zone = await _valVenalEstDbContext.Zones.FindAsync(id);
 
@@ -65,15 +65,15 @@ namespace ValVenalEstimator.Api.Repositories
             }
             return zone;
         }
-        public async Task<IEnumerable<Zone>> GetAsyncAllZones()
+        public async Task<IEnumerable<Zone>> GetAllZonesAsync()
         {
             return await _valVenalEstDbContext.Zones.Include(z => z.Prefecture).ToListAsync();
         }
-         public async Task<IEnumerable<Zone>> GetAsyncAllZonesByPrefectureId(long idPrefecture)
+         public async Task<IEnumerable<Zone>> GetAllZonesByPrefectureIdAsync(long idPrefecture)
         {
             return await _valVenalEstDbContext.Zones.Where(z => z.PrefectureId == idPrefecture).ToListAsync();
         }
-        public async Task<IActionResult> DeleteAsyncZone(long id)
+        public async Task<IActionResult> DeleteZoneAsync(long id)
         {
             var zone = await _valVenalEstDbContext.Zones.FindAsync(id);
 
@@ -85,7 +85,7 @@ namespace ValVenalEstimator.Api.Repositories
             await _valVenalEstDbContext.SaveChangesAsync();
             return null;
         }
-        public async void LoadAsyncDataInDbWithCsvFile(string accessPath)
+        public async void LoadDataInDbWithCsvFileAsync(string accessPath)
         {
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -94,12 +94,12 @@ namespace ValVenalEstimator.Api.Repositories
             
                 foreach (var z in records)
                 {
-                    await AddAsyncZone(z);
+                    await AddZoneAsync(z);
                 
                 }
             }
         }
-        public async void SaveAsyncChange()
+        public async void SaveChangeAsync()
         {
             await _valVenalEstDbContext.SaveChangesAsync();
         }

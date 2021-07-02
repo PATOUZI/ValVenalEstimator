@@ -6,13 +6,13 @@ namespace ValVenalEstimator.Api.Contracts
 {
     public interface IPrefectureRepository
     {
-        public Task<Prefecture> AddAsyncPrefecture(Prefecture prefecture);
-        public Task<Prefecture> GetAsyncPrefecture(long id);
-        public Task<IEnumerable<Prefecture>> GetAsyncAllPrefectures();     
+        public Task<Prefecture> AddPrefectureAsync(Prefecture prefecture);
+        public Task<Prefecture> GetPrefectureAsync(long id);
+        public Task<IEnumerable<Prefecture>> GetAllPrefecturesAsync();     
         // public Task<IEnumerable<Prefecture>> GetAllPrefecturesWithZones();
-        public Task<IActionResult> DeleteAsyncPrefecture(long id);
-        public void LoadAsyncDataInDbWithCsvFile(string accessPath);
-        public void SaveAsyncChange();
+        public Task<IActionResult> DeletePrefectureAsync(long id);
+        public void LoadDataInDbWithCsvFileAsync(string accessPath);
+        public void SaveChangeAsync();
         public bool PrefectureExists(long id);
         public void Remove(Prefecture prefecture);
     }

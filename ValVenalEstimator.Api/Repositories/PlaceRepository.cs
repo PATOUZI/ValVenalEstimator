@@ -21,12 +21,12 @@ namespace ValVenalEstimator.Api.Repositories
             _valVenalEstDbContext = context; 
             _izoneRepository = izoneRepository;
         } 
-        public async Task<Place> AddAsyncPlace(Place place)
+        public async Task<Place> AddPlaceAsync(Place place)
         {
             var existingZone = _izoneRepository.ZoneExists(place.ZoneId);
             if (existingZone == true)
             {
-                var zone = _izoneRepository.GetAsyncZone(place.ZoneId);
+                var zone = _izoneRepository.GetZoneAsync(place.ZoneId);
                 place.Zone = zone.Result;
                 _valVenalEstDbContext.Add(place);
                 await _valVenalEstDbContext.SaveChangesAsync();
@@ -37,7 +37,7 @@ namespace ValVenalEstimator.Api.Repositories
                 return null;
             }        
         }
-        public async Task<Place> GetAsyncPlace(long id)
+        public async Task<Place> GetPlaceAsync(long id)
         {
             var place = await _valVenalEstDbContext.Places.FindAsync(id); //Include(p => p.Zone)
             if (place == null)
@@ -46,11 +46,11 @@ namespace ValVenalEstimator.Api.Repositories
             }
             return place;
         }
-        public async Task<IEnumerable<Place>> GetAsyncAllPlaces()
+        public async Task<IEnumerable<Place>> GetAllPlacesAsync()
         {
             return await _valVenalEstDbContext.Places.Include(p => p.Zone).ToListAsync();
         }                 
-        public async Task<IActionResult> DeleteAsyncPlace(long id)
+        public async Task<IActionResult> DeletePlaceAsync(long id)
         {
             var place = await _valVenalEstDbContext.Places.FindAsync(id);
             if (place == null)
@@ -61,13 +61,13 @@ namespace ValVenalEstimator.Api.Repositories
             await _valVenalEstDbContext.SaveChangesAsync();
             return null;
         }
-        public async Task<IEnumerable<Place>> GetAsyncPlacesByZoneId(long IdZone)
+        public async Task<IEnumerable<Place>> GetPlacesByZoneIdAsync(long IdZone)
         {
              return await _valVenalEstDbContext.Places
                             .Where(o => o.ZoneId == IdZone)
                             .ToListAsync();
         }
-        public async void LoadAsyncDataInDbWithCsvFile(string accessPath)
+        public async void LoadDataInDbWithCsvFileAsync(string accessPath)
         {
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -84,7 +84,7 @@ namespace ValVenalEstimator.Api.Repositories
                 }
             }
         }       
-        public async void SaveAsyncChange()
+        public async void SaveChangeAsync()
         {
             await _valVenalEstDbContext.SaveChangesAsync();
         }

@@ -22,7 +22,7 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Prefecture>> AddPrefecture(Prefecture prefecture)
         {
-            await _iPrefectureRepository.AddAsyncPrefecture(prefecture);
+            await _iPrefectureRepository.AddPrefectureAsync(prefecture);
             return CreatedAtAction(
                 nameof(AddPrefecture),
                 new { id = prefecture.Id },
@@ -33,21 +33,21 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpGet("{id}")]
         public async Task<Prefecture> GetPrefecture(long id)
         {
-            return await _iPrefectureRepository.GetAsyncPrefecture(id);
+            return await _iPrefectureRepository.GetPrefectureAsync(id);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllPrefectures()
         {
-            return Ok(await _iPrefectureRepository.GetAsyncAllPrefectures());
+            return Ok(await _iPrefectureRepository.GetAllPrefecturesAsync());
         }
 
         [HttpGet("WithZone")]
         public async Task<IActionResult> GetAllPrefecturesWithZones()
         {
-            var list  =  await _iPrefectureRepository.GetAsyncAllPrefectures();
+            var list  =  await _iPrefectureRepository.GetAllPrefecturesAsync();
             var resList = list.Select( async(p) => {
-                p.Zones = (await _iZoneRepository.GetAsyncAllZonesByPrefectureId(p.Id)).ToList();
+                p.Zones = (await _iZoneRepository.GetAllZonesByPrefectureIdAsync(p.Id)).ToList();
                 return p;
             }).ToList();
             //List<Prefecture> resList = new List<Prefecture>(); 
@@ -67,7 +67,7 @@ namespace ValVenalEstimator.Api.Controllers
                 return BadRequest();
             }
 
-            var p = await _iPrefectureRepository.GetAsyncPrefecture(id);
+            var p = await _iPrefectureRepository.GetPrefectureAsync(id);
             if (p == null)
             {
                 return NotFound();
@@ -77,7 +77,7 @@ namespace ValVenalEstimator.Api.Controllers
 
             try
             {
-                _iPrefectureRepository.SaveAsyncChange(); 
+                _iPrefectureRepository.SaveChangeAsync(); 
             }
             catch (DbUpdateConcurrencyException) when (!_iPrefectureRepository.PrefectureExists(id))
             {
@@ -90,21 +90,21 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePrefecture(long id)
         {
-            var prefecture = await _iPrefectureRepository.GetAsyncPrefecture(id);
+            var prefecture = await _iPrefectureRepository.GetPrefectureAsync(id);
 
             if (prefecture == null)
             {
                 return NotFound();    
             }     
             _iPrefectureRepository.Remove(prefecture);           
-            _iPrefectureRepository.SaveAsyncChange();                                   
+            _iPrefectureRepository.SaveChangeAsync();                                   
             return StatusCode(202);          
         }
 
         [HttpPost("{accessPath}")]
         public void LoadDataInDbByPost(string accessPath)
         {
-            _iPrefectureRepository.LoadAsyncDataInDbWithCsvFile(accessPath);
+            _iPrefectureRepository.LoadDataInDbWithCsvFileAsync(accessPath);
         } 
     }
 }
