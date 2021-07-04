@@ -11,6 +11,7 @@ using ValVenalEstimator.Api.Contracts;
 using ValVenalEstimator.Api.Data;
 using ValVenalEstimator.Api.ViewModels;
 using ValVenalEstimator.Api.Models;
+
 namespace ValVenalEstimator.Api.Repositories
 {
     public class ZoneRepository : IZoneRepository
@@ -22,22 +23,6 @@ namespace ValVenalEstimator.Api.Repositories
             _valVenalEstDbContext = context;   
             _iprefectureRepository = iprefectureRepository;
         } 
-        /*public async Task<Zone> AddZone(Zone zone)
-        {
-            var existingPrefecture = _iprefectureRepository.PrefectureExists(zone.PrefectureId);
-            if (existingPrefecture == true)
-            {
-                var prefecture = _iprefectureRepository.GetPrefecture(zone.PrefectureId);
-                zone.Prefecture = prefecture.Result;
-                _valVenalEstDbContext.Add(zone);
-                await _valVenalEstDbContext.SaveChangesAsync();
-                return zone;
-            } 
-            else
-            {
-                return null;
-            }  
-        }*/
         public async Task<Zone> AddZoneAsync(ZoneDTO zoneDTO)
         {
             var prefecture = await _iprefectureRepository.GetPrefectureAsync(zoneDTO.PrefectureId);
@@ -47,7 +32,7 @@ namespace ValVenalEstimator.Api.Repositories
                 zone.Prefecture = prefecture;
                 zone.Code = prefecture.Name + "_" + zoneDTO.Name;
                 await _valVenalEstDbContext.AddAsync(zone);
-                await _valVenalEstDbContext.SaveChangesAsync();
+                await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync()
                 return zone;
             } 
             else
@@ -58,10 +43,9 @@ namespace ValVenalEstimator.Api.Repositories
         public async Task<Zone> GetZoneAsync(long id)
         {
             var zone = await _valVenalEstDbContext.Zones.FindAsync(id);
-
             if (zone == null)
             {
-                return null;
+                return null;  //throw new Exception("La zone avec l'id "+id+" n'existe pas !!!");
             }
             return zone;
         }
@@ -69,20 +53,20 @@ namespace ValVenalEstimator.Api.Repositories
         {
             return await _valVenalEstDbContext.Zones.Include(z => z.Prefecture).ToListAsync();
         }
-         public async Task<IEnumerable<Zone>> GetAllZonesByPrefectureIdAsync(long idPrefecture)
+        public async Task<IEnumerable<Zone>> GetAllZonesByPrefectureIdAsync(long idPrefecture)
         {
             return await _valVenalEstDbContext.Zones.Where(z => z.PrefectureId == idPrefecture).ToListAsync();
         }
         public async Task<IActionResult> DeleteZoneAsync(long id)
         {
-            var zone = await _valVenalEstDbContext.Zones.FindAsync(id);
-
+            var zone = await _valVenalEstDbContext.Zones.FindAsync(id); //GetZoneAsync(id)
             if (zone == null)
             {
-                return null;     
+                return null; //throw new Exception("La prefecture avec l'id "+zoneDTO.PrefectureId+" n'existe pas !!!");
+    
             }     
             _valVenalEstDbContext.Zones.Remove(zone);                                      
-            await _valVenalEstDbContext.SaveChangesAsync();
+            await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync()
             return null;
         }
         public async void LoadDataInDbWithCsvFileAsync(string accessPath)
@@ -90,12 +74,10 @@ namespace ValVenalEstimator.Api.Repositories
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var records = csv.GetRecords<ZoneDTO>();
-            
+                var records = csv.GetRecords<ZoneDTO>();           
                 foreach (var z in records)
                 {
-                    await AddZoneAsync(z);
-                
+                    await AddZoneAsync(z);               
                 }
             }
         }

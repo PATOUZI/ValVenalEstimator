@@ -10,6 +10,7 @@ using ValVenalEstimator.Api.Models;
 using ValVenalEstimator.Api.Contracts;
 using ValVenalEstimator.Api.Data;
 using ValVenalEstimator.Api.ViewModels;
+
 namespace ValVenalEstimator.Api.Repositories
 {
     public class PrefectureRepository : IPrefectureRepository
@@ -22,16 +23,15 @@ namespace ValVenalEstimator.Api.Repositories
         public async Task<Prefecture> AddPrefectureAsync(Prefecture prefecture)
         {
             _valVenalEstDbContext.Add(prefecture);
-            await _valVenalEstDbContext.SaveChangesAsync();
+            await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync()
             return prefecture;
         }
         public async Task<Prefecture> GetPrefectureAsync(long id)
         {
             var prefecture = await _valVenalEstDbContext.Prefectures.FindAsync(id);
-
             if (prefecture == null)
             {
-                return null;
+                return null; //throw new Exception("La zone avec l'id "+id+" n'existe pas !!!");
             }
             return prefecture;
         }
@@ -41,14 +41,13 @@ namespace ValVenalEstimator.Api.Repositories
         }
         public async Task<IActionResult> DeletePrefectureAsync(long id)
         {
-            var prefecture = await _valVenalEstDbContext.Prefectures.FindAsync(id);
-
+            var prefecture = await _valVenalEstDbContext.Prefectures.FindAsync(id); //GetPrefectureAsync(id)
             if (prefecture == null)
             {
-                return null;     
+                return null;     //throw new Exception("La zone avec l'id "+id+" n'existe pas !!!"); 
             }     
             _valVenalEstDbContext.Prefectures.Remove(prefecture);                                      
-            await _valVenalEstDbContext.SaveChangesAsync();
+            await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync()
             return null;
         }
         public async void LoadDataInDbWithCsvFileAsync(string accessPath)
@@ -61,8 +60,7 @@ namespace ValVenalEstimator.Api.Repositories
                 {
                     Prefecture prefecture = new Prefecture();
                     prefecture.Name = p.Name;
-                    _valVenalEstDbContext.Add<Prefecture>(prefecture);               
-                    await _valVenalEstDbContext.SaveChangesAsync();
+                    await AddPrefectureAsync(prefecture);
                 }
             }
         }

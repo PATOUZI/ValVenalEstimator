@@ -10,6 +10,7 @@ using ValVenalEstimator.Api.Contracts;
 using ValVenalEstimator.Api.Models;
 using ValVenalEstimator.Api.ViewModels;
 using ValVenalEstimator.Api.Data;
+
 namespace ValVenalEstimator.Api.Repositories             
 {
     public class PlaceRepository : IPlaceRepository 
@@ -29,7 +30,7 @@ namespace ValVenalEstimator.Api.Repositories
                 var zone = _izoneRepository.GetZoneAsync(place.ZoneId);
                 place.Zone = zone.Result;
                 _valVenalEstDbContext.Add(place);
-                await _valVenalEstDbContext.SaveChangesAsync();
+                await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync()
                 return place;
             } 
             else
@@ -42,7 +43,7 @@ namespace ValVenalEstimator.Api.Repositories
             var place = await _valVenalEstDbContext.Places.FindAsync(id); //Include(p => p.Zone)
             if (place == null)
             {
-                return null;
+                return null; //throw new Exception("La zone avec l'id "+id+" n'existe pas !!!");
             }
             return place;
         }
@@ -52,13 +53,13 @@ namespace ValVenalEstimator.Api.Repositories
         }                 
         public async Task<IActionResult> DeletePlaceAsync(long id)
         {
-            var place = await _valVenalEstDbContext.Places.FindAsync(id);
+            var place = await _valVenalEstDbContext.Places.FindAsync(id); //GetPlaceAsync()
             if (place == null)
             {
                 return null;     
             }     
             _valVenalEstDbContext.Places.Remove(place);                                      
-            await _valVenalEstDbContext.SaveChangesAsync();
+            await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync();
             return null;
         }
         public async Task<IEnumerable<Place>> GetPlacesByZoneIdAsync(long IdZone)
@@ -80,7 +81,7 @@ namespace ValVenalEstimator.Api.Repositories
                     place.ZoneId = p.ZoneId;
                     _valVenalEstDbContext.Add<Place>(place);               
                     await _valVenalEstDbContext.SaveChangesAsync();
-                    //AddPlace(place);
+                    //AddPlaceAsync(place);
                 }
             }
         }       

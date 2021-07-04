@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using ValVenalEstimator.Api.Models;
 using ValVenalEstimator.Api.ViewModels;
 using ValVenalEstimator.Api.Contracts;
+
 namespace ValVenalEstimator.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -22,9 +23,12 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> AddZone(ZoneDTO zoneDTO)
         {
-            try{
-                  return Ok(await _iZoneRepository.AddZoneAsync(zoneDTO));
-            }catch(Exception e){
+            try
+            {
+                return Ok(await _iZoneRepository.AddZoneAsync(zoneDTO));
+            }
+            catch(Exception e)
+            {
                  return NotFound(e.Message);
             }        
         }
@@ -36,9 +40,9 @@ namespace ValVenalEstimator.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Zone>> GetAllZones()
+        public async Task<IActionResult> GetAllZones()
         {
-            return await _iZoneRepository.GetAllZonesAsync();
+            return Ok(await _iZoneRepository.GetAllZonesAsync());
         }
 
         [HttpPut("{id}")]

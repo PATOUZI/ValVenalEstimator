@@ -1,3 +1,6 @@
+using System;
+using System.Threading.Tasks;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
@@ -5,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ValVenalEstimator.Api.Models;
 using ValVenalEstimator.Api.Contracts;
+
 namespace ValVenalEstimator.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -20,14 +24,16 @@ namespace ValVenalEstimator.Api.Controllers
         }   
 
         [HttpPost]
-        public async Task<ActionResult<Prefecture>> AddPrefecture(Prefecture prefecture)
+        public async Task<ActionResult> AddPrefecture(Prefecture prefecture)
         {
-            await _iPrefectureRepository.AddPrefectureAsync(prefecture);
-            return CreatedAtAction(
-                nameof(AddPrefecture),
-                new { id = prefecture.Id },
-                prefecture
-            );
+            try
+            {
+                return Ok( await _iPrefectureRepository.AddPrefectureAsync(prefecture));
+            }
+            catch(Exception e)
+            {
+                return NotFound(e.Message);
+            }   
         }
 
         [HttpGet("{id}")]
@@ -66,15 +72,12 @@ namespace ValVenalEstimator.Api.Controllers
             {
                 return BadRequest();
             }
-
-            var p = await _iPrefectureRepository.GetPrefectureAsync(id);
+            var p = await _iPrefectureRepository.GetPrefectureAsync(id); 
             if (p == null)
             {
                 return NotFound();
             }
-
             p.Name = prefecture.Name;
-
             try
             {
                 _iPrefectureRepository.SaveChangeAsync(); 
@@ -83,7 +86,6 @@ namespace ValVenalEstimator.Api.Controllers
             {
                 return NotFound();
             }
-
             return StatusCode(200);
         }
 
@@ -91,7 +93,6 @@ namespace ValVenalEstimator.Api.Controllers
         public async Task<IActionResult> DeletePrefecture(long id)
         {
             var prefecture = await _iPrefectureRepository.GetPrefectureAsync(id);
-
             if (prefecture == null)
             {
                 return NotFound();    

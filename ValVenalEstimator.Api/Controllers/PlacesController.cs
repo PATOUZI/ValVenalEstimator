@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
@@ -5,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using ValVenalEstimator.Api.Models;
 using ValVenalEstimator.Api.Contracts;
 using ValVenalEstimator.Api.ViewModels;
+
 namespace ValVenalEstimator.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -18,15 +20,16 @@ namespace ValVenalEstimator.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<Place> AddPlace(Place place)
+        public async Task<ActionResult> AddPlace(Place place)
         {
-            await _iPlaceRepository.AddPlaceAsync(place);
-            /*return CreatedAtAction(
-                nameof(AddPlace),
-                new { id = place.Id },
-                place
-            );*/
-            return place;
+             try
+            {
+                return Ok( await _iPlaceRepository.AddPlaceAsync(place));
+            }
+            catch(Exception e)
+            {
+                return NotFound(e.Message);
+            } 
         }
 
         [HttpGet("{id}")]
@@ -36,9 +39,9 @@ namespace ValVenalEstimator.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Place>> GetAllPlaces()
+        public async Task<IActionResult> GetAllPlaces()
         {
-            return await _iPlaceRepository.GetAllPlacesAsync();
+            return Ok(await _iPlaceRepository.GetAllPlacesAsync());
         }
 
         [HttpGet ("zone/{idZone}")]
