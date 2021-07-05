@@ -23,14 +23,7 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> AddZone(ZoneDTO zoneDTO)
         {
-            try
-            {
-                return Ok(await _iZoneRepository.AddZoneAsync(zoneDTO));
-            }
-            catch(Exception e)
-            {
-                 return NotFound(e.Message);
-            }        
+            return Ok(await _iZoneRepository.AddZoneAsync(zoneDTO));    
         }
 
         [HttpGet("{id}")]

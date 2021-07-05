@@ -17,7 +17,7 @@ namespace ValVenalEstimator.Web.Controllers
         public async Task<IActionResult> Index()
         {
             List<Prefecture> PrefectureList = new List<Prefecture>();
-            dynamic model = new ExpandoObject();
+            //dynamic model = new ExpandoObject();
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync("https://localhost:5004/api/Prefectures"))
@@ -43,9 +43,10 @@ namespace ValVenalEstimator.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetValVenal(string prefect, string dist, int area)
+        public async Task<IActionResult> GetValVenal(long idPlace, int area)
         {
-            string accessPath = @"https://localhost:5004/api/Places/" + prefect + "/" + dist + "/" + area ;
+            //Calcul de la valeur venale du terrain
+            string accessPath = @"https://localhost:5004/api/Places/" + idPlace + "/" + area ;
             ValVenalDTO ValVenalDTO = new ValVenalDTO();
             using (var httpClient = new HttpClient())
             {
@@ -54,13 +55,16 @@ namespace ValVenalEstimator.Web.Controllers
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
-                        ValVenalDTO = JsonConvert.DeserializeObject<ValVenalDTO>(apiResponse);   
+                        ValVenalDTO = JsonConvert.DeserializeObject<ValVenalDTO>(apiResponse); 
+                        Console.WriteLine("valVenal : " + ValVenalDTO.ValVenal);
+  
                     }
                     else
                         ViewBag.StatusCode = response.StatusCode;
                 }
             }
-            string accessPath2 = @"https://localhost:5004/api/Prefectures/" + prefect ;
+            //Recuperation de l'objet Place correspondant à l'id fourni
+            string accessPath2 = @"https://localhost:5004/api/Places/" + idPlace ;
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(accessPath2))
@@ -68,15 +72,13 @@ namespace ValVenalEstimator.Web.Controllers
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
-                        var Prefecture = JsonConvert.DeserializeObject<Prefecture>(apiResponse);   
-                        ValVenalDTO.Prefecture = Prefecture.Name;
+                        var Place = JsonConvert.DeserializeObject<Place>(apiResponse);   
                     }
                     else
                         ViewBag.StatusCode = response.StatusCode;
                 }
             }
-            ValVenalDTO.District = dist;
-            ValVenalDTO.Area = area;
+            //ValVenalDTO.District = dist;
             return View(ValVenalDTO);
         }
 

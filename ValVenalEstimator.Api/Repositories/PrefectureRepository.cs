@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using System.Linq;
 using System.IO;
@@ -31,7 +32,7 @@ namespace ValVenalEstimator.Api.Repositories
             var prefecture = await _valVenalEstDbContext.Prefectures.FindAsync(id);
             if (prefecture == null)
             {
-                return null; //throw new Exception("La zone avec l'id "+id+" n'existe pas !!!");
+                throw new Exception("La zone avec l'id "+id+" n'existe pas !!!");
             }
             return prefecture;
         }

@@ -50,6 +50,12 @@ namespace ValVenalEstimator.Api.Controllers
             return await _iPlaceRepository.GetPlacesByZoneIdAsync(idZone);
         }
 
+        [HttpGet("prefecture/{idPrefecture}")]
+        public async Task<IEnumerable<Place>> GetPlaceByPrefectureId(long idPrefecture)
+        {
+            return await _iPlaceRepository.GetPlacesByPrefectureId(idPrefecture);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePlace(long id, Place place)
         {

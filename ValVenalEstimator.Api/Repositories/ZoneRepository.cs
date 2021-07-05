@@ -45,7 +45,7 @@ namespace ValVenalEstimator.Api.Repositories
             var zone = await _valVenalEstDbContext.Zones.FindAsync(id);
             if (zone == null)
             {
-                return null;  //throw new Exception("La zone avec l'id "+id+" n'existe pas !!!");
+                throw new Exception("La zone avec l'id "+id+" n'existe pas !!!");
             }
             return zone;
         }

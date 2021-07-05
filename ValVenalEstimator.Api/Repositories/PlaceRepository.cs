@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using System.Linq;
 using System.IO;
@@ -24,33 +25,46 @@ namespace ValVenalEstimator.Api.Repositories
         } 
         public async Task<Place> AddPlaceAsync(Place place)
         {
-            var existingZone = _izoneRepository.ZoneExists(place.ZoneId);
-            if (existingZone == true)
+            var zone = await _izoneRepository.GetZoneAsync(place.ZoneId);
+            if (zone != null)
             {
-                var zone = _izoneRepository.GetZoneAsync(place.ZoneId);
-                place.Zone = zone.Result;
+                place.Zone = zone;
                 _valVenalEstDbContext.Add(place);
                 await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync()
                 return place;
             } 
             else
             {
-                return null;
+                throw new Exception("La prefecture avec l'id "+place.ZoneId+" n'existe pas !!!");
             }        
         }
         public async Task<Place> GetPlaceAsync(long id)
         {
-            var place = await _valVenalEstDbContext.Places.FindAsync(id); //Include(p => p.Zone)
-            if (place == null)
+            Place pla = new Place();
+            var listPlaces = await _valVenalEstDbContext.Places.Include(p => p.Zone).ToListAsync(); 
+            foreach (var p in listPlaces)
             {
-                return null; //throw new Exception("La zone avec l'id "+id+" n'existe pas !!!");
+                if (p.Id == id)
+                {
+                    pla = p;
+                }
+            }          
+            if (pla == null)
+            {
+               throw new Exception("La quartier avec l'id "+id+" n'existe pas !!!");
             }
-            return place;
+            return pla;
         }
         public async Task<IEnumerable<Place>> GetAllPlacesAsync()
         {
             return await _valVenalEstDbContext.Places.Include(p => p.Zone).ToListAsync();
-        }                 
+        }   
+        public async Task<IEnumerable<Place>> GetPlacesByPrefectureId(long idPrefecture)
+        {
+            return await _valVenalEstDbContext.Places.Include(p => p.Zone) //Pas de zone à enlever après test et verification
+                                                     .Where(p => p.Zone.PrefectureId == idPrefecture)
+                                                     .ToListAsync();            
+        }              
         public async Task<IActionResult> DeletePlaceAsync(long id)
         {
             var place = await _valVenalEstDbContext.Places.FindAsync(id); //GetPlaceAsync()
@@ -62,10 +76,10 @@ namespace ValVenalEstimator.Api.Repositories
             await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync();
             return null;
         }
-        public async Task<IEnumerable<Place>> GetPlacesByZoneIdAsync(long IdZone)
+        public async Task<IEnumerable<Place>> GetPlacesByZoneIdAsync(long idZone)
         {
              return await _valVenalEstDbContext.Places
-                            .Where(o => o.ZoneId == IdZone)
+                            .Where(p => p.ZoneId == idZone)
                             .ToListAsync();
         }
         public async void LoadDataInDbWithCsvFileAsync(string accessPath)

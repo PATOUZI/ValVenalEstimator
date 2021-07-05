@@ -11,10 +11,9 @@ namespace ValVenalEstimator.Api.Contracts
         public Task<Place> GetPlaceAsync(long id);
         public Task<IEnumerable<Place>> GetAllPlacesAsync();
         public Task<IActionResult> DeletePlaceAsync(long id);
-        public void LoadDataInDbWithCsvFileAsync(string accessPath);
-        
-        //public Task<IEnumerable<Place>> GetPlacesByPrefectureId(long IdPrefecture);
-        public Task<IEnumerable<Place>> GetPlacesByZoneIdAsync(long IdZone);
+        public void LoadDataInDbWithCsvFileAsync(string accessPath);     
+        public Task<IEnumerable<Place>> GetPlacesByPrefectureId(long idPrefecture);
+        public Task<IEnumerable<Place>> GetPlacesByZoneIdAsync(long idZone);
         public void SaveChangeAsync();
         public bool PlaceExists(long id);
         public void Remove(Place place);
