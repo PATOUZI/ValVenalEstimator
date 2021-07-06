@@ -40,26 +40,26 @@ namespace ValVenalEstimator.Api.Repositories
         }
         public async Task<Place> GetPlaceAsync(long id)
         {
-            Place pla = new Place();
+            Place place = new Place();
             var listPlaces = await _valVenalEstDbContext.Places.Include(p => p.Zone).ToListAsync(); 
             foreach (var p in listPlaces)
             {
                 if (p.Id == id)
                 {
-                    pla = p;
+                    place = p;
                 }
             }          
-            if (pla == null)
+            if (place == null)
             {
                throw new Exception("La quartier avec l'id "+id+" n'existe pas !!!");
             }
-            return pla;
+            return place;
         }
         public async Task<IEnumerable<Place>> GetAllPlacesAsync()
         {
             return await _valVenalEstDbContext.Places.Include(p => p.Zone).ToListAsync();
         }   
-        public async Task<IEnumerable<Place>> GetPlacesByPrefectureId(long idPrefecture)
+        public async Task<IEnumerable<Place>> GetPlacesByPrefectureIdAsync(long idPrefecture)
         {
             return await _valVenalEstDbContext.Places.Include(p => p.Zone) //Pas de zone à enlever après test et verification
                                                      .Where(p => p.Zone.PrefectureId == idPrefecture)

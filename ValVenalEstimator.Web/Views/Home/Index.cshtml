@@ -14,7 +14,7 @@
     </select>
     <br/>
     <label for="Place">Quartier</label>
-    <select name="place" id="place"> 
+    <select name="idPlace" id="idPlace"> 
     </select>
     <br/>
     <label for="area">Superficie</label>
@@ -28,7 +28,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var PrefectSelected = $("#prefect");
-            var PlaceSelected = $("#place");
+            var PlaceSelected = $("#idPlace");
             PlaceSelected.prop('disabled', true);
             PrefectSelected.change(function (){
                 if($(this).val() == "") {
@@ -44,7 +44,7 @@
                             PlaceSelected.empty();
                             PlaceSelected.append($('<option/>', {value: '', text: '-- Selectionner le quartier --'}));
                             $(data).each(function(index, item) {
-                                PlaceSelected.append($('<option/>', {value: item.id, text: item.name}));
+                                PlaceSelected.append($('<option/>', {value: item.id, text: item.name }));
                             });
                         }
                     });

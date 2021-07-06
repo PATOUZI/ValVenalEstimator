@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using System.ComponentModel.DataAnnotations.Schema;
 using ValVenalEstimator.Api.Enums;
 
 namespace ValVenalEstimator.Api.Models
@@ -16,8 +17,8 @@ namespace ValVenalEstimator.Api.Models
         public string Code { get; set; }
         public ZoneType  Type { get; set; }
         public double PricePerMeterSquare { get; set; }
-        public long PrefectureId { get; set; }        
-        
+        public long PrefectureId { get; set; }
+
         [JsonIgnore]
         public Prefecture Prefecture { get; set; }
 

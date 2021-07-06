@@ -22,7 +22,7 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> AddPlace(Place place)
         {
-             try
+            try
             {
                 return Ok( await _iPlaceRepository.AddPlaceAsync(place));
             }
@@ -53,7 +53,7 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpGet("prefecture/{idPrefecture}")]
         public async Task<IEnumerable<Place>> GetPlaceByPrefectureId(long idPrefecture)
         {
-            return await _iPlaceRepository.GetPlacesByPrefectureId(idPrefecture);
+            return await _iPlaceRepository.GetPlacesByPrefectureIdAsync(idPrefecture);
         }
 
         [HttpPut("{id}")]
@@ -104,22 +104,9 @@ namespace ValVenalEstimator.Api.Controllers
         public void Load(string accessPath)
         {
             _iPlaceRepository.LoadDataInDbWithCsvFileAsync(accessPath);
-        }                                     
+        }                                      
 
-        /*[HttpGet("Load/{accessPath}")]
-        public void LoadDatas(string accessPath)
-        {
-            _iPlaceRepository.LoadDataInDbWithCsvFile(accessPath);
-        }*/           
-
-        /*[HttpGet("LoadDataInDb")]
-        public IActionResult LoadDataInDb(string accessPath)
-        {
-            _iPlaceRepository.LoadDataInDbWithCsvFile(accessPath);
-            return Ok(GetAllPlaces());
-        }*/    
-
-        [HttpGet("{id}/{area}", Name = "GetValVenal")]
+        /*[HttpGet("{id}/{area}", Name = "GetValVenal")]
         public async Task<ActionResult<ValVenalDTO>> GetValVenal(long id, int area)
         {
             var place = await _iPlaceRepository.GetPlaceAsync(id);
@@ -129,6 +116,21 @@ namespace ValVenalEstimator.Api.Controllers
             }
             ValVenalDTO venaleValue = new ValVenalDTO();
             venaleValue.ValVenal = place.Zone.PricePerMeterSquare * area;
+            return venaleValue;
+        }*/
+        
+        [HttpGet("{idPlace}/{area}", Name = "GetValVenal")]
+        public async Task<ActionResult<ValVenalDTO>> GetValVenal(long idPlace, int area)
+        {
+            var place = await _iPlaceRepository.GetPlaceAsync(idPlace);
+            if (place == null)
+            {
+                return NotFound();
+            }
+            ValVenalDTO venaleValue = new ValVenalDTO();
+            venaleValue.ValVenal = place.Zone.PricePerMeterSquare * area;
+            venaleValue.PlaceName = place.Name;
+            venaleValue.Area = area;
             return venaleValue;
         }
     }
