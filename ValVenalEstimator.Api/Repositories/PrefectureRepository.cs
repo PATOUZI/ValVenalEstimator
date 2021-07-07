@@ -17,15 +17,25 @@ namespace ValVenalEstimator.Api.Repositories
     public class PrefectureRepository : IPrefectureRepository
     {
         readonly ValVenalEstimatorDbContext _valVenalEstDbContext;                  
+        //readonly IZoneRepository _iZoneRepository; 
+
+        /*public PrefectureRepository(ValVenalEstimatorDbContext context, IZoneRepository iZoneRepository)
+        {  
+            _valVenalEstDbContext = context;  
+            _iZoneRepository = iZoneRepository;
+        }*/ 
+
         public PrefectureRepository(ValVenalEstimatorDbContext context)
         {  
             _valVenalEstDbContext = context;  
         } 
-        public async Task<Prefecture> AddPrefectureAsync(Prefecture prefecture)
+        public async Task<Prefecture> AddPrefectureAsync(PrefectureDTO prefectureDTO)
         {
-            _valVenalEstDbContext.Add(prefecture);
-            await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync()
-            return prefecture;
+            Prefecture p = prefectureDTO.ToPrefecture();
+            await _valVenalEstDbContext.AddAsync(p);
+            //await _valVenalEstDbContext.SaveChangesAsync(); 
+            SaveChangeAsync();
+            return p;
         }
         public async Task<Prefecture> GetPrefectureAsync(long id)
         {
@@ -40,17 +50,17 @@ namespace ValVenalEstimator.Api.Repositories
         {
             return await _valVenalEstDbContext.Prefectures.ToListAsync();
         }
-        public async Task<IActionResult> DeletePrefectureAsync(long id)
+
+        /*public async Task<IEnumerable<Prefecture>> GetAllPrefecturesWithZonesAsync()
         {
-            var prefecture = await _valVenalEstDbContext.Prefectures.FindAsync(id); //GetPrefectureAsync(id)
-            if (prefecture == null)
-            {
-                return null;     //throw new Exception("La zone avec l'id "+id+" n'existe pas !!!"); 
-            }     
-            _valVenalEstDbContext.Prefectures.Remove(prefecture);                                      
-            await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync()
-            return null;
-        }
+            var list  =  await GetAllPrefecturesAsync();
+            var resList = list.Select( async(p) => {
+                                                        p.Zones = (await _iZoneRepository.GetAllZonesByPrefectureIdAsync(p.Id)).ToList();
+                                                        return p;
+                                                   }
+                                     ).ToList();
+            return resList;
+        }*/
         public async void LoadDataInDbWithCsvFileAsync(string accessPath)
         {
             using (var reader = new StreamReader(accessPath))   
@@ -59,9 +69,9 @@ namespace ValVenalEstimator.Api.Repositories
                 var records = csv.GetRecords<PrefectureDTO>();
                 foreach (var p in records)
                 {
-                    Prefecture prefecture = new Prefecture();
-                    prefecture.Name = p.Name;
-                    await AddPrefectureAsync(prefecture);
+                    /*Prefecture prefecture = new Prefecture();
+                    prefecture.Name = p.Name;*/
+                    await AddPrefectureAsync(p);
                 }
             }
         }

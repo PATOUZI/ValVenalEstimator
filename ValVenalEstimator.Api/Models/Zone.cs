@@ -21,8 +21,8 @@ namespace ValVenalEstimator.Api.Models
 
         [JsonIgnore]
         public Prefecture Prefecture { get; set; }
-
-        [JsonIgnore]       
+       
+       [JsonIgnore]       
         public List<Place> Places { get; set; }
     }
 }

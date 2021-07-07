@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace ValVenalEstimator.Web.Models
 {
     public class Prefecture

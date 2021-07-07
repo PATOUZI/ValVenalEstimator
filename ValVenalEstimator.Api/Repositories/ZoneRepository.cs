@@ -32,7 +32,8 @@ namespace ValVenalEstimator.Api.Repositories
                 zone.Prefecture = prefecture;
                 zone.Code = prefecture.Name + "_" + zoneDTO.Name;
                 await _valVenalEstDbContext.AddAsync(zone);
-                await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync()
+                //await _valVenalEstDbContext.SaveChangesAsync(); 
+                SaveChangeAsync();
                 return zone;
             } 
             else
@@ -56,18 +57,6 @@ namespace ValVenalEstimator.Api.Repositories
         public async Task<IEnumerable<Zone>> GetAllZonesByPrefectureIdAsync(long idPrefecture)
         {
             return await _valVenalEstDbContext.Zones.Where(z => z.PrefectureId == idPrefecture).ToListAsync();
-        }
-        public async Task<IActionResult> DeleteZoneAsync(long id)
-        {
-            var zone = await _valVenalEstDbContext.Zones.FindAsync(id); //GetZoneAsync(id)
-            if (zone == null)
-            {
-                return null; //throw new Exception("La prefecture avec l'id "+zoneDTO.PrefectureId+" n'existe pas !!!");
-    
-            }     
-            _valVenalEstDbContext.Zones.Remove(zone);                                      
-            await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync()
-            return null;
         }
         public async void LoadDataInDbWithCsvFileAsync(string accessPath)
         {

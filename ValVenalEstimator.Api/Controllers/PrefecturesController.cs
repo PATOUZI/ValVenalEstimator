@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ValVenalEstimator.Api.Models;
+using ValVenalEstimator.Api.ViewModels;
 using ValVenalEstimator.Api.Contracts;
 
 namespace ValVenalEstimator.Api.Controllers
@@ -16,29 +17,36 @@ namespace ValVenalEstimator.Api.Controllers
     {
         private readonly IPrefectureRepository _iPrefectureRepository;
         private readonly IZoneRepository _iZoneRepository; 
-        public PrefecturesController(IPrefectureRepository iPrefectureRepository,IZoneRepository iZoneRepository)
+        public PrefecturesController(IPrefectureRepository iPrefectureRepository, IZoneRepository iZoneRepository)
         {
             _iPrefectureRepository = iPrefectureRepository;
             _iZoneRepository = iZoneRepository;
         }   
 
         [HttpPost]
-        public async Task<ActionResult> AddPrefecture(Prefecture prefecture)
+        public async Task<ActionResult> AddPrefecture(PrefectureDTO prefectureDTO)
         {
             try
             {
-                return Ok( await _iPrefectureRepository.AddPrefectureAsync(prefecture));
+                return Ok( await _iPrefectureRepository.AddPrefectureAsync(prefectureDTO));
             }
             catch(Exception e)
             {
                 return NotFound(e.Message);
-            }   
+            }  
         }
 
         [HttpGet("{id}")]
-        public async Task<Prefecture> GetPrefecture(long id)
+        public async Task<ActionResult> GetPrefecture(long id)
         {
-            return await _iPrefectureRepository.GetPrefectureAsync(id);
+            try
+            {
+                return Ok(await _iPrefectureRepository.GetPrefectureAsync(id));
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);            
+            }
         }
 
         [HttpGet]
@@ -55,19 +63,13 @@ namespace ValVenalEstimator.Api.Controllers
                 p.Zones = (await _iZoneRepository.GetAllZonesByPrefectureIdAsync(p.Id)).ToList();
                 return p;
             }).ToList();
-            //List<Prefecture> resList = new List<Prefecture>(); 
-            // foreach (var p in list)
-            // {
-            //     p.Zones = (await _iZoneRepository.GetAllZonesByPrefectureId(p.Id)).ToList();
-                
-            // }
             return Ok(resList);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePrefecture(long id, Prefecture prefecture)
+        public async Task<IActionResult> UpdatePrefecture(long id, PrefectureDTO prefectureDTO)
         {
-            if (id != prefecture.Id)
+            if (id != prefectureDTO.Id)
             {
                 return BadRequest();
             }
@@ -76,7 +78,7 @@ namespace ValVenalEstimator.Api.Controllers
             {
                 return NotFound();
             }
-            p.Name = prefecture.Name;
+            p.Name = prefectureDTO.Name;
             try
             {
                 _iPrefectureRepository.SaveChangeAsync(); 

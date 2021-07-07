@@ -20,11 +20,11 @@ namespace ValVenalEstimator.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddPlace(Place place)
+        public async Task<ActionResult> AddPlace(PlaceDTO placeDTO)
         {
             try
             {
-                return Ok( await _iPlaceRepository.AddPlaceAsync(place));
+                return Ok( await _iPlaceRepository.AddPlaceAsync(placeDTO));
             }
             catch(Exception e)
             {
@@ -33,9 +33,16 @@ namespace ValVenalEstimator.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Place> GetPlace(long id)
+        public async Task<ActionResult> GetPlace(long id)
         {
-            return await _iPlaceRepository.GetPlaceAsync(id);
+            try
+            {
+                return Ok(await _iPlaceRepository.GetPlaceAsync(id));                
+            }
+            catch (Exception e)
+            {              
+                return NotFound(e.Message);
+            }
         }
 
         [HttpGet]
@@ -51,15 +58,15 @@ namespace ValVenalEstimator.Api.Controllers
         }
 
         [HttpGet("prefecture/{idPrefecture}")]
-        public async Task<IEnumerable<Place>> GetPlaceByPrefectureId(long idPrefecture)
+        public async Task<IEnumerable<Place>> GetPlacesByPrefectureId(long idPrefecture)
         {
             return await _iPlaceRepository.GetPlacesByPrefectureIdAsync(idPrefecture);
         }
-
+        
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePlace(long id, Place place)
+        public async Task<IActionResult> UpdatePlace(long id, PlaceDTO placeDTO)
         {
-            if (id != place.Id)
+            if (id != placeDTO.Id)
             {
                 return BadRequest();
             }
@@ -68,8 +75,8 @@ namespace ValVenalEstimator.Api.Controllers
             {
                 return NotFound();
             }
-            p.Name = place.Name;
-            p.ZoneId = place.ZoneId;
+            p.Name = placeDTO.Name;
+            p.ZoneId = placeDTO.ZoneId;
             try
             {
                 _iPlaceRepository.SaveChangeAsync(); 
@@ -80,7 +87,7 @@ namespace ValVenalEstimator.Api.Controllers
             }
             return StatusCode(200);
         }
-
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlace(long id)
         {
@@ -105,19 +112,6 @@ namespace ValVenalEstimator.Api.Controllers
         {
             _iPlaceRepository.LoadDataInDbWithCsvFileAsync(accessPath);
         }                                      
-
-        /*[HttpGet("{id}/{area}", Name = "GetValVenal")]
-        public async Task<ActionResult<ValVenalDTO>> GetValVenal(long id, int area)
-        {
-            var place = await _iPlaceRepository.GetPlaceAsync(id);
-            if (place == null)
-            {
-                return NotFound();
-            }
-            ValVenalDTO venaleValue = new ValVenalDTO();
-            venaleValue.ValVenal = place.Zone.PricePerMeterSquare * area;
-            return venaleValue;
-        }*/
         
         [HttpGet("{idPlace}/{area}", Name = "GetValVenal")]
         public async Task<ActionResult<ValVenalDTO>> GetValVenal(long idPlace, int area)
@@ -130,6 +124,7 @@ namespace ValVenalEstimator.Api.Controllers
             ValVenalDTO venaleValue = new ValVenalDTO();
             venaleValue.ValVenal = place.Zone.PricePerMeterSquare * area;
             venaleValue.PlaceName = place.Name;
+            venaleValue.ZoneName = place.Zone.Name;
             venaleValue.Area = area;
             return venaleValue;
         }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using ValVenalEstimator.Web.Models;
-
 namespace ValVenalEstimator.Web.ViewModels
 {
     public class IndexViewModel

@@ -2,15 +2,15 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using ValVenalEstimator.Api.Models; 
+using ValVenalEstimator.Api.ViewModels; 
 
 namespace ValVenalEstimator.Api.Contracts
 {
     public interface IPlaceRepository
     {
-        public Task<Place> AddPlaceAsync(Place place);
+        public Task<Place> AddPlaceAsync(PlaceDTO placeDTO);
         public Task<Place> GetPlaceAsync(long id);
         public Task<IEnumerable<Place>> GetAllPlacesAsync();
-        public Task<IActionResult> DeletePlaceAsync(long id);
         public void LoadDataInDbWithCsvFileAsync(string accessPath);     
         public Task<IEnumerable<Place>> GetPlacesByPrefectureIdAsync(long idPrefecture);
         public Task<IEnumerable<Place>> GetPlacesByZoneIdAsync(long idZone);

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using ValVenalEstimator.Web.Models;
 using ValVenalEstimator.Web.ViewModels;
-using System.Dynamic;
 
 namespace ValVenalEstimator.Web.Controllers
 {
@@ -27,7 +26,6 @@ namespace ValVenalEstimator.Web.Controllers
             }
             return View(PrefectureList);
         }
-
         public IActionResult FileUpload()
         {
             return View();
@@ -83,8 +81,6 @@ namespace ValVenalEstimator.Web.Controllers
             ValVenalDTO.Area = area;
             return View(ValVenalDTO);
         }
-
-        // Upload file on server
         public async Task<bool> UploadFile(IFormFile file)
         {
             string path = "";

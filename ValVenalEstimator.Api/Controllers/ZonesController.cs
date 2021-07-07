@@ -23,13 +23,29 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> AddZone(ZoneDTO zoneDTO)
         {
-            return Ok(await _iZoneRepository.AddZoneAsync(zoneDTO));    
+            try
+            {
+                return Ok(await _iZoneRepository.AddZoneAsync(zoneDTO));       
+            }
+            catch (Exception e)
+            {
+                
+                return NotFound(e.Message);
+            }
         }
 
         [HttpGet("{id}")]
-        public async Task<Zone> GetZone(long id)
+        public async Task<ActionResult> GetZone(long id)
         {
-            return await _iZoneRepository.GetZoneAsync(id);
+            try
+            {
+                return Ok(await _iZoneRepository.GetZoneAsync(id));
+           
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);                            
+            }
         }
 
         [HttpGet]
@@ -39,9 +55,9 @@ namespace ValVenalEstimator.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateZone(long id, Zone zone)
+        public async Task<IActionResult> UpdateZone(long id, ZoneDTO zoneDTO)
         {
-            if (id != zone.Id)
+            if (id != zoneDTO.Id)
             {
                 return BadRequest();
             }
@@ -50,7 +66,11 @@ namespace ValVenalEstimator.Api.Controllers
             {
                 return NotFound();
             }
-            z.Name = zone.Name;
+            z.Name = zoneDTO.Name;
+            z.ZoneNum = zoneDTO.ZoneNum;
+            z.Type = zoneDTO.Type;
+            z.PricePerMeterSquare = zoneDTO.PricePerMeterSquare;
+            z.PrefectureId = zoneDTO.PrefectureId;
             try
             {
                 _iZoneRepository.SaveChangeAsync(); 
@@ -67,7 +87,6 @@ namespace ValVenalEstimator.Api.Controllers
         public async Task<IActionResult> DeleteZone(long id)
         {
             var zone = await _iZoneRepository.GetZoneAsync(id);
-
             if (zone == null)
             {
                 return NotFound();    

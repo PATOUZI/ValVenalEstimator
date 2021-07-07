@@ -22,20 +22,22 @@ namespace ValVenalEstimator.Api.Repositories
         {  
             _valVenalEstDbContext = context; 
             _izoneRepository = izoneRepository;
-        } 
-        public async Task<Place> AddPlaceAsync(Place place)
+        }
+        public async Task<Place> AddPlaceAsync(PlaceDTO placeDTO)
         {
-            var zone = await _izoneRepository.GetZoneAsync(place.ZoneId);
+            Place p = placeDTO.ToPlace();
+            var zone = await _izoneRepository.GetZoneAsync(p.ZoneId);
             if (zone != null)
             {
-                place.Zone = zone;
-                _valVenalEstDbContext.Add(place);
-                await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync()
-                return place;
+                p.Zone = zone;
+                await _valVenalEstDbContext.AddAsync(p);
+                //await _valVenalEstDbContext.SaveChangesAsync(); 
+                SaveChangeAsync();
+                return p;
             } 
             else
             {
-                throw new Exception("La prefecture avec l'id "+place.ZoneId+" n'existe pas !!!");
+                throw new Exception("La prefecture avec l'id "+placeDTO.ZoneId+" n'existe pas !!!");
             }        
         }
         public async Task<Place> GetPlaceAsync(long id)
@@ -61,26 +63,13 @@ namespace ValVenalEstimator.Api.Repositories
         }   
         public async Task<IEnumerable<Place>> GetPlacesByPrefectureIdAsync(long idPrefecture)
         {
-            return await _valVenalEstDbContext.Places.Include(p => p.Zone) //Pas de zone à enlever après test et verification
-                                                     .Where(p => p.Zone.PrefectureId == idPrefecture)
+            return await _valVenalEstDbContext.Places.Where(p => p.Zone.PrefectureId == idPrefecture)
                                                      .ToListAsync();            
         }              
-        public async Task<IActionResult> DeletePlaceAsync(long id)
-        {
-            var place = await _valVenalEstDbContext.Places.FindAsync(id); //GetPlaceAsync()
-            if (place == null)
-            {
-                return null;     
-            }     
-            _valVenalEstDbContext.Places.Remove(place);                                      
-            await _valVenalEstDbContext.SaveChangesAsync(); //SaveChangeAsync();
-            return null;
-        }
         public async Task<IEnumerable<Place>> GetPlacesByZoneIdAsync(long idZone)
         {
-             return await _valVenalEstDbContext.Places
-                            .Where(p => p.ZoneId == idZone)
-                            .ToListAsync();
+             return await _valVenalEstDbContext.Places.Where(p => p.ZoneId == idZone)
+                                                      .ToListAsync();
         }
         public async void LoadDataInDbWithCsvFileAsync(string accessPath)
         {
