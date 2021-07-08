@@ -124,3 +124,4 @@ F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Api\obj\Debug\net5.
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Api\obj\Debug\net5.0\ValVenalEstimatorApi.RazorTargetAssemblyInfo.cache
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Api\obj\Debug\net5.0\ValVenalEstimatorApi.csproj.CopyComplete
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Api\obj\Debug\net5.0\ValVenalEstimatorApi.genruntimeconfig.cache
+F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Api\bin\Debug\net5.0\AutoMapper.dll

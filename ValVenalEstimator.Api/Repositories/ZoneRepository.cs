@@ -63,10 +63,11 @@ namespace ValVenalEstimator.Api.Repositories
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var records = csv.GetRecords<ZoneDTO>();           
+                var records = csv.GetRecords<ZoneCsvDTO>();           
                 foreach (var z in records)
                 {
-                    await AddZoneAsync(z);               
+                    ZoneDTO zoneDTO = z.ToZoneDTO(); 
+                    await AddZoneAsync(zoneDTO);               
                 }
             }
         }

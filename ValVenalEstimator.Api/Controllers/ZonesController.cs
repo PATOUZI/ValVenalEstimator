@@ -1,3 +1,4 @@
+using AutoMapper;
 using System;
 using System.Threading.Tasks;
 using System.Text.Json;
@@ -14,10 +15,13 @@ namespace ValVenalEstimator.Api.Controllers
     [ApiController]
     public class ZonesController : ControllerBase
     {
-        private readonly IZoneRepository _iZoneRepository;   
-        public ZonesController(IZoneRepository iZoneRepository)
+        private readonly IZoneRepository _iZoneRepository;  
+        private readonly IMapper _mapper;
+
+        public ZonesController(IZoneRepository iZoneRepository, IMapper mapper)
         {
             _iZoneRepository = iZoneRepository;
+            _mapper = mapper;
         }   
 
         [HttpPost]
@@ -48,10 +52,26 @@ namespace ValVenalEstimator.Api.Controllers
             }
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public async Task<IActionResult> GetAllZones()
         {
-            return Ok(await _iZoneRepository.GetAllZonesAsync());
+            try
+            {
+                return Ok(await _iZoneRepository.GetAllZonesAsync()); 
+            }
+            catch (Exception e)
+            {    
+                return NotFound(e.Message);                            
+            }
+        }*/   
+
+         [HttpGet]
+        //public async Task<IEnumerable<ZoneViewDTO>> GetAllZones()
+        public async Task<IActionResult> GetAllZones()
+        {
+            var zones = await _iZoneRepository.GetAllZonesAsync(); 
+            var resources = _mapper.Map<IEnumerable<Zone>, IEnumerable<ZoneViewDTO>>(zones);
+            return Ok(resources);
         }
 
         [HttpPut("{id}")]

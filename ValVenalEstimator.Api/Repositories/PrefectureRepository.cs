@@ -62,17 +62,16 @@ namespace ValVenalEstimator.Api.Repositories
             return resList;
         }*/
         public async void LoadDataInDbWithCsvFileAsync(string accessPath)
-        {
+        {   
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var records = csv.GetRecords<PrefectureDTO>();
+                var records = csv.GetRecords<PrefectureCsvDTO>();
                 foreach (var p in records)
                 {
-                    /*Prefecture prefecture = new Prefecture();
-                    prefecture.Name = p.Name;*/
-                    await AddPrefectureAsync(p);
-                }
+                    PrefectureDTO prefectDTO = p.ToPrefectureDTO();
+                    await AddPrefectureAsync(prefectDTO);    
+                } 
             }
         }
         public async void SaveChangeAsync()

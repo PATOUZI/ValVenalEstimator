@@ -1,14 +1,17 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using ValVenalEstimator.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using ValVenalEstimator.Api.Data;
+using ValVenalEstimator.Api.Mapping;
 using ValVenalEstimator.Api.Repositories;
 using ValVenalEstimator.Api.Contracts;
 using System.Text.Json.Serialization;
+
 
 namespace ValVenalEstimator.Api
 {
@@ -24,7 +27,6 @@ namespace ValVenalEstimator.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddCors(options => options.AddDefaultPolicy(b => b.AllowAnyOrigin()
                                                                         .AllowAnyHeader()
                                                                         .AllowAnyMethod()
@@ -33,7 +35,16 @@ namespace ValVenalEstimator.Api
             services.AddDbContext<ValVenalEstimatorDbContext>(opt => opt.UseMySQL("server=localhost;database=ValVenalEstimator2;user=root;password="));
             services.AddScoped<IPlaceRepository, PlaceRepository>();
             services.AddScoped<IPrefectureRepository, PrefectureRepository>();
-            services.AddScoped<IZoneRepository, ZoneRepository>();            
+            services.AddScoped<IZoneRepository, ZoneRepository>();   
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new ModelToResourceProfile());   
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            services.AddMvc(); 
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

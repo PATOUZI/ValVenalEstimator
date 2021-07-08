@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "1OXtoO5nLFD3ELanffWzQLABSVU5oIhl9XOI69ISLPZ61m+LJzpt0zETzI9ykzU9GAzsdr/x3PZPBF4+Y040bA==",
+  "dgSpecHash": "ypFhvS+SB1BQPUUUGJrXJGOVhTJgiBcMoUyCIQn/bjU+GIDRIzAEzz8ABV5pdE2TF+pN+CgirFm+LfNVihH2HA==",
   "success": true,
   "projectFilePath": "F:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Api\\ValVenalEstimatorApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Paul\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\csvhelper\\26.1.0\\csvhelper.26.1.0.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\google.protobuf\\3.11.4\\google.protobuf.3.11.4.nupkg.sha512",
@@ -82,7 +83,7 @@
     "C:\\Users\\Paul\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\system.objectmodel\\4.3.0\\system.objectmodel.4.3.0.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
-    "C:\\Users\\Paul\\.nuget\\packages\\system.reflection.emit\\4.3.0\\system.reflection.emit.4.3.0.nupkg.sha512",
+    "C:\\Users\\Paul\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.3.0\\system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\system.reflection.emit.lightweight\\4.3.0\\system.reflection.emit.lightweight.4.3.0.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\system.reflection.extensions\\4.3.0\\system.reflection.extensions.4.3.0.nupkg.sha512",
