@@ -1,3 +1,4 @@
+using AutoMapper;
 using System.Threading.Tasks;
 using System.Linq;
 using System.IO;
@@ -17,12 +18,14 @@ namespace ValVenalEstimator.Api.Repositories
     public class ZoneRepository : IZoneRepository
     {
         readonly ValVenalEstimatorDbContext _valVenalEstDbContext; 
-        readonly IPrefectureRepository _iprefectureRepository;      
+        readonly IPrefectureRepository _iprefectureRepository;   
+
         public ZoneRepository(ValVenalEstimatorDbContext context, IPrefectureRepository iprefectureRepository)
         {  
             _valVenalEstDbContext = context;   
             _iprefectureRepository = iprefectureRepository;
-        } 
+        }
+
         public async Task<Zone> AddZoneAsync(ZoneDTO zoneDTO)
         {
             var prefecture = await _iprefectureRepository.GetPrefectureAsync(zoneDTO.PrefectureId);
@@ -50,6 +53,7 @@ namespace ValVenalEstimator.Api.Repositories
             }
             return zone;
         }
+
         public async Task<IEnumerable<Zone>> GetAllZonesAsync()
         {
             return await _valVenalEstDbContext.Zones.Include(z => z.Prefecture).ToListAsync();

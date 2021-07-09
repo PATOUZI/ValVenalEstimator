@@ -16,11 +16,13 @@ namespace ValVenalEstimator.Api.Controllers
     public class ZonesController : ControllerBase
     {
         private readonly IZoneRepository _iZoneRepository;  
+        private readonly IPrefectureRepository _iPrefectureRepository;  
         private readonly IMapper _mapper;
 
-        public ZonesController(IZoneRepository iZoneRepository, IMapper mapper)
+        public ZonesController(IZoneRepository iZoneRepository, IMapper mapper, IPrefectureRepository iPrefectureRepository)
         {
             _iZoneRepository = iZoneRepository;
+            _iPrefectureRepository = iPrefectureRepository;
             _mapper = mapper;
         }   
 
@@ -43,30 +45,17 @@ namespace ValVenalEstimator.Api.Controllers
         {
             try
             {
-                return Ok(await _iZoneRepository.GetZoneAsync(id));
-           
+                var zone = await _iZoneRepository.GetZoneAsync(id); 
+                var resource = _mapper.Map<Zone, ZoneViewDTO>(zone);
+                return Ok(resource);   
             }
             catch (Exception e)
             {
-                return NotFound(e.Message);                            
+                return NotFound(e.Message);                                            
             }
-        }
-
-        /*[HttpGet]
-        public async Task<IActionResult> GetAllZones()
-        {
-            try
-            {
-                return Ok(await _iZoneRepository.GetAllZonesAsync()); 
-            }
-            catch (Exception e)
-            {    
-                return NotFound(e.Message);                            
-            }
-        }*/   
+        } 
 
          [HttpGet]
-        //public async Task<IEnumerable<ZoneViewDTO>> GetAllZones()
         public async Task<IActionResult> GetAllZones()
         {
             var zones = await _iZoneRepository.GetAllZonesAsync(); 
@@ -90,7 +79,13 @@ namespace ValVenalEstimator.Api.Controllers
             z.ZoneNum = zoneDTO.ZoneNum;
             z.Type = zoneDTO.Type;
             z.PricePerMeterSquare = zoneDTO.PricePerMeterSquare;
-            z.PrefectureId = zoneDTO.PrefectureId;
+            var prefecture = await _iPrefectureRepository.GetPrefectureAsync(zoneDTO.PrefectureId);
+            if (prefecture != null)    
+            {
+                z.PrefectureId = zoneDTO.PrefectureId; 
+                z.Prefecture = prefecture;
+                z.Code = prefecture.Name + "_" + z.Name;
+            }
             try
             {
                 _iZoneRepository.SaveChangeAsync(); 
@@ -116,7 +111,7 @@ namespace ValVenalEstimator.Api.Controllers
             return StatusCode(202);          
         }
 
-        [HttpPost("{accessPath}")]
+        [HttpPost("LoadDataInDataBase")]
         public void LoadDataInDbByPost(string accessPath)
         {
             _iZoneRepository.LoadDataInDbWithCsvFileAsync(accessPath);

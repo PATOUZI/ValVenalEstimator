@@ -18,6 +18,7 @@ namespace ValVenalEstimator.Api.Repositories
     {
         readonly ValVenalEstimatorDbContext _valVenalEstDbContext;  
         readonly IZoneRepository _izoneRepository;
+        
         public PlaceRepository(ValVenalEstimatorDbContext context, IZoneRepository izoneRepository)
         {  
             _valVenalEstDbContext = context; 
@@ -79,11 +80,6 @@ namespace ValVenalEstimator.Api.Repositories
                 var records = csv.GetRecords<PlaceCsvDTO>();
                 foreach (var p in records)
                 {
-                    /*Place place = new Place();
-                    place.Name = p.Name;
-                    place.ZoneId = p.ZoneId;
-                    _valVenalEstDbContext.Add<Place>(place);               
-                    await _valVenalEstDbContext.SaveChangesAsync();*/
                     PlaceDTO placeDTO = p.ToPlaceDTO();
                     await AddPlaceAsync(placeDTO);
                 }

@@ -41,3 +41,5 @@ F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\ref\ValVenalEstimator.Web.dll
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\ValVenalEstimator.Web.pdb
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\ValVenalEstimator.Web.genruntimeconfig.cache
+F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\Razor\Views\Home\PrefectureFileUpload.cshtml.g.cs
+F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\Razor\Views\Home\ZoneFileUpload.cshtml.g.cs

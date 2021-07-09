@@ -26,14 +26,7 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> AddPrefecture(PrefectureDTO prefectureDTO)
         {
-            try
-            {
-                return Ok( await _iPrefectureRepository.AddPrefectureAsync(prefectureDTO));
-            }
-            catch(Exception e)
-            {
-                return NotFound(e.Message);
-            }  
+            return Ok( await _iPrefectureRepository.AddPrefectureAsync(prefectureDTO));  
         }
 
         [HttpGet("{id}")]
@@ -103,7 +96,7 @@ namespace ValVenalEstimator.Api.Controllers
             return StatusCode(202);          
         }
 
-        [HttpPost("{accessPath}")]
+        [HttpPost("LoadDataInDataBase")]
         public void LoadDataInDbByPost(string accessPath)
         {
             _iPrefectureRepository.LoadDataInDbWithCsvFileAsync(accessPath);

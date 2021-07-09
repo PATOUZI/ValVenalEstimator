@@ -30,6 +30,14 @@ namespace ValVenalEstimator.Web.Controllers
         {
             return View();
         }
+        public IActionResult PrefectureFileUpload()
+        {
+            return View();
+        }
+        public IActionResult ZoneFileUpload()
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<ActionResult> FileUpload(IFormFile file)
@@ -40,6 +48,22 @@ namespace ValVenalEstimator.Web.Controllers
         }
 
         [HttpPost]
+        public async Task<ActionResult> PrefectureFileUpload(IFormFile file)
+        {
+            await PrefectureUploadFile(file);
+            TempData["msg"] = "File Uploaded successfully.";
+            return View();
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult> ZoneFileUpload(IFormFile file)
+        {
+            await ZoneUploadFile(file);
+            TempData["msg"] = "File Uploaded successfully.";
+            return View();
+        }   
+
+        [HttpPost]        
         public async Task<IActionResult> GetValVenal(long idPlace, int area, long prefect)
         {
             //Calcul de la valeur venale du terrain
@@ -85,39 +109,95 @@ namespace ValVenalEstimator.Web.Controllers
         {
             string path = "";
             bool iscopied = false;
-            try
+            if (file.Length > 0)
             {
-                if (file.Length > 0)
+                string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Upload"));
+                using (var filestream = new FileStream(Path.Combine(path, filename), FileMode.Create))
                 {
-                    string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                    path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Upload"));
-                    using (var filestream = new FileStream(Path.Combine(path, filename), FileMode.Create))
-                    {
-                        await file.CopyToAsync(filestream);
-                    }
+                    await file.CopyToAsync(filestream);
                     iscopied = true;
-                    string filePath = Path.Combine(path, filename);
-                    using (var httpClient = new HttpClient())
-                    {
-                        string accessPath = @"https://localhost:5004/api/Places/LoadDataInDataBase?accessPath=" + filePath;
-                        var stringContent = new FormUrlEncodedContent(new[]
-                        {
-                            new KeyValuePair<string, string>("field1", "value1"),
-                            new KeyValuePair<string, string>("field2", "value2"),
-                        });
-                        await httpClient.PostAsync(accessPath, stringContent);
-                    }
                 }
-                else
+                string filePath = Path.Combine(path, filename);
+                using (var httpClient = new HttpClient())
                 {
-                    iscopied = false;
+                    string accessPath = @"https://localhost:5004/api/Places/LoadDataInDataBase?accessPath=" + filePath;
+                    var stringContent = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("field1", "value1"),
+                        new KeyValuePair<string, string>("field2", "value2"),
+                    });
+                        await httpClient.PostAsync(accessPath, stringContent);
                 }
             }
-            catch (Exception)
+            else
             {
-                throw;
+                iscopied = false;
+            }
+            return iscopied;
+        }
+        public async Task<bool> PrefectureUploadFile(IFormFile file)
+        {
+            string path = "";
+            bool iscopied = false;
+            if (file.Length > 0)
+            {
+                string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Upload"));
+                using (var filestream = new FileStream(Path.Combine(path, filename), FileMode.Create))
+                {
+                    await file.CopyToAsync(filestream);
+                    iscopied = true;
+                }
+                string filePath = Path.Combine(path, filename);
+                using (var httpClient = new HttpClient())
+                {
+                    string accessPath = @"https://localhost:5004/api/Prefectures/LoadDataInDataBase?accessPath=" + filePath;
+                    var stringContent = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("field1", "value1"),
+                        new KeyValuePair<string, string>("field2", "value2"),
+                    });
+                        await httpClient.PostAsync(accessPath, stringContent);
+                }
+            }
+            else
+            {
+                iscopied = false;
+            }
+            return iscopied;
+        }
+        public async Task<bool> ZoneUploadFile(IFormFile file)
+        {
+            string path = "";
+            bool iscopied = false;
+            if (file.Length > 0)
+            {
+                string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Upload"));
+                using (var filestream = new FileStream(Path.Combine(path, filename), FileMode.Create))
+                {
+                    await file.CopyToAsync(filestream);
+                    iscopied = true;
+                }
+                string filePath = Path.Combine(path, filename);
+                using (var httpClient = new HttpClient())
+                {
+                    string accessPath = @"https://localhost:5004/api/Zones/LoadDataInDataBase?accessPath=" + filePath;
+                    var stringContent = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("field1", "value1"),
+                        new KeyValuePair<string, string>("field2", "value2"),
+                    });
+                        await httpClient.PostAsync(accessPath, stringContent);
+                }
+            }
+            else
+            {
+                iscopied = false;
             }
             return iscopied;
         }
     }
 }
+     
