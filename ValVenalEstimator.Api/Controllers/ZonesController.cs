@@ -55,7 +55,7 @@ namespace ValVenalEstimator.Api.Controllers
             }
         } 
 
-         [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> GetAllZones()
         {
             var zones = await _iZoneRepository.GetAllZonesAsync(); 

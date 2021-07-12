@@ -1,3 +1,4 @@
+using AutoMapper;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace ValVenalEstimator.Api.Controllers
     public class PlacesController : ControllerBase
     {
         private readonly IPlaceRepository _iPlaceRepository;
+
         public PlacesController(IPlaceRepository iPlaceRepository)
         {
             _iPlaceRepository = iPlaceRepository;

@@ -12,7 +12,6 @@ using ValVenalEstimator.Api.Repositories;
 using ValVenalEstimator.Api.Contracts;
 using System.Text.Json.Serialization;
 
-
 namespace ValVenalEstimator.Api
 {
     public class Startup
@@ -21,7 +20,6 @@ namespace ValVenalEstimator.Api
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
