@@ -29,6 +29,7 @@ namespace ValVenalEstimator.Api.Repositories
         {  
             _valVenalEstDbContext = context;  
         }
+
         public async Task<Prefecture> AddPrefectureAsync(PrefectureDTO prefectureDTO)
         {
             Prefecture p = prefectureDTO.ToPrefecture();
@@ -51,13 +52,15 @@ namespace ValVenalEstimator.Api.Repositories
             return await _valVenalEstDbContext.Prefectures.ToListAsync();
         }
 
-        /*public async Task<IActionResult> GetAllPrefecturesWithZonesAsync()
+        /*public async Task<List<Prefecture>> GetAllPrefecturesWithZonesAsync()
         {
             var list  =  await GetAllPrefecturesAsync();
-            var resList = list.Select( async(p) => {
-                                                        p.Zones = (await _iZoneRepository.GetAllZonesByPrefectureIdAsync(p.Id)).ToList();
-                                                        return p;
-                                                   }
+            var resList = list.Select( 
+                                        async(p) => 
+                                        {
+                                            p.Zones = (await _iZoneRepository.GetAllZonesByPrefectureIdAsync(p.Id)).ToList();
+                                            return p;
+                                        }
                                      ).ToList();
             return resList;
         }*/

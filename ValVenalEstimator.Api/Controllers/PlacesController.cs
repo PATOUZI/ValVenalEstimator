@@ -118,17 +118,20 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpGet("{idPlace}/{area}", Name = "GetValVenal")]
         public async Task<ActionResult<ValVenalDTO>> GetValVenal(long idPlace, int area)
         {
-            var place = await _iPlaceRepository.GetPlaceAsync(idPlace);
-            if (place == null)
+            try
             {
-                return NotFound();
+                var place = await _iPlaceRepository.GetPlaceAsync(idPlace); 
+                ValVenalDTO venaleValue = new ValVenalDTO();
+                venaleValue.ValVenal = place.Zone.PricePerMeterSquare * area;
+                venaleValue.PlaceName = place.Name;
+                venaleValue.ZoneName = place.Zone.Name;
+                venaleValue.Area = area;
+                return venaleValue;               
             }
-            ValVenalDTO venaleValue = new ValVenalDTO();
-            venaleValue.ValVenal = place.Zone.PricePerMeterSquare * area;
-            venaleValue.PlaceName = place.Name;
-            venaleValue.ZoneName = place.Zone.Name;
-            venaleValue.Area = area;
-            return venaleValue;
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
     }
 }

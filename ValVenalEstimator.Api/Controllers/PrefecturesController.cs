@@ -52,10 +52,13 @@ namespace ValVenalEstimator.Api.Controllers
         public async Task<IActionResult> GetAllPrefecturesWithZones()
         {
             var list  =  await _iPrefectureRepository.GetAllPrefecturesAsync();
-            var resList = list.Select( async(p) => {
-                p.Zones = (await _iZoneRepository.GetAllZonesByPrefectureIdAsync(p.Id)).ToList();
-                return p;
-            }).ToList();
+            var resList = list.Select( 
+                                        async(p) => 
+                                        {
+                                            p.Zones = (await _iZoneRepository.GetAllZonesByPrefectureIdAsync(p.Id)).ToList();
+                                            return p;
+                                        }
+                                     ).ToList();
             return Ok(resList);
         }
 

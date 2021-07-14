@@ -43,6 +43,14 @@ namespace ValVenalEstimator.Api.Repositories
         }
         public async Task<Place> GetPlaceAsync(long id)
         {
+            
+            /*var place = await _valVenalEstDbContext.Places.FindAsync(id);
+            if (place == null)
+            {
+                return null;
+            }
+            return place;*/
+
             Place place = new Place();
             var listPlaces = await _valVenalEstDbContext.Places.Include(p => p.Zone).ToListAsync(); 
             foreach (var p in listPlaces)
@@ -52,7 +60,7 @@ namespace ValVenalEstimator.Api.Repositories
                     place = p;
                 }
             }          
-            if (place == null)
+            if (place.Id == 0)
             {
                throw new Exception("La quartier avec l'id "+id+" n'existe pas !!!");
             }

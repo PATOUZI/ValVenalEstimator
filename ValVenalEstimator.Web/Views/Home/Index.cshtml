@@ -5,7 +5,7 @@
 
 <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="GetValVenal">
     <label for="Prefecture">Prefecture</label>
-    <select name="prefect" id="prefect">
+    <select name="prefect" id="prefect" required="required">
         <option value="">Choisisez la préfecture</option>
         @foreach (Prefecture p in Model)
         {
@@ -14,11 +14,11 @@
     </select>
     <br/>
     <label for="Place">Quartier</label>
-    <select name="idPlace" id="idPlace"> 
+    <select name="idPlace" id="idPlace" required="required"> 
     </select>
     <br/>
     <label for="area">Superficie</label>
-    <input name="area" />
+    <input name="area" type="number" min="1" required="required"/>
     <div class="form-group">
         <input type="submit" value="Envoyer" />
     </div>
@@ -52,5 +52,5 @@
             });
 
         });
-    </script>
+    </script>   
 }
