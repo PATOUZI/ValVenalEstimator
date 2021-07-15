@@ -109,7 +109,7 @@ namespace ValVenalEstimator.Web.Controllers
         {
             string path = "";
             bool iscopied = false;
-            if (file.Length > 0)
+            if (file.FileName.Substring((file.FileName.Length -3)) == "csv" && file.Length > 0)
             {
                 string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
                 path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Upload"));
@@ -133,6 +133,7 @@ namespace ValVenalEstimator.Web.Controllers
             else
             {
                 iscopied = false;
+                Console.WriteLine("Le type de fichier ne correspond");
             }
             return iscopied;
         }

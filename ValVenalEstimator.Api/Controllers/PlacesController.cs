@@ -15,14 +15,13 @@ namespace ValVenalEstimator.Api.Controllers
     public class PlacesController : ControllerBase
     {
         private readonly IPlaceRepository _iPlaceRepository;
-
         public PlacesController(IPlaceRepository iPlaceRepository)
         {
             _iPlaceRepository = iPlaceRepository;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddPlace(PlaceDTO placeDTO)
+        [HttpPost]   
+        public async Task<ActionResult> AddPlace(PlaceDTO placeDTO) 
         {
             try
             {
