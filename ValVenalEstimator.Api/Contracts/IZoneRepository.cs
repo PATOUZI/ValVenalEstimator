@@ -13,6 +13,7 @@ namespace ValVenalEstimator.Api.Contracts
         public Task<IEnumerable<Zone>> GetAllZonesAsync();
         public Task<IEnumerable<Zone>> GetAllZonesByPrefectureIdAsync(long prefectureId);
         public void LoadDataInDbWithCsvFileAsync(string accessPath);
+        public  void LoadData(string accessPath);
         public void SaveChangeAsync();
         public bool ZoneExists(long id);
         public void Remove(Zone Zone);

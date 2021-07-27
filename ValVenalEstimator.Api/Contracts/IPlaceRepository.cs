@@ -10,6 +10,7 @@ namespace ValVenalEstimator.Api.Contracts
     {
         public Task<Place> AddPlaceAsync(PlaceDTO placeDTO);
         public Task<Place> GetPlaceAsync(long id);
+        public Task<PlaceViewDTO> GetPlaceViewDTOAsync(long id);
         public Task<IEnumerable<Place>> GetAllPlacesAsync();
         public void LoadDataInDbWithCsvFileAsync(string accessPath);     
         public Task<IEnumerable<Place>> GetPlacesByPrefectureIdAsync(long idPrefecture);

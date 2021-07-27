@@ -19,7 +19,6 @@ namespace ValVenalEstimator.Api.Repositories
     {
         readonly ValVenalEstimatorDbContext _valVenalEstDbContext; 
         readonly IPrefectureRepository _iprefectureRepository;   
-
         public ZoneRepository(ValVenalEstimatorDbContext context, IPrefectureRepository iprefectureRepository)
         {  
             _valVenalEstDbContext = context;   
@@ -42,6 +41,24 @@ namespace ValVenalEstimator.Api.Repositories
             else
             {
                 throw new Exception("La prefecture avec l'id "+zoneDTO.PrefectureId+" n'existe pas !!!");
+            }  
+        }
+        public async Task<Zone> AddZoneAsync2(ZoneCsvDTO2 zoneCsvDTO)
+        {           
+            var prefecture = await _iprefectureRepository.GetPrefectureByNameAsync(zoneCsvDTO.Name);
+            if (prefecture != null)
+            {
+                Zone zone = zoneCsvDTO.ToZone();
+                zone.Prefecture = prefecture;
+                zone.Code = prefecture.Name + "_" + zoneCsvDTO.Name;
+                await _valVenalEstDbContext.AddAsync(zone);
+                //await _valVenalEstDbContext.SaveChangesAsync(); 
+                SaveChangeAsync();
+                return zone;
+            } 
+            else
+            {
+                throw new Exception("La prefecture avec le nom "+zoneCsvDTO.Name+" n'existe pas !!!");
             }  
         }
         public async Task<Zone> GetZoneAsync(long id)
@@ -72,6 +89,18 @@ namespace ValVenalEstimator.Api.Repositories
                 {
                     ZoneDTO zoneDTO = z.ToZoneDTO(); 
                     await AddZoneAsync(zoneDTO);               
+                }
+            }
+        }
+        public async void LoadData(string accessPath)
+        {
+            using (var reader = new StreamReader(accessPath))   
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<ZoneCsvDTO2>();           
+                foreach (var z in records)
+                {
+                    await AddZoneAsync2(z);               
                 }
             }
         }

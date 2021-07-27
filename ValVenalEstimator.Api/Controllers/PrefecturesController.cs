@@ -27,7 +27,7 @@ namespace ValVenalEstimator.Api.Controllers
         public async Task<ActionResult> AddPrefecture(PrefectureDTO prefectureDTO)
         {
             return Ok( await _iPrefectureRepository.AddPrefectureAsync(prefectureDTO));  
-        }
+        }       
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetPrefecture(long id)
@@ -42,6 +42,18 @@ namespace ValVenalEstimator.Api.Controllers
             }
         }
 
+        [HttpGet("name/{name}")]
+        public async Task<ActionResult> GetPrefectureByName(string name)
+        {
+            try
+            {
+                return Ok(await _iPrefectureRepository.GetPrefectureByNameAsync(name));
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);            
+            }
+        }
         [HttpGet]
         public async Task<IActionResult> GetAllPrefectures()
         {

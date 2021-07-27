@@ -1,4 +1,3 @@
-
 namespace ValVenalEstimator.Api.ViewModels
 {
     public class PlaceCsvDTO

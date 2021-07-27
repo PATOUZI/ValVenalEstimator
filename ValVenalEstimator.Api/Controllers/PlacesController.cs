@@ -119,11 +119,12 @@ namespace ValVenalEstimator.Api.Controllers
         {
             try
             {
-                var place = await _iPlaceRepository.GetPlaceAsync(idPlace); 
+                var place = await _iPlaceRepository.GetPlaceViewDTOAsync(idPlace); 
                 ValVenalDTO venaleValue = new ValVenalDTO();
                 venaleValue.ValVenal = place.Zone.PricePerMeterSquare * area;
                 venaleValue.PlaceName = place.Name;
                 venaleValue.ZoneName = place.Zone.Name;
+                venaleValue.ZoneType = place.Zone.Type;
                 venaleValue.Area = area;
                 return venaleValue;               
             }

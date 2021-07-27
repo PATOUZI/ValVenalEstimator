@@ -24,7 +24,6 @@ F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\ValVenalEstimator.Web.TagHelpers.input.cache
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\ValVenalEstimator.Web.TagHelpers.output.cache
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\ValVenalEstimator.Web.RazorCoreGenerate.cache
-F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\Razor\Views\Home\FileUpload.cshtml.g.cs
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\Razor\Views\Home\GetValVenal.cshtml.g.cs
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
@@ -43,3 +42,4 @@ F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\ValVenalEstimator.Web.genruntimeconfig.cache
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\Razor\Views\Home\PrefectureFileUpload.cshtml.g.cs
 F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\Razor\Views\Home\ZoneFileUpload.cshtml.g.cs
+F:\ASP.NET Core projects\ValVenalEstimator\ValVenalEstimator.Web\obj\Debug\net5.0\Razor\Views\Home\PlaceFileUpload.cshtml.g.cs

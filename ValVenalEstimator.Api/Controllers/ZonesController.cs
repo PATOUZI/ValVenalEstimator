@@ -116,5 +116,11 @@ namespace ValVenalEstimator.Api.Controllers
         {
             _iZoneRepository.LoadDataInDbWithCsvFileAsync(accessPath);
         } 
+
+        [HttpPost("LoadData")]   
+        public void LoadData(string accessPath)
+        {
+            _iZoneRepository.LoadData(accessPath);
+        } 
     }
 }

@@ -26,7 +26,7 @@ namespace ValVenalEstimator.Web.Controllers
             }
             return View(PrefectureList);
         }
-        public IActionResult FileUpload()
+        public IActionResult PlaceFileUpload()
         {
             return View();
         }
@@ -40,31 +40,52 @@ namespace ValVenalEstimator.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> FileUpload(IFormFile file)
+        public async Task<ActionResult> PlaceFileUpload(IFormFile file)
         {
-            await UploadFile(file);
-            TempData["msg"] = "File Uploaded successfully.";
+            bool result = await PlaceUploadFile(file);
+            if (result)
+            {
+                TempData["msg"] = "File Uploaded successfully.";                
+            }
+            else
+            {
+                TempData["msg"] = "Le type de fichier ne correspond.";  
+            }            
             return View();
         }
 
         [HttpPost]
         public async Task<ActionResult> PrefectureFileUpload(IFormFile file)
         {
-            await PrefectureUploadFile(file);
-            TempData["msg"] = "File Uploaded successfully.";
+            bool result = await PrefectureUploadFile(file);
+            if (result)
+            {
+                TempData["msg"] = "File Uploaded successfully.";                
+            }
+            else
+            {
+                TempData["msg"] = "Le type de fichier ne correspond.";  
+            }            
             return View();
         }
         
         [HttpPost]
         public async Task<ActionResult> ZoneFileUpload(IFormFile file)
         {
-            await ZoneUploadFile(file);
-            TempData["msg"] = "File Uploaded successfully.";
+            bool result = await ZoneUploadFile(file);
+            if (result)
+            {
+                TempData["msg"] = "File Uploaded successfully.";                
+            }
+            else
+            {
+                TempData["msg"] = "Le type de fichier ne correspond.";  
+            }
             return View();
         }   
 
         [HttpPost]        
-        public async Task<IActionResult> GetValVenal(long idPlace, int area, long prefect)
+        public async Task<IActionResult> GetValVenal(long idPlace, int area, long prefect)  
         {
             //Calcul de la valeur venale du terrain
             string accessPath = @"https://localhost:5004/api/Places/" + idPlace + "/" + area ;
@@ -105,19 +126,20 @@ namespace ValVenalEstimator.Web.Controllers
             ValVenalDTO.Area = area;
             return View(ValVenalDTO);
         }
-        public async Task<bool> UploadFile(IFormFile file)
+        public async Task<bool> PlaceUploadFile(IFormFile file)
         {
             string path = "";
             bool iscopied = false;
-            if (file.FileName.Substring((file.FileName.Length -3)) == "csv" && file.Length > 0)
+            string extension = Path.GetExtension(file.FileName);
+            if (extension == ".csv" && file.Length > 0)
             {
                 string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Upload"));
+                path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "PlaceFileUpload"));
                 using (var filestream = new FileStream(Path.Combine(path, filename), FileMode.Create))
                 {
                     await file.CopyToAsync(filestream);
                     iscopied = true;
-                }
+                }     
                 string filePath = Path.Combine(path, filename);
                 using (var httpClient = new HttpClient())
                 {
@@ -133,7 +155,6 @@ namespace ValVenalEstimator.Web.Controllers
             else
             {
                 iscopied = false;
-                Console.WriteLine("Le type de fichier ne correspond");
             }
             return iscopied;
         }
@@ -141,10 +162,11 @@ namespace ValVenalEstimator.Web.Controllers
         {
             string path = "";
             bool iscopied = false;
-            if (file.Length > 0)
+            string extension = Path.GetExtension(file.FileName);
+            if (extension == ".csv" && file.Length > 0)
             {
                 string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Upload"));
+                path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "PrefectureFileUpload"));
                 using (var filestream = new FileStream(Path.Combine(path, filename), FileMode.Create))
                 {
                     await file.CopyToAsync(filestream);
@@ -172,10 +194,11 @@ namespace ValVenalEstimator.Web.Controllers
         {
             string path = "";
             bool iscopied = false;
-            if (file.Length > 0)
+            string extension = Path.GetExtension(file.FileName);
+            if (extension == ".csv" && file.Length > 0)
             {
                 string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Upload"));
+                path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "ZoneFileUpload"));
                 using (var filestream = new FileStream(Path.Combine(path, filename), FileMode.Create))
                 {
                     await file.CopyToAsync(filestream);

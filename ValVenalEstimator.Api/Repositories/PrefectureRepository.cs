@@ -16,15 +16,13 @@ namespace ValVenalEstimator.Api.Repositories
 {
     public class PrefectureRepository : IPrefectureRepository
     {
-        readonly ValVenalEstimatorDbContext _valVenalEstDbContext;                  
-        
+        readonly ValVenalEstimatorDbContext _valVenalEstDbContext;                         
         /*readonly IZoneRepository _iZoneRepository; 
         public PrefectureRepository(ValVenalEstimatorDbContext context, IZoneRepository iZoneRepository)
         {  
             _valVenalEstDbContext = context;  
             _iZoneRepository = iZoneRepository;
         }*/ 
-
         public PrefectureRepository(ValVenalEstimatorDbContext context)
         {  
             _valVenalEstDbContext = context;  
@@ -49,9 +47,20 @@ namespace ValVenalEstimator.Api.Repositories
         }
         public async Task<IEnumerable<Prefecture>> GetAllPrefecturesAsync()
         {
-            return await _valVenalEstDbContext.Prefectures.ToListAsync();
+            var ListPref = await _valVenalEstDbContext.Prefectures.ToListAsync();
+            var res = ListPref.OrderBy(p => p.Name);
+            return res;
         }
-
+        public async Task<Prefecture> GetPrefectureByNameAsync(string name)
+        {
+            var prefecture = await _valVenalEstDbContext.Prefectures.Where(p => p.Name == name)
+                                                                    .ToListAsync();
+            if (prefecture == null)
+            {
+                throw new Exception("La zone avec pour nom"+name+" n'existe pas !!!");
+            }
+            return prefecture[0];
+        }
         /*public async Task<List<Prefecture>> GetAllPrefecturesWithZonesAsync()
         {
             var list  =  await GetAllPrefecturesAsync();
