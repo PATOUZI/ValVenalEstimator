@@ -85,10 +85,10 @@ namespace ValVenalEstimator.Web.Controllers
         }   
 
         [HttpPost]        
-        public async Task<IActionResult> GetValVenal(long idPlace, int area, long prefect)  
+        public async Task<IActionResult> GetValVenal(long idPlace, int area, long prefect, double valAchat, int nbrePge)  
         {
             //Calcul de la valeur venale du terrain
-            string accessPath = @"https://localhost:5004/api/Places/" + idPlace + "/" + area ;
+            string accessPath = @"https://localhost:5004/api/Places/" + idPlace + "/" + area + "/" + valAchat + "/" + nbrePge ;
             ValVenalDTO ValVenalDTO = new ValVenalDTO();
             using (var httpClient = new HttpClient())
             {

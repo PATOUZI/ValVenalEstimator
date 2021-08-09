@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ypFhvS+SB1BQPUUUGJrXJGOVhTJgiBcMoUyCIQn/bjU+GIDRIzAEzz8ABV5pdE2TF+pN+CgirFm+LfNVihH2HA==",
+  "dgSpecHash": "Pb0A8GLh5vRGdsgQjb7a2T7mOkG1zSV2s99JhVb/R3K4MZ/iQMOY8D53tLEI+Bdpv0vId/2nf66AK5PWS9vihA==",
   "success": true,
-  "projectFilePath": "F:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Api\\ValVenalEstimatorApi.csproj",
+  "projectFilePath": "G:\\ValVenalEstimator\\ValVenalEstimator\\ValVenalEstimator.Api\\ValVenalEstimatorApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Paul\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",

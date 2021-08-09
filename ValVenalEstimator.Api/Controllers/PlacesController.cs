@@ -114,14 +114,26 @@ namespace ValVenalEstimator.Api.Controllers
             _iPlaceRepository.LoadDataInDbWithCsvFileAsync(accessPath);
         }                                      
         
-        [HttpGet("{idPlace}/{area}", Name = "GetValVenal")]
-        public async Task<ActionResult<ValVenalDTO>> GetValVenal(long idPlace, int area)
+        [HttpGet("{idPlace}/{area}/{valAchat}/{nbrePge}", Name = "GetValVenal")]
+        public async Task<ActionResult<ValVenalDTO>> GetValVenal(long idPlace, int area, double valAchat, int nbrePge)
         {
             try
             {
                 var place = await _iPlaceRepository.GetPlaceViewDTOAsync(idPlace); 
                 ValVenalDTO venaleValue = new ValVenalDTO();
-                venaleValue.ValVenal = place.Zone.PricePerMeterSquare * area;
+                double valVenalTerrain = place.Zone.PricePerMeterSquare * area;
+                double priceOfOnePge = 10000;
+                double priceToPay;
+                /*if (valAchat >= valVenalTerrain)
+                {
+                    priceToPay = (valAchat * 0.015) + (priceOfOnePge * nbrePge);
+                }
+                else
+                {
+                    priceToPay = (valVenalTerrain * 0.015) + (priceOfOnePge * nbrePge);
+                }*/
+                priceToPay = (valAchat >= valVenalTerrain) ? (valAchat * 0.015) + (priceOfOnePge * nbrePge):(valVenalTerrain * 0.015) + (priceOfOnePge * nbrePge);
+                venaleValue.ValVenal = priceToPay;                    
                 venaleValue.PlaceName = place.Name;
                 venaleValue.ZoneName = place.Zone.Name;
                 venaleValue.ZoneType = place.Zone.Type;

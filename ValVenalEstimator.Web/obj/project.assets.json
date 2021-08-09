@@ -53,11 +53,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "f:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Web\\ValVenalEstimator.Web.csproj",
+      "projectUniqueName": "G:\\ValVenalEstimator\\ValVenalEstimator\\ValVenalEstimator.Web\\ValVenalEstimator.Web.csproj",
       "projectName": "ValVenalEstimator.Web",
-      "projectPath": "f:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Web\\ValVenalEstimator.Web.csproj",
+      "projectPath": "G:\\ValVenalEstimator\\ValVenalEstimator\\ValVenalEstimator.Web\\ValVenalEstimator.Web.csproj",
       "packagesPath": "C:\\Users\\Paul\\.nuget\\packages\\",
-      "outputPath": "f:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Web\\obj\\",
+      "outputPath": "G:\\ValVenalEstimator\\ValVenalEstimator\\ValVenalEstimator.Web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Paul\\AppData\\Roaming\\NuGet\\NuGet.Config",
