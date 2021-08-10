@@ -1,15 +1,15 @@
+using CsvHelper;
 using System;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using CsvHelper;
+using Microsoft.EntityFrameworkCore;
+using ValVenalEstimator.Api.Data;
 using ValVenalEstimator.Api.Models;
 using ValVenalEstimator.Api.Contracts;
-using ValVenalEstimator.Api.Data;
 using ValVenalEstimator.Api.ViewModels;
 
 namespace ValVenalEstimator.Api.Repositories
@@ -27,7 +27,6 @@ namespace ValVenalEstimator.Api.Repositories
         {  
             _valVenalEstDbContext = context;  
         }
-
         public async Task<Prefecture> AddPrefectureAsync(PrefectureDTO prefectureDTO)
         {
             Prefecture p = prefectureDTO.ToPrefecture();
@@ -53,13 +52,12 @@ namespace ValVenalEstimator.Api.Repositories
         }
         public async Task<Prefecture> GetPrefectureByNameAsync(string name)
         {
-            var prefecture = await _valVenalEstDbContext.Prefectures.Where(p => p.Name == name)
-                                                                    .ToListAsync();
+            var prefecture = await _valVenalEstDbContext.Prefectures.Where(p => p.Name == name).SingleOrDefaultAsync();
             if (prefecture == null)
             {
-                throw new Exception("La zone avec pour nom"+name+" n'existe pas !!!");
+                throw new Exception("La préfecture avec pour nom "+name+" n'existe pas !!!");
             }
-            return prefecture[0];
+            return prefecture;
         }
         /*public async Task<List<Prefecture>> GetAllPrefecturesWithZonesAsync()
         {

@@ -102,6 +102,7 @@ namespace ValVenalEstimator.Api.Controllers
             return StatusCode(202);
         }
     
+        //Les 2 premieres methodes Post sont équivalents(font la meme chose)
         [HttpPost("{accessPath}", Name = "LoadDataInDbByPost")]
         public void LoadDataInDbByPost(string accessPath)
         {
@@ -112,6 +113,12 @@ namespace ValVenalEstimator.Api.Controllers
         public void Load(string accessPath)
         {
             _iPlaceRepository.LoadDataInDbWithCsvFileAsync(accessPath);
+        } 
+
+        [HttpPost("LoadData")]      
+        public void LoadData(string accessPath)
+        {
+            _iPlaceRepository.LoadDataAsync(accessPath);
         }                                      
         
         [HttpGet("{idPlace}/{area}/{valAchat}/{nbrePge}", Name = "GetValVenal")]
@@ -119,20 +126,11 @@ namespace ValVenalEstimator.Api.Controllers
         {
             try
             {
-                var place = await _iPlaceRepository.GetPlaceViewDTOAsync(idPlace); 
-                ValVenalDTO venaleValue = new ValVenalDTO();
-                double valVenalTerrain = place.Zone.PricePerMeterSquare * area;
                 double priceOfOnePge = 10000;
-                double priceToPay;
-                /*if (valAchat >= valVenalTerrain)
-                {
-                    priceToPay = (valAchat * 0.015) + (priceOfOnePge * nbrePge);
-                }
-                else
-                {
-                    priceToPay = (valVenalTerrain * 0.015) + (priceOfOnePge * nbrePge);
-                }*/
-                priceToPay = (valAchat >= valVenalTerrain) ? (valAchat * 0.015) + (priceOfOnePge * nbrePge):(valVenalTerrain * 0.015) + (priceOfOnePge * nbrePge);
+                ValVenalDTO venaleValue = new ValVenalDTO();
+                var place = await _iPlaceRepository.GetPlaceViewDTOAsync(idPlace); 
+                double valVenalTerrain = place.Zone.PricePerMeterSquare * area;
+                double priceToPay = (valAchat >= valVenalTerrain) ? (valAchat * 0.015) + (priceOfOnePge * nbrePge):(valVenalTerrain * 0.015) + (priceOfOnePge * nbrePge);
                 venaleValue.ValVenal = priceToPay;                    
                 venaleValue.PlaceName = place.Name;
                 venaleValue.ZoneName = place.Zone.Name;

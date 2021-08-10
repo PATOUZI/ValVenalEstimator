@@ -9,7 +9,9 @@ namespace ValVenalEstimator.Api.Contracts
     public interface IZoneRepository
     {
         public Task<Zone> AddZoneAsync(ZoneDTO zoneDTO);
+        public Task<Zone> AddZoneAsync2(ZoneCsvDTO2 zoneCsvDTO);
         public Task<Zone> GetZoneAsync(long id);
+        public Task<Zone> GetZoneByZoneNameAndPrefectureNameAsync(string zoneName, string prefectName);        
         public Task<IEnumerable<Zone>> GetAllZonesAsync();
         public Task<IEnumerable<Zone>> GetAllZonesByPrefectureIdAsync(long prefectureId);
         public void LoadDataInDbWithCsvFileAsync(string accessPath);

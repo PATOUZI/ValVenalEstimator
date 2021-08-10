@@ -53,6 +53,22 @@ namespace ValVenalEstimator.Api.Controllers
             {
                 return NotFound(e.Message);                                            
             }
+        }
+
+        [HttpGet("{zoneName}/{prefectName}")]
+        public async Task<ActionResult> GetZoneByZoneNameAndPrefectureName(string zoneName, string prefectName)
+        {
+            try
+            {
+                var zone = await _iZoneRepository.GetZoneByZoneNameAndPrefectureNameAsync(zoneName, prefectName); 
+                var resource = _mapper.Map<Zone, ZoneViewDTO>(zone);
+                return Ok(resource); 
+                //return Ok(zone); 
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);                                            
+            }
         } 
 
         [HttpGet]

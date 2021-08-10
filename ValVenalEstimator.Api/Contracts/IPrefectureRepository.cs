@@ -9,7 +9,7 @@ namespace ValVenalEstimator.Api.Contracts
     public interface IPrefectureRepository
     {
         public Task<Prefecture> AddPrefectureAsync(PrefectureDTO prefectureDTO);
-        public Task<Prefecture> GetPrefectureAsync(long id);
+        public Task<Prefecture> GetPrefectureAsync(long id);       
         public Task<Prefecture> GetPrefectureByNameAsync(string name);
         public Task<IEnumerable<Prefecture>> GetAllPrefecturesAsync();           
         //public Task<List<Prefecture>> GetAllPrefecturesWithZonesAsync();

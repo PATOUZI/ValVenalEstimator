@@ -1,13 +1,13 @@
 using System;
-using System.Threading.Tasks;
-using System.Text.Json;
 using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ValVenalEstimator.Api.Models;
-using ValVenalEstimator.Api.ViewModels;
 using ValVenalEstimator.Api.Contracts;
+using ValVenalEstimator.Api.ViewModels;
 
 namespace ValVenalEstimator.Api.Controllers
 {
@@ -54,6 +54,7 @@ namespace ValVenalEstimator.Api.Controllers
                 return NotFound(e.Message);            
             }
         }
+        
         [HttpGet]
         public async Task<IActionResult> GetAllPrefectures()
         {

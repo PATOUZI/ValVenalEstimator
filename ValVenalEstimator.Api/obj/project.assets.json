@@ -5182,11 +5182,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\ValVenalEstimator\\ValVenalEstimator\\ValVenalEstimator.Api\\ValVenalEstimatorApi.csproj",
+      "projectUniqueName": "F:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Api\\ValVenalEstimatorApi.csproj",
       "projectName": "ValVenalEstimatorApi",
-      "projectPath": "G:\\ValVenalEstimator\\ValVenalEstimator\\ValVenalEstimator.Api\\ValVenalEstimatorApi.csproj",
+      "projectPath": "F:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Api\\ValVenalEstimatorApi.csproj",
       "packagesPath": "C:\\Users\\Paul\\.nuget\\packages\\",
-      "outputPath": "G:\\ValVenalEstimator\\ValVenalEstimator\\ValVenalEstimator.Api\\obj\\",
+      "outputPath": "F:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Paul\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\ValVenalEstimator\\ValVenalEstimator\\ValVenalEstimator.Web\\ValVenalEstimator.Web.csproj": {}
+    "F:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Web\\ValVenalEstimator.Web.csproj": {}
   },
   "projects": {
-    "G:\\ValVenalEstimator\\ValVenalEstimator\\ValVenalEstimator.Web\\ValVenalEstimator.Web.csproj": {
+    "F:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Web\\ValVenalEstimator.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\ValVenalEstimator\\ValVenalEstimator\\ValVenalEstimator.Web\\ValVenalEstimator.Web.csproj",
+        "projectUniqueName": "F:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Web\\ValVenalEstimator.Web.csproj",
         "projectName": "ValVenalEstimator.Web",
-        "projectPath": "G:\\ValVenalEstimator\\ValVenalEstimator\\ValVenalEstimator.Web\\ValVenalEstimator.Web.csproj",
+        "projectPath": "F:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Web\\ValVenalEstimator.Web.csproj",
         "packagesPath": "C:\\Users\\Paul\\.nuget\\packages\\",
-        "outputPath": "G:\\ValVenalEstimator\\ValVenalEstimator\\ValVenalEstimator.Web\\obj\\",
+        "outputPath": "F:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Web\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Paul\\AppData\\Roaming\\NuGet\\NuGet.Config",

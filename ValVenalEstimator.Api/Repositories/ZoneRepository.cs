@@ -1,17 +1,17 @@
+using CsvHelper;
 using AutoMapper;
-using System.Threading.Tasks;
-using System.Linq;
-using System.IO;
-using System.Globalization;
-using System.Collections.Generic;
 using System;
+using System.IO;
+using System.Linq;
+using System.Globalization;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CsvHelper;
-using ValVenalEstimator.Api.Contracts;
 using ValVenalEstimator.Api.Data;
-using ValVenalEstimator.Api.ViewModels;
 using ValVenalEstimator.Api.Models;
+using ValVenalEstimator.Api.Contracts;
+using ValVenalEstimator.Api.ViewModels;
 
 namespace ValVenalEstimator.Api.Repositories
 {
@@ -24,7 +24,6 @@ namespace ValVenalEstimator.Api.Repositories
             _valVenalEstDbContext = context;   
             _iprefectureRepository = iprefectureRepository;
         }
-
         public async Task<Zone> AddZoneAsync(ZoneDTO zoneDTO)
         {
             var prefecture = await _iprefectureRepository.GetPrefectureAsync(zoneDTO.PrefectureId);
@@ -45,7 +44,7 @@ namespace ValVenalEstimator.Api.Repositories
         }
         public async Task<Zone> AddZoneAsync2(ZoneCsvDTO2 zoneCsvDTO)
         {           
-            var prefecture = await _iprefectureRepository.GetPrefectureByNameAsync(zoneCsvDTO.Name);
+            var prefecture = await _iprefectureRepository.GetPrefectureByNameAsync(zoneCsvDTO.PrefectureName);
             if (prefecture != null)
             {
                 Zone zone = zoneCsvDTO.ToZone();
@@ -58,7 +57,7 @@ namespace ValVenalEstimator.Api.Repositories
             } 
             else
             {
-                throw new Exception("La prefecture avec le nom "+zoneCsvDTO.Name+" n'existe pas !!!");
+                throw new Exception("La prefecture avec le nom "+zoneCsvDTO.PrefectureName+" n'existe pas !!!");
             }  
         }
         public async Task<Zone> GetZoneAsync(long id)
@@ -70,7 +69,24 @@ namespace ValVenalEstimator.Api.Repositories
             }
             return zone;
         }    
-
+        public async Task<Zone> GetZoneByZoneNameAndPrefectureNameAsync(string zoneName, string prefectName)
+        {      
+            var prefecture = await _iprefectureRepository.GetPrefectureByNameAsync(prefectName);
+            if (prefecture != null)
+            {
+                long idPref = prefecture.Id;
+                var zone = await _valVenalEstDbContext.Zones.Where(z => (z.Name == zoneName && z.PrefectureId == idPref)).SingleOrDefaultAsync();
+                if (zone != null)
+                {
+                    return zone;
+                }
+                else
+                {
+                    throw new Exception("La zone avec pour nom de préfecture "+prefectName+ " et pour nom de zone "+zoneName+" n'existe pas !!!");                    
+                }
+            }
+            return null;
+        }
         public async Task<IEnumerable<Zone>> GetAllZonesAsync()
         {
             return await _valVenalEstDbContext.Zones.Include(z => z.Prefecture).ToListAsync();
