@@ -32,7 +32,7 @@ namespace ValVenalEstimator.Api.Repositories
             Prefecture p = prefectureDTO.ToPrefecture();
             await _valVenalEstDbContext.AddAsync(p);
             //await _valVenalEstDbContext.SaveChangesAsync(); 
-            SaveChangeAsync();
+            SaveChange();
             return p;
         }
         public async Task<Prefecture> GetPrefectureAsync(long id)
@@ -71,7 +71,7 @@ namespace ValVenalEstimator.Api.Repositories
                                      ).ToList();
             return resList;
         }*/
-        public async void LoadDataInDbWithCsvFileAsync(string accessPath)
+        public async void LoadDataInDbWithCsvFile(string accessPath)
         {   
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -84,7 +84,7 @@ namespace ValVenalEstimator.Api.Repositories
                 } 
             }
         }
-        public async void SaveChangeAsync()
+        public async void SaveChange()
         {
             await _valVenalEstDbContext.SaveChangesAsync();
         }

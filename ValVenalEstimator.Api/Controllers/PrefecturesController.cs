@@ -90,7 +90,7 @@ namespace ValVenalEstimator.Api.Controllers
             p.Name = prefectureDTO.Name;
             try
             {
-                _iPrefectureRepository.SaveChangeAsync(); 
+                _iPrefectureRepository.SaveChange(); 
             }
             catch (DbUpdateConcurrencyException) when (!_iPrefectureRepository.PrefectureExists(id))
             {
@@ -108,14 +108,14 @@ namespace ValVenalEstimator.Api.Controllers
                 return NotFound();    
             }     
             _iPrefectureRepository.Remove(prefecture);           
-            _iPrefectureRepository.SaveChangeAsync();                                   
+            _iPrefectureRepository.SaveChange();                                   
             return StatusCode(202);          
         }
 
         [HttpPost("LoadDataInDataBase")]
         public void LoadDataInDbByPost(string accessPath)
         {
-            _iPrefectureRepository.LoadDataInDbWithCsvFileAsync(accessPath);
+            _iPrefectureRepository.LoadDataInDbWithCsvFile(accessPath);
         } 
     }
 }

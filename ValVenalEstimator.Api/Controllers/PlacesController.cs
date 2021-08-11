@@ -80,7 +80,7 @@ namespace ValVenalEstimator.Api.Controllers
             p.ZoneId = placeDTO.ZoneId;
             try
             {
-                _iPlaceRepository.SaveChangeAsync(); 
+                _iPlaceRepository.SaveChange(); 
             }
             catch (DbUpdateConcurrencyException) when (!_iPlaceRepository.PlaceExists(id))
             {
@@ -98,7 +98,7 @@ namespace ValVenalEstimator.Api.Controllers
                 return NotFound();    
             }
             _iPlaceRepository.Remove(place);            
-            _iPlaceRepository.SaveChangeAsync();                                   
+            _iPlaceRepository.SaveChange();                                   
             return StatusCode(202);
         }
     
@@ -106,37 +106,27 @@ namespace ValVenalEstimator.Api.Controllers
         [HttpPost("{accessPath}", Name = "LoadDataInDbByPost")]
         public void LoadDataInDbByPost(string accessPath)
         {
-            _iPlaceRepository.LoadDataInDbWithCsvFileAsync(accessPath);
+            _iPlaceRepository.LoadDataInDbWithCsvFile(accessPath);
         }                     
 
         [HttpPost("LoadDataInDataBase")]      
         public void Load(string accessPath)
         {
-            _iPlaceRepository.LoadDataInDbWithCsvFileAsync(accessPath);
+            _iPlaceRepository.LoadDataInDbWithCsvFile(accessPath);
         } 
 
         [HttpPost("LoadData")]      
         public void LoadData(string accessPath)
         {
-            _iPlaceRepository.LoadDataAsync(accessPath);
+            _iPlaceRepository.LoadData(accessPath);
         }                                      
         
         [HttpGet("{idPlace}/{area}/{valAchat}/{nbrePge}", Name = "GetValVenal")]
-        public async Task<ActionResult<ValVenalDTO>> GetValVenal(long idPlace, int area, double valAchat, int nbrePge)
+        public async Task<ActionResult<ValVenalDTO>> GetPriceToPay(long idPlace, int area, double valAchat, int nbrePge)
         {
             try
             {
-                double priceOfOnePge = 10000;
-                ValVenalDTO venaleValue = new ValVenalDTO();
-                var place = await _iPlaceRepository.GetPlaceViewDTOAsync(idPlace); 
-                double valVenalTerrain = place.Zone.PricePerMeterSquare * area;
-                double priceToPay = (valAchat >= valVenalTerrain) ? (valAchat * 0.015) + (priceOfOnePge * nbrePge):(valVenalTerrain * 0.015) + (priceOfOnePge * nbrePge);
-                venaleValue.ValVenal = priceToPay;                    
-                venaleValue.PlaceName = place.Name;
-                venaleValue.ZoneName = place.Zone.Name;
-                venaleValue.ZoneType = place.Zone.Type;
-                venaleValue.Area = area;
-                return venaleValue;               
+                return await _iPlaceRepository.GetPriceToPayAsync(idPlace, area, valAchat, nbrePge);
             }
             catch (Exception e)
             {

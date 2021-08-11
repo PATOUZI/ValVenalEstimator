@@ -36,7 +36,7 @@ namespace ValVenalEstimator.Api.Repositories
                 p.Zone = zone;
                 await _valVenalEstDbContext.AddAsync(p);
                 //await _valVenalEstDbContext.SaveChangesAsync(); 
-                SaveChangeAsync();
+                SaveChange();
                 return p;
             } 
             else
@@ -54,7 +54,7 @@ namespace ValVenalEstimator.Api.Repositories
                 p.Zone = zone.Result;
                 await _valVenalEstDbContext.AddAsync(p);
                 //await _valVenalEstDbContext.SaveChangesAsync(); 
-                SaveChangeAsync();
+                SaveChange();
                 return p;
             } 
             else
@@ -99,7 +99,7 @@ namespace ValVenalEstimator.Api.Repositories
              return await _valVenalEstDbContext.Places.Where(p => p.ZoneId == idZone)
                                                       .ToListAsync();
         }
-        public async void LoadDataInDbWithCsvFileAsync(string accessPath)
+        public async void LoadDataInDbWithCsvFile(string accessPath)
         {
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -112,7 +112,7 @@ namespace ValVenalEstimator.Api.Repositories
                 }
             }
         }
-        public async void LoadDataAsync(string accessPath)
+        public async void LoadData(string accessPath)
         {
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -123,8 +123,26 @@ namespace ValVenalEstimator.Api.Repositories
                     await AddPlaceAsync2(p);
                 }
             }
-        }       
-        public async void SaveChangeAsync()
+        }    
+        
+        public async Task<ActionResult<ValVenalDTO>> GetPriceToPayAsync(long idPlace, int area, double valAchat, int nbrePge)
+        {
+                double priceOfOnePge = 10000;
+                ValVenalDTO venaleValue = new ValVenalDTO();
+                var place = await GetPlaceViewDTOAsync(idPlace); 
+                double valVenalTerrain = place.Zone.PricePerMeterSquare * area;
+                double priceToPay = (valAchat >= valVenalTerrain) ? (valAchat * 0.015) + (priceOfOnePge * nbrePge):(valVenalTerrain * 0.015) + (priceOfOnePge * nbrePge);
+                /*Console.WriteLine("priceToPay : "+priceToPay); 
+                Console.WriteLine("priceToPayCaster : "+ (int) priceToPay);  */                           
+                venaleValue.ValVenal = (int) priceToPay;   //Pour arrondir le prix en cas d'obtention d'un nombre décimal                 
+                venaleValue.PlaceName = place.Name;
+                venaleValue.ZoneName = place.Zone.Name;
+                venaleValue.ZoneType = place.Zone.Type;
+                venaleValue.Area = area;
+                return venaleValue;   
+        } 
+   
+        public async void SaveChange()
         {
             await _valVenalEstDbContext.SaveChangesAsync();
         }

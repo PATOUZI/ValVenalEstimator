@@ -13,8 +13,8 @@ namespace ValVenalEstimator.Api.Contracts
         public Task<Prefecture> GetPrefectureByNameAsync(string name);
         public Task<IEnumerable<Prefecture>> GetAllPrefecturesAsync();           
         //public Task<List<Prefecture>> GetAllPrefecturesWithZonesAsync();
-        public void LoadDataInDbWithCsvFileAsync(string accessPath);
-        public void SaveChangeAsync();
+        public void LoadDataInDbWithCsvFile(string accessPath);
+        public void SaveChange();
         public bool PrefectureExists(long id);
         public void Remove(Prefecture prefecture);
     }

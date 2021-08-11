@@ -34,7 +34,7 @@ namespace ValVenalEstimator.Api.Repositories
                 zone.Code = prefecture.Name + "_" + zoneDTO.Name;
                 await _valVenalEstDbContext.AddAsync(zone);
                 //await _valVenalEstDbContext.SaveChangesAsync(); 
-                SaveChangeAsync();
+                SaveChange();
                 return zone;
             } 
             else
@@ -52,7 +52,7 @@ namespace ValVenalEstimator.Api.Repositories
                 zone.Code = prefecture.Name + "_" + zoneCsvDTO.Name;
                 await _valVenalEstDbContext.AddAsync(zone);
                 //await _valVenalEstDbContext.SaveChangesAsync(); 
-                SaveChangeAsync();
+                SaveChange();
                 return zone;
             } 
             else
@@ -95,7 +95,7 @@ namespace ValVenalEstimator.Api.Repositories
         {
             return await _valVenalEstDbContext.Zones.Where(z => z.PrefectureId == idPrefecture).ToListAsync();
         }
-        public async void LoadDataInDbWithCsvFileAsync(string accessPath)
+        public async void LoadDataInDbWithCsvFile(string accessPath)
         {
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -120,7 +120,7 @@ namespace ValVenalEstimator.Api.Repositories
                 }
             }
         }
-        public async void SaveChangeAsync()
+        public async void SaveChange()
         {
             await _valVenalEstDbContext.SaveChangesAsync();
         }

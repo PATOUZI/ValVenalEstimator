@@ -104,7 +104,7 @@ namespace ValVenalEstimator.Api.Controllers
             }
             try
             {
-                _iZoneRepository.SaveChangeAsync(); 
+                _iZoneRepository.SaveChange(); 
             }
             catch (DbUpdateConcurrencyException) when (!_iZoneRepository.ZoneExists(id))
             {
@@ -123,14 +123,14 @@ namespace ValVenalEstimator.Api.Controllers
                 return NotFound();    
             }     
             _iZoneRepository.Remove(zone);           
-            _iZoneRepository.SaveChangeAsync();                                   
+            _iZoneRepository.SaveChange();                                   
             return StatusCode(202);          
         }
 
         [HttpPost("LoadDataInDataBase")]
         public void LoadDataInDbByPost(string accessPath)
         {
-            _iZoneRepository.LoadDataInDbWithCsvFileAsync(accessPath);
+            _iZoneRepository.LoadDataInDbWithCsvFile(accessPath);
         } 
 
         [HttpPost("LoadData")]   
