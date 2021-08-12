@@ -127,7 +127,7 @@ namespace ValVenalEstimator.Api.Controllers
             return StatusCode(202);          
         }
 
-        [HttpPost("LoadDataInDataBase")]
+        /*[HttpPost("LoadDataInDataBase")]
         public void LoadDataInDbByPost(string accessPath)
         {
             _iZoneRepository.LoadDataInDbWithCsvFile(accessPath);
@@ -137,6 +137,6 @@ namespace ValVenalEstimator.Api.Controllers
         public void LoadData(string accessPath)
         {
             _iZoneRepository.LoadData(accessPath);
-        } 
+        } */
     }
 }

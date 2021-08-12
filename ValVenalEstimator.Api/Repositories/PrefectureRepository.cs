@@ -71,7 +71,7 @@ namespace ValVenalEstimator.Api.Repositories
                                      ).ToList();
             return resList;
         }*/
-        public async void LoadDataInDbWithCsvFile(string accessPath)
+        /*public async void LoadDataInDbWithCsvFile(string accessPath)
         {   
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -83,7 +83,7 @@ namespace ValVenalEstimator.Api.Repositories
                     await AddPrefectureAsync(prefectDTO);    
                 } 
             }
-        }
+        }*/
         public async void SaveChange()
         {
             await _valVenalEstDbContext.SaveChangesAsync();

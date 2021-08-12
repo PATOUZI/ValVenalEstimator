@@ -103,7 +103,7 @@ namespace ValVenalEstimator.Api.Controllers
         }
     
         //Les 2 premieres methodes Post sont équivalents(font la meme chose)
-        [HttpPost("{accessPath}", Name = "LoadDataInDbByPost")]
+        /*[HttpPost("{accessPath}", Name = "LoadDataInDbByPost")]
         public void LoadDataInDbByPost(string accessPath)
         {
             _iPlaceRepository.LoadDataInDbWithCsvFile(accessPath);
@@ -119,7 +119,7 @@ namespace ValVenalEstimator.Api.Controllers
         public void LoadData(string accessPath)
         {
             _iPlaceRepository.LoadData(accessPath);
-        }                                      
+        } */                                     
         
         [HttpGet("{idPlace}/{area}/{valAchat}/{nbrePge}", Name = "GetValVenal")]
         public async Task<ActionResult<ValVenalDTO>> GetPriceToPay(long idPlace, int area, double valAchat, int nbrePge)

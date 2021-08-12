@@ -99,7 +99,7 @@ namespace ValVenalEstimator.Api.Repositories
              return await _valVenalEstDbContext.Places.Where(p => p.ZoneId == idZone)
                                                       .ToListAsync();
         }
-        public async void LoadDataInDbWithCsvFile(string accessPath)
+        /*public async void LoadDataInDbWithCsvFile(string accessPath)
         {
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -123,7 +123,7 @@ namespace ValVenalEstimator.Api.Repositories
                     await AddPlaceAsync2(p);
                 }
             }
-        }    
+        } */   
         
         public async Task<ActionResult<ValVenalDTO>> GetPriceToPayAsync(long idPlace, int area, double valAchat, int nbrePge)
         {

@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "ypFhvS+SB1BQPUUUGJrXJGOVhTJgiBcMoUyCIQn/bjU+GIDRIzAEzz8ABV5pdE2TF+pN+CgirFm+LfNVihH2HA==",
+  "dgSpecHash": "srRJOu6EWLWAeR2Ue/yc1c5VhgNuBjGxnfrNyrUu4dCqb6edocW4KnH1MJkEI9ejv4sjxIaLXnJfLOpS3M9SZQ==",
   "success": true,
   "projectFilePath": "F:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Api\\ValVenalEstimatorApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Paul\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
-    "C:\\Users\\Paul\\.nuget\\packages\\csvhelper\\26.1.0\\csvhelper.26.1.0.nupkg.sha512",
+    "C:\\Users\\Paul\\.nuget\\packages\\csvhelper\\12.2.1\\csvhelper.12.2.1.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\google.protobuf\\3.11.4\\google.protobuf.3.11.4.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\k4os.compression.lz4\\1.1.11\\k4os.compression.lz4.1.1.11.nupkg.sha512",
@@ -89,7 +89,7 @@
     "C:\\Users\\Paul\\.nuget\\packages\\system.reflection.extensions\\4.3.0\\system.reflection.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\system.reflection.metadata\\5.0.0\\system.reflection.metadata.5.0.0.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\system.reflection.primitives\\4.3.0\\system.reflection.primitives.4.3.0.nupkg.sha512",
-    "C:\\Users\\Paul\\.nuget\\packages\\system.reflection.typeextensions\\4.3.0\\system.reflection.typeextensions.4.3.0.nupkg.sha512",
+    "C:\\Users\\Paul\\.nuget\\packages\\system.reflection.typeextensions\\4.4.0\\system.reflection.typeextensions.4.4.0.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\system.resources.resourcemanager\\4.3.0\\system.resources.resourcemanager.4.3.0.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
     "C:\\Users\\Paul\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.7.1\\system.runtime.compilerservices.unsafe.4.7.1.nupkg.sha512",

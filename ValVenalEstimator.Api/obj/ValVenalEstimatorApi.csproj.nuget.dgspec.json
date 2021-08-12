@@ -46,7 +46,7 @@
             },
             "CsvHelper": {
               "target": "Package",
-              "version": "[26.1.0, )"
+              "version": "[12.2.1, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",

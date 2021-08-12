@@ -34,7 +34,7 @@
       "ValVenalEstimatorApi/1.0.0": {
         "dependencies": {
           "AutoMapper": "10.1.1",
-          "CsvHelper": "26.1.0",
+          "CsvHelper": "12.2.1",
           "Microsoft.EntityFrameworkCore": "5.0.4",
           "Microsoft.EntityFrameworkCore.Design": "5.0.4",
           "Microsoft.EntityFrameworkCore.Relational": "5.0.4",
@@ -357,15 +357,19 @@
           "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
         }
       },
-      "CsvHelper/26.1.0": {
+      "CsvHelper/12.2.1": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "System.Reflection.TypeExtensions": "4.4.0"
+        },
         "runtime": {
-          "lib/net5.0/CsvHelper.dll": {
-            "assemblyVersion": "26.0.0.0",
-            "fileVersion": "26.1.0.0"
+          "lib/netstandard2.0/CsvHelper.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.2.1.0"
           }
         },
         "compile": {
-          "lib/net5.0/CsvHelper.dll": {}
+          "lib/netstandard2.0/CsvHelper.dll": {}
         }
       },
       "Google.Protobuf/3.11.4": {
@@ -1337,7 +1341,7 @@
           "System.Reflection.Emit.Lightweight": "4.3.0",
           "System.Reflection.Extensions": "4.3.0",
           "System.Reflection.Primitives": "4.3.0",
-          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.4.0",
           "System.Resources.ResourceManager": "4.3.0",
           "System.Runtime": "4.3.0",
           "System.Runtime.Extensions": "4.3.0",
@@ -1395,12 +1399,7 @@
           "System.Runtime": "4.3.0"
         }
       },
-      "System.Reflection.TypeExtensions/4.3.0": {
-        "dependencies": {
-          "System.Reflection": "4.3.0",
-          "System.Runtime": "4.3.0"
-        }
-      },
+      "System.Reflection.TypeExtensions/4.4.0": {},
       "System.Resources.ResourceManager/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0",
@@ -3194,12 +3193,12 @@
       "path": "bouncycastle.netcore/1.8.5",
       "hashPath": "bouncycastle.netcore.1.8.5.nupkg.sha512"
     },
-    "CsvHelper/26.1.0": {
+    "CsvHelper/12.2.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-bcyX9U6OYwx2P5pSgyiULEpGPVu8m+SMnC4atB9W8Srp+jQbsvAwgZ1PxSNfhM4CULhShYTDz22ABroCaxEpOQ==",
-      "path": "csvhelper/26.1.0",
-      "hashPath": "csvhelper.26.1.0.nupkg.sha512"
+      "sha512": "sha512-I5TYySBQQWQFEFAFFhN0YUvc1xpTH1A9w/vBdtAwopYKtbgaJ0ExM0j8l4d2mNrP+BSfuHULQEnqmx4N7yBcsA==",
+      "path": "csvhelper/12.2.1",
+      "hashPath": "csvhelper.12.2.1.nupkg.sha512"
     },
     "Google.Protobuf/3.11.4": {
       "type": "package",
@@ -3775,12 +3774,12 @@
       "path": "system.reflection.primitives/4.3.0",
       "hashPath": "system.reflection.primitives.4.3.0.nupkg.sha512"
     },
-    "System.Reflection.TypeExtensions/4.3.0": {
+    "System.Reflection.TypeExtensions/4.4.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-7u6ulLcZbyxB5Gq0nMkQttcdBTx57ibzw+4IOXEfR+sXYQoHvjW5LTLyNr8O22UIMrqYbchJQJnos4eooYzYJA==",
-      "path": "system.reflection.typeextensions/4.3.0",
-      "hashPath": "system.reflection.typeextensions.4.3.0.nupkg.sha512"
+      "sha512": "sha512-dkmh/ySlwnXJp/1qYP9uyKkCK1CXR/REFzl7abHcArxBcV91mY2CgrrzSRA5Z/X4MevJWwXsklGRdR3A7K9zbg==",
+      "path": "system.reflection.typeextensions/4.4.0",
+      "hashPath": "system.reflection.typeextensions.4.4.0.nupkg.sha512"
     },
     "System.Resources.ResourceManager/4.3.0": {
       "type": "package",
