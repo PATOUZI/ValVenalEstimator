@@ -80,7 +80,7 @@ namespace ValVenalEstimator.Api.Controllers
             p.ZoneId = placeDTO.ZoneId;
             try
             {
-                _iPlaceRepository.SaveChange(); 
+                _iPlaceRepository.SaveChanges(); 
             }
             catch (DbUpdateConcurrencyException) when (!_iPlaceRepository.PlaceExists(id))
             {
@@ -98,16 +98,16 @@ namespace ValVenalEstimator.Api.Controllers
                 return NotFound();    
             }
             _iPlaceRepository.Remove(place);            
-            _iPlaceRepository.SaveChange();                                   
+            _iPlaceRepository.SaveChanges();                                   
             return StatusCode(202);
         }
     
         //Les 2 premieres methodes Post sont équivalents(font la meme chose)
-        /*[HttpPost("{accessPath}", Name = "LoadDataInDbByPost")]
+        [HttpPost("{accessPath}", Name = "LoadDataInDbByPost")]
         public void LoadDataInDbByPost(string accessPath)
         {
             _iPlaceRepository.LoadDataInDbWithCsvFile(accessPath);
-        }                     
+        }                    
 
         [HttpPost("LoadDataInDataBase")]      
         public void Load(string accessPath)
@@ -115,11 +115,12 @@ namespace ValVenalEstimator.Api.Controllers
             _iPlaceRepository.LoadDataInDbWithCsvFile(accessPath);
         } 
 
+        //Les 2 premieres methodes Post sont équivalents(font la meme chose)
         [HttpPost("LoadData")]      
         public void LoadData(string accessPath)
         {
             _iPlaceRepository.LoadData(accessPath);
-        } */                                     
+        }                                    
         
         [HttpGet("{idPlace}/{area}/{valAchat}/{nbrePge}", Name = "GetValVenal")]
         public async Task<ActionResult<ValVenalDTO>> GetPriceToPay(long idPlace, int area, double valAchat, int nbrePge)

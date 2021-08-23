@@ -33,8 +33,7 @@ namespace ValVenalEstimator.Api.Repositories
                 zone.Prefecture = prefecture;
                 zone.Code = prefecture.Name + "_" + zoneDTO.Name;
                 await _valVenalEstDbContext.AddAsync(zone);
-                //await _valVenalEstDbContext.SaveChangesAsync(); 
-                SaveChange();
+                SaveChanges();
                 return zone;
             } 
             else
@@ -51,8 +50,7 @@ namespace ValVenalEstimator.Api.Repositories
                 zone.Prefecture = prefecture;
                 zone.Code = prefecture.Name + "_" + zoneCsvDTO.Name;
                 await _valVenalEstDbContext.AddAsync(zone);
-                //await _valVenalEstDbContext.SaveChangesAsync(); 
-                SaveChange();
+                SaveChanges();
                 return zone;
             } 
             else
@@ -60,9 +58,9 @@ namespace ValVenalEstimator.Api.Repositories
                 throw new Exception("La prefecture avec le nom "+zoneCsvDTO.PrefectureName+" n'existe pas !!!");
             }  
         }
-        public async Task<Zone> GetZoneAsync(long id)
+        public async Task<Zone> GetZoneAsync(long id)    
         {
-            var zone = await _valVenalEstDbContext.Zones.FindAsync(id);
+            var zone = await _valVenalEstDbContext.Zones.FindAsync(id);   
             if (zone == null)
             {
                 throw new Exception("La zone avec l'id "+id+" n'existe pas !!!");
@@ -95,7 +93,7 @@ namespace ValVenalEstimator.Api.Repositories
         {
             return await _valVenalEstDbContext.Zones.Where(z => z.PrefectureId == idPrefecture).ToListAsync();
         }
-        /*public async void LoadDataInDbWithCsvFile(string accessPath)
+        public async void LoadDataInDbWithCsvFile(string accessPath)
         {
             using (var reader = new StreamReader(accessPath))   
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -119,8 +117,8 @@ namespace ValVenalEstimator.Api.Repositories
                     await AddZoneAsync2(z);               
                 }
             }
-        }*/
-        public async void SaveChange()
+        }
+        public async void SaveChanges()
         {
             await _valVenalEstDbContext.SaveChangesAsync();
         }

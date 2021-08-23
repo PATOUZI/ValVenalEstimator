@@ -11,6 +11,6 @@ namespace ValVenalEstimator.Api.Enums
         [Description("Rural")]
         Rurale = 3,
         [Description("Urbain et periurbain")]
-        UrbainEtPeriurbain = 4
+        UrbaineEtPeriurbaine = 4
     }
 }

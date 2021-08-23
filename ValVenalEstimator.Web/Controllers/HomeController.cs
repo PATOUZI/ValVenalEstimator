@@ -68,7 +68,7 @@ namespace ValVenalEstimator.Web.Controllers
             }            
             return View();
         }
-        
+            
         [HttpPost]
         public async Task<ActionResult> ZoneFileUpload(IFormFile file)
         {
@@ -87,7 +87,6 @@ namespace ValVenalEstimator.Web.Controllers
         [HttpPost]        
         public async Task<IActionResult> GetValVenal(long idPlace, int area, long prefect, double valAchat, int nbrePge)  
         {
-            //Calcul de la valeur venale du terrain
             string accessPath = @"https://localhost:5004/api/Places/" + idPlace + "/" + area + "/" + valAchat + "/" + nbrePge ;
             ValVenalDTO ValVenalDTO = new ValVenalDTO();
             using (var httpClient = new HttpClient())
@@ -97,8 +96,7 @@ namespace ValVenalEstimator.Web.Controllers
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
-                        ValVenalDTO = JsonConvert.DeserializeObject<ValVenalDTO>(apiResponse); 
-  
+                        ValVenalDTO = JsonConvert.DeserializeObject<ValVenalDTO>(apiResponse);   
                     }
                     else
                     {
@@ -160,7 +158,7 @@ namespace ValVenalEstimator.Web.Controllers
         }
         public async Task<bool> PrefectureUploadFile(IFormFile file)
         {
-            string path = "";
+            string path = "";    
             bool iscopied = false;
             string extension = Path.GetExtension(file.FileName);
             if (extension == ".csv" && file.Length > 0)

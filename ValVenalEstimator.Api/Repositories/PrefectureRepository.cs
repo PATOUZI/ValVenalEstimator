@@ -16,23 +16,22 @@ namespace ValVenalEstimator.Api.Repositories
 {
     public class PrefectureRepository : IPrefectureRepository
     {
-        readonly ValVenalEstimatorDbContext _valVenalEstDbContext;                         
+        readonly ValVenalEstimatorDbContext _valVenalEstDbContext;
         /*readonly IZoneRepository _iZoneRepository; 
         public PrefectureRepository(ValVenalEstimatorDbContext context, IZoneRepository iZoneRepository)
         {  
             _valVenalEstDbContext = context;  
             _iZoneRepository = iZoneRepository;
-        }*/ 
+        }*/
         public PrefectureRepository(ValVenalEstimatorDbContext context)
-        {  
-            _valVenalEstDbContext = context;  
+        {
+            _valVenalEstDbContext = context;
         }
         public async Task<Prefecture> AddPrefectureAsync(PrefectureDTO prefectureDTO)
         {
             Prefecture p = prefectureDTO.ToPrefecture();
             await _valVenalEstDbContext.AddAsync(p);
-            //await _valVenalEstDbContext.SaveChangesAsync(); 
-            SaveChange();
+            SaveChanges();
             return p;
         }
         public async Task<Prefecture> GetPrefectureAsync(long id)
@@ -40,7 +39,7 @@ namespace ValVenalEstimator.Api.Repositories
             var prefecture = await _valVenalEstDbContext.Prefectures.FindAsync(id);
             if (prefecture == null)
             {
-                throw new Exception("La zone avec l'id "+id+" n'existe pas !!!");
+                throw new Exception("La zone avec l'id " + id + " n'existe pas !!!");
             }
             return prefecture;
         }
@@ -55,7 +54,7 @@ namespace ValVenalEstimator.Api.Repositories
             var prefecture = await _valVenalEstDbContext.Prefectures.Where(p => p.Name == name).SingleOrDefaultAsync();
             if (prefecture == null)
             {
-                throw new Exception("La préfecture avec pour nom "+name+" n'existe pas !!!");
+                throw new Exception("La préfecture avec pour nom " + name + " n'existe pas !!!");
             }
             return prefecture;
         }
@@ -71,27 +70,50 @@ namespace ValVenalEstimator.Api.Repositories
                                      ).ToList();
             return resList;
         }*/
-        /*public async void LoadDataInDbWithCsvFile(string accessPath)
-        {   
-            using (var reader = new StreamReader(accessPath))   
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        public async void LoadDataInDbWithCsvFile(string accessPath)
+        {
+            try
             {
-                var records = csv.GetRecords<PrefectureCsvDTO>();
-                foreach (var p in records)
+                using (var reader = new StreamReader(accessPath))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
-                    PrefectureDTO prefectDTO = p.ToPrefectureDTO();
-                    await AddPrefectureAsync(prefectDTO);    
-                } 
+                    var records = csv.GetRecords<PrefectureCsvDTO>().ToList();
+                    foreach (var p in records)
+                    {
+                        PrefectureDTO prefectDTO = p.ToPrefectureDTO();
+                        await AddPrefectureAsync(prefectDTO);
+                    }
+                }
             }
-        }*/
-        public async void SaveChange()
+            catch (BadDataException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                throw new Exception(e.Message);
+            }
+            catch (FieldValidationException e)
+            {
+                throw new Exception(e.Message);
+            }
+            catch (CsvHelperException e)     
+            {
+                throw new Exception(e.Message);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async void SaveChanges()
         {
             await _valVenalEstDbContext.SaveChangesAsync();
         }
-        public bool PrefectureExists(long id) => _valVenalEstDbContext.Prefectures.Any(p => p.Id == id);       
+        public bool PrefectureExists(long id) => _valVenalEstDbContext.Prefectures.Any(p => p.Id == id);
         public void Remove(Prefecture prefecture)
         {
-            _valVenalEstDbContext.Prefectures.Remove(prefecture);   
+            _valVenalEstDbContext.Prefectures.Remove(prefecture);
         }
     }
 }

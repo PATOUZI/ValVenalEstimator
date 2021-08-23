@@ -63,7 +63,6 @@ namespace ValVenalEstimator.Api.Controllers
                 var zone = await _iZoneRepository.GetZoneByZoneNameAndPrefectureNameAsync(zoneName, prefectName); 
                 var resource = _mapper.Map<Zone, ZoneViewDTO>(zone);
                 return Ok(resource); 
-                //return Ok(zone); 
             }
             catch (Exception e)
             {
@@ -104,7 +103,7 @@ namespace ValVenalEstimator.Api.Controllers
             }
             try
             {
-                _iZoneRepository.SaveChange(); 
+                _iZoneRepository.SaveChanges(); 
             }
             catch (DbUpdateConcurrencyException) when (!_iZoneRepository.ZoneExists(id))
             {
@@ -123,11 +122,11 @@ namespace ValVenalEstimator.Api.Controllers
                 return NotFound();    
             }     
             _iZoneRepository.Remove(zone);           
-            _iZoneRepository.SaveChange();                                   
+            _iZoneRepository.SaveChanges();                                   
             return StatusCode(202);          
         }
 
-        /*[HttpPost("LoadDataInDataBase")]
+        [HttpPost("LoadDataInDataBase")]
         public void LoadDataInDbByPost(string accessPath)
         {
             _iZoneRepository.LoadDataInDbWithCsvFile(accessPath);
@@ -137,6 +136,6 @@ namespace ValVenalEstimator.Api.Controllers
         public void LoadData(string accessPath)
         {
             _iZoneRepository.LoadData(accessPath);
-        } */
+        }
     }
 }

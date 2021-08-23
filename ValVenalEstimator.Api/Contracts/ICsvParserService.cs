@@ -5,6 +5,8 @@ namespace ValVenalEstimator.Api.Contracts
 {
     public interface ICsvParserService
     {
-        List<PrefectureModel> ReadCsvFileTopPrefectureModel(string path);
+        //List<PrefectureModel> ReadCsvFileToPrefectureModel(string path);
+        //public void ReadCsvFileToPrefectureModel(string path);
+
     }
 }

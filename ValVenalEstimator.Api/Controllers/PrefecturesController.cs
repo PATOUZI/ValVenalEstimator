@@ -1,15 +1,20 @@
+using CsvHelper;
 using System;
+using System.IO;
+using System.Text;
 using System.Linq;
 using System.Text.Json;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ValVenalEstimator.Api.Models;
+using ValVenalEstimator.Api.Mappers;
 using ValVenalEstimator.Api.Contracts;
 using ValVenalEstimator.Api.ViewModels;
 
-namespace ValVenalEstimator.Api.Controllers
+namespace ValVenalEstimator.Api.Controllers    
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,12 +22,15 @@ namespace ValVenalEstimator.Api.Controllers
     {
         private readonly IPrefectureRepository _iPrefectureRepository;
         private readonly IZoneRepository _iZoneRepository; 
-        public PrefecturesController(IPrefectureRepository iPrefectureRepository, IZoneRepository iZoneRepository)
+        private readonly ICsvParserService _csvParserService; 
+
+        public PrefecturesController(IPrefectureRepository iPrefectureRepository, IZoneRepository iZoneRepository, ICsvParserService csvParserService)
         {
             _iPrefectureRepository = iPrefectureRepository;
             _iZoneRepository = iZoneRepository;
+            _csvParserService = csvParserService; 
         }   
-
+   
         [HttpPost]
         public async Task<ActionResult> AddPrefecture(PrefectureDTO prefectureDTO)
         {
@@ -90,7 +98,7 @@ namespace ValVenalEstimator.Api.Controllers
             p.Name = prefectureDTO.Name;
             try
             {
-                _iPrefectureRepository.SaveChange(); 
+                _iPrefectureRepository.SaveChanges(); 
             }
             catch (DbUpdateConcurrencyException) when (!_iPrefectureRepository.PrefectureExists(id))
             {
@@ -108,14 +116,14 @@ namespace ValVenalEstimator.Api.Controllers
                 return NotFound();    
             }     
             _iPrefectureRepository.Remove(prefecture);           
-            _iPrefectureRepository.SaveChange();                                   
+            _iPrefectureRepository.SaveChanges();                                   
             return StatusCode(202);          
         }
-
-        /*[HttpPost("LoadDataInDataBase")]
+   
+        [HttpPost("LoadDataInDataBase")]    
         public void LoadDataInDbByPost(string accessPath)
         {
-            _iPrefectureRepository.LoadDataInDbWithCsvFile(accessPath);
-        }*/ 
-    }
-}
+            _iPrefectureRepository.LoadDataInDbWithCsvFile(accessPath);      
+        }
+    }     
+}    

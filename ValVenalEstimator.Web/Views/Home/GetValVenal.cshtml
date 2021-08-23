@@ -8,7 +8,11 @@
                 <th>Zone</th>
                 <th>Type de zone</th>
                 <th>Superficie</th>
+                <th>Prix du bornage contradictoire</th>
                 <th>Valeur venale du terrain</th>
+                <th>Valeur d'enregistrement</th>
+                <th>Droit de timbre</th>
+                <th>Prix à payer</th>
             </tr>
         </thead>
         <tbody>
@@ -16,9 +20,13 @@
                 <td>@Model.PrefectureName</td>
                 <td>@Model.PlaceName</td>
                 <td>@Model.ZoneName</td>
-                    <td>@Model.ZoneType</td>
+                <td>@Model.ZoneType</td>
                 <td>@Model.Area m2</td>
+                <td>@Model.PriceOfBornageContradictoire F</td>
                 <td>@Model.ValVenal F</td>
+                <td>@Model.ValEnregistrement F</td>
+                <td>@Model.DroitDeTimbre F</td>
+                <td>@Model.PriceToPay F</td>
             </tr>
         </tbody>
     </table>

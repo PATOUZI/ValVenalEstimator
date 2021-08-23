@@ -15,9 +15,9 @@ namespace ValVenalEstimator.Api.Models
         public string Code { get; set; }   // prefecture name concat zone name
         public ZoneType  Type { get; set; }
         public double PricePerMeterSquare { get; set; }
-        public long PrefectureId { get; set; }
+        public long PrefectureId { get; set; }        
         [JsonIgnore]
-        public Prefecture Prefecture { get; set; }      
+        public Prefecture Prefecture { get; set; }             
         [JsonIgnore]       
         public List<Place> Places { get; set; }
     }

@@ -31,10 +31,10 @@ namespace ValVenalEstimator.Api
                                                                 )
                             );
             services.AddDbContext<ValVenalEstimatorDbContext>(opt => opt.UseMySQL("server=localhost;database=ValVenalEstimator2;user=root;password="));
-            //services.AddDbContext<ValVenalEstimatorDbContext>(opt => opt.UseMySQL("server=localhost;database=ValVenal;user=root;password="));
             services.AddScoped<IPlaceRepository, PlaceRepository>();
             services.AddScoped<IPrefectureRepository, PrefectureRepository>();
             services.AddScoped<IZoneRepository, ZoneRepository>();   
+            services.AddScoped<ICsvParserService, CsvParserService>();   
 
             var mapperConfig = new MapperConfiguration(mc =>
             {
