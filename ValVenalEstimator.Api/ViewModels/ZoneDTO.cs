@@ -21,7 +21,6 @@ namespace ValVenalEstimator.Api.ViewModels
                 PricePerMeterSquare = PricePerMeterSquare,
                 PrefectureId = PrefectureId
             };
-        }
-   
+        }   
     }
 }

@@ -25,7 +25,6 @@ namespace ValVenalEstimator.Api.Repositories
             _valVenalEstDbContext = context;
             _izoneRepository = izoneRepository;
             _mapper = mapper;
-
         }
         public async Task<Place> AddPlaceAsync(PlaceDTO placeDTO)
         {
@@ -40,12 +39,15 @@ namespace ValVenalEstimator.Api.Repositories
             }
             else
             {
-                throw new Exception("La prefecture avec l'id " + placeDTO.ZoneId + " n'existe pas !!!");
+                throw new Exception("La zone avec l'id " + placeDTO.ZoneId + " n'existe pas !!!");
             }
         }
+
+        /*Cette méthode permet d'enrégistrer une place à partir 
+        du nom du quartier, de la zone et de la prefecture(PlaceCsv2DTO)*/
         public async Task<Place> AddPlaceAsync2(PlaceCsv2DTO placeDTO)
         {
-            var zone = _izoneRepository.GetZoneByZoneNameAndPrefectureNameAsync(placeDTO.ZoneName, placeDTO.PrefectureName);
+            var zone = _izoneRepository.GetZoneByZoneNameAndPrefectureNameAsync(placeDTO.ZoneName, placeDTO.PrefectureName);               
             if (zone != null)
             {
                 Place p = placeDTO.ToPlace();
@@ -81,16 +83,15 @@ namespace ValVenalEstimator.Api.Repositories
         }
         public async Task<IEnumerable<Place>> GetAllPlacesAsync()
         {
-            var ListPlaces = await _valVenalEstDbContext.Places.ToListAsync();
-            var res = ListPlaces.OrderBy(p => p.Name);
-            return res;
+            var listPlaces = await _valVenalEstDbContext.Places.OrderBy(p => p.Name).ToListAsync();
+            return listPlaces;
         }
         public async Task<IEnumerable<Place>> GetPlacesByPrefectureIdAsync(long idPrefecture)
         {
-            var ListPlaces = await _valVenalEstDbContext.Places.Where(p => p.Zone.PrefectureId == idPrefecture)
+            var listPlaces = await _valVenalEstDbContext.Places.Where(p => p.Zone.PrefectureId == idPrefecture)
+                                                               .OrderBy(p => p.Name)
                                                                .ToListAsync();
-            var res = ListPlaces.OrderBy(p => p.Name);
-            return res;
+            return listPlaces;
         }
         public async Task<IEnumerable<Place>> GetPlacesByZoneIdAsync(long idZone)
         {
@@ -110,6 +111,9 @@ namespace ValVenalEstimator.Api.Repositories
                 }
             }
         }
+
+        /*Cette méthode permet d'enrégistrer des places grace à un fichier csv 
+        contenant les noms des quartiers, des zones et des prefectures(PlaceCsv2DTO)*/
         public async void LoadData(string accessPath)
         {
             using (var reader = new StreamReader(accessPath))

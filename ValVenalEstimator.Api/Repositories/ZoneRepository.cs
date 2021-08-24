@@ -41,6 +41,9 @@ namespace ValVenalEstimator.Api.Repositories
                 throw new Exception("La prefecture avec l'id "+zoneDTO.PrefectureId+" n'existe pas !!!");
             }  
         }
+
+        /*Cette méthode permet d'enrégistrer une zone à partir des informations 
+        relatives à une zone et du nom de la prefecture(ZoneCsv2DTO)*/
         public async Task<Zone> AddZoneAsync2(ZoneCsvDTO2 zoneCsvDTO)
         {           
             var prefecture = await _iprefectureRepository.GetPrefectureByNameAsync(zoneCsvDTO.PrefectureName);
@@ -106,6 +109,9 @@ namespace ValVenalEstimator.Api.Repositories
                 }
             }
         }
+
+        /*Cette méthode permet d'enrégistrer des zones grace à un fichier csv contenant 
+        des informations relatives à une zone et du nom de la prefecture(ZoneCsv2DTO)*/
         public async void LoadData(string accessPath)
         {
             using (var reader = new StreamReader(accessPath))   

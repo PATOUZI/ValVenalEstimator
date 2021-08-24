@@ -34,8 +34,7 @@ namespace ValVenalEstimator.Api.Controllers
                 return Ok(await _iZoneRepository.AddZoneAsync(zoneDTO));       
             }
             catch (Exception e)
-            {
-                
+            {                
                 return NotFound(e.Message);
             }
         }
@@ -109,7 +108,6 @@ namespace ValVenalEstimator.Api.Controllers
             {
                 return NotFound();
             }
-
             return StatusCode(200);
         }
 
@@ -127,7 +125,7 @@ namespace ValVenalEstimator.Api.Controllers
         }
 
         [HttpPost("LoadDataInDataBase")]
-        public void LoadDataInDbByPost(string accessPath)
+        public void LoadDataInDb(string accessPath)
         {
             _iZoneRepository.LoadDataInDbWithCsvFile(accessPath);
         } 

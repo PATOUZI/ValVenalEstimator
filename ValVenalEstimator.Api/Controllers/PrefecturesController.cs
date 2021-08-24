@@ -22,19 +22,24 @@ namespace ValVenalEstimator.Api.Controllers
     {
         private readonly IPrefectureRepository _iPrefectureRepository;
         private readonly IZoneRepository _iZoneRepository; 
-        private readonly ICsvParserService _csvParserService; 
 
-        public PrefecturesController(IPrefectureRepository iPrefectureRepository, IZoneRepository iZoneRepository, ICsvParserService csvParserService)
+        public PrefecturesController(IPrefectureRepository iPrefectureRepository, IZoneRepository iZoneRepository)
         {
             _iPrefectureRepository = iPrefectureRepository;
             _iZoneRepository = iZoneRepository;
-            _csvParserService = csvParserService; 
         }   
    
         [HttpPost]
         public async Task<ActionResult> AddPrefecture(PrefectureDTO prefectureDTO)
         {
-            return Ok( await _iPrefectureRepository.AddPrefectureAsync(prefectureDTO));  
+            try
+            {
+                return Ok( await _iPrefectureRepository.AddPrefectureAsync(prefectureDTO));  
+            }
+            catch(Exception e)
+            {
+                return NotFound(e.Message);
+            } 
         }       
 
         [HttpGet("{id}")]
@@ -121,7 +126,7 @@ namespace ValVenalEstimator.Api.Controllers
         }
    
         [HttpPost("LoadDataInDataBase")]    
-        public void LoadDataInDbByPost(string accessPath)
+        public void LoadDataInDb(string accessPath)
         {
             _iPrefectureRepository.LoadDataInDbWithCsvFile(accessPath);      
         }

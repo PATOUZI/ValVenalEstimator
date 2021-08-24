@@ -1,4 +1,5 @@
 using ValVenalEstimator.Api.Models;
+
 namespace ValVenalEstimator.Api.ViewModels
 {
     public class PlaceCsv2DTO

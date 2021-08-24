@@ -102,20 +102,19 @@ namespace ValVenalEstimator.Api.Controllers
             return StatusCode(202);
         }
     
-        //Les 2 premieres methodes Post sont équivalents(font la meme chose)
-        [HttpPost("{accessPath}", Name = "LoadDataInDbByPost")]
-        public void LoadDataInDbByPost(string accessPath)
+        //Les 2 méthodes suivantes font la meme chose. Elles diffèrent seulement par leur URI
+        [HttpPost("{accessPath}", Name = "LoadDataInDb")]
+        public void LoadDataInDb(string accessPath)
         {
             _iPlaceRepository.LoadDataInDbWithCsvFile(accessPath);
         }                    
 
         [HttpPost("LoadDataInDataBase")]      
-        public void Load(string accessPath)
+        public void LoadDataInDb2(string accessPath)
         {
             _iPlaceRepository.LoadDataInDbWithCsvFile(accessPath);
         } 
 
-        //Les 2 premieres methodes Post sont équivalents(font la meme chose)
         [HttpPost("LoadData")]      
         public void LoadData(string accessPath)
         {

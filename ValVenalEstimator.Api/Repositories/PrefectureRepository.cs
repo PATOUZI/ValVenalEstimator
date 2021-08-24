@@ -17,6 +17,7 @@ namespace ValVenalEstimator.Api.Repositories
     public class PrefectureRepository : IPrefectureRepository
     {
         readonly ValVenalEstimatorDbContext _valVenalEstDbContext;
+
         /*readonly IZoneRepository _iZoneRepository; 
         public PrefectureRepository(ValVenalEstimatorDbContext context, IZoneRepository iZoneRepository)
         {  
@@ -39,15 +40,14 @@ namespace ValVenalEstimator.Api.Repositories
             var prefecture = await _valVenalEstDbContext.Prefectures.FindAsync(id);
             if (prefecture == null)
             {
-                throw new Exception("La zone avec l'id " + id + " n'existe pas !!!");
+                throw new Exception("La préfecture avec l'id " + id + " n'existe pas !!!");
             }
             return prefecture;
         }
         public async Task<IEnumerable<Prefecture>> GetAllPrefecturesAsync()
         {
-            var ListPref = await _valVenalEstDbContext.Prefectures.ToListAsync();
-            var res = ListPref.OrderBy(p => p.Name);
-            return res;
+            var listPref = await _valVenalEstDbContext.Prefectures.OrderBy(p => p.Name).ToListAsync();
+            return listPref;
         }
         public async Task<Prefecture> GetPrefectureByNameAsync(string name)
         {
@@ -58,6 +58,7 @@ namespace ValVenalEstimator.Api.Repositories
             }
             return prefecture;
         }
+
         /*public async Task<List<Prefecture>> GetAllPrefecturesWithZonesAsync()
         {
             var list  =  await GetAllPrefecturesAsync();
@@ -70,6 +71,10 @@ namespace ValVenalEstimator.Api.Repositories
                                      ).ToList();
             return resList;
         }*/
+        
+        /*Cette méthode permet d'enrégistrer des préfectures grace à un fichier csv 
+        contenant les noms des prefectures avec gestion des exceptions. Mais la 
+        gestion des exceptions ne marchent pas pour le moment*/
         public async void LoadDataInDbWithCsvFile(string accessPath)
         {
             try

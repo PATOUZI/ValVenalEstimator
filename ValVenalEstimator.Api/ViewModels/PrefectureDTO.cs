@@ -14,4 +14,4 @@ namespace ValVenalEstimator.Api.ViewModels
             };
         }
     }
-}
+}   
