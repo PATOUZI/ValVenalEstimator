@@ -1,30 +1,35 @@
-﻿using System;
-using System.IO;
-using System.Net.Http;
-using System.Collections.Generic;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using ValVenalEstimator.Web.Models;
+using ValVenalEstimator.Web.Contracts;
 using ValVenalEstimator.Web.ViewModels;
 
 namespace ValVenalEstimator.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public async Task<IActionResult> Index()
+        private readonly IWebRepository _iWebRepository;
+        public HomeController(IWebRepository iWebRepository)
         {
-            List<Prefecture> PrefectureList = new List<Prefecture>();
+            _iWebRepository = iWebRepository;
+        }
+        public async Task<IActionResult> Index()
+        //public async Task<List<Prefecture>> Index()
+        {
+            /*List<Prefecture> prefectureList = new List<Prefecture>();
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync("https://localhost:5004/api/Prefectures"))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
-                    PrefectureList = JsonConvert.DeserializeObject<List<Prefecture>>(apiResponse);
+                    prefectureList = JsonConvert.DeserializeObject<List<Prefecture>>(apiResponse);
                 }
-            }
-            return View(PrefectureList);
+            }*/
+            //return View(prefectureList);
+            return View(await _iWebRepository.Index());
         }
         public IActionResult PlaceFileUpload()
         {
@@ -38,93 +43,7 @@ namespace ValVenalEstimator.Web.Controllers
         {
             return View();
         }
-
-        [HttpPost]
-        public async Task<ActionResult> PlaceFileUpload(IFormFile file)
-        {
-            bool result = await PlaceUploadFile(file);
-            if (result)
-            {
-                TempData["msg"] = "File Uploaded successfully.";                
-            }
-            else
-            {
-                TempData["msg"] = "Le type de fichier ne correspond.";  
-            }            
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> PrefectureFileUpload(IFormFile file)
-        {
-            bool result = await PrefectureUploadFile(file);
-            if (result)
-            {
-                TempData["msg"] = "File Uploaded successfully.";                
-            }
-            else
-            {
-                TempData["msg"] = "Le type de fichier ne correspond.";  
-            }            
-            return View();
-        }
-            
-        [HttpPost]
-        public async Task<ActionResult> ZoneFileUpload(IFormFile file)
-        {
-            bool result = await ZoneUploadFile(file);
-            if (result)
-            {
-                TempData["msg"] = "File Uploaded successfully.";                
-            }
-            else
-            {
-                TempData["msg"] = "Le type de fichier ne correspond.";  
-            }
-            return View();
-        }   
-
-        [HttpPost]        
-        public async Task<IActionResult> GetValVenal(long idPlace, int area, long prefect, double valAchat, int nbrePge)  
-        {
-            string accessPath = @"https://localhost:5004/api/Places/" + idPlace + "/" + area + "/" + valAchat + "/" + nbrePge ;
-            ValVenalDTO ValVenalDTO = new ValVenalDTO();
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(accessPath))
-                {
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-                        ValVenalDTO = JsonConvert.DeserializeObject<ValVenalDTO>(apiResponse);   
-                    }
-                    else
-                    {
-                        ViewBag.StatusCode = response.StatusCode;
-                    }
-                }
-            }
-            //Recuperation de l'objet Prefecture correspondant à la Place dont l'id est fournie
-            string accessPath2 = @"https://localhost:5004/api/Prefectures/" + prefect ;
-            Prefecture prefecture = new Prefecture();
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(accessPath2))
-                {
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-                        prefecture = JsonConvert.DeserializeObject<Prefecture>(apiResponse);   
-                    }
-                    else
-                        ViewBag.StatusCode = response.StatusCode;
-                }
-            }
-            ValVenalDTO.PrefectureName = prefecture.Name;
-            ValVenalDTO.Area = area;
-            return View(ValVenalDTO);
-        }
-        public async Task<bool> PlaceUploadFile(IFormFile file)
+        /*public async Task<bool> PlaceUploadFile(IFormFile file)
         {
             string path = "";
             bool iscopied = false;
@@ -219,7 +138,107 @@ namespace ValVenalEstimator.Web.Controllers
                 iscopied = false;
             }
             return iscopied;
+        }*/
+
+        [HttpPost]
+        public async Task<ActionResult> PlaceFileUpload(IFormFile file)
+        {
+            //bool result = await PlaceUploadFile(file);
+            bool result = await _iWebRepository.PlaceUploadFile(file);
+            /*string placeAccessPath = @"https://localhost:5004/api/Places/LoadDataInDataBase?accessPath=";
+            string placeDirectory = "PlaceFileUpload";
+            bool result = await _iWebRepository.UploadFile(file, placeDirectory, placeAccessPath);*/
+            if (result)
+            {
+                TempData["msg"] = "File Uploaded successfully.";                
+            }
+            else
+            {
+                TempData["msg"] = "Le type de fichier ne correspond.";  
+            }            
+            return View();
         }
+
+        [HttpPost]        
+        public async Task<ActionResult> PrefectureFileUpload(IFormFile file)
+        {
+            //bool result = await PrefectureUploadFile(file);
+            bool result = await _iWebRepository.PrefectureUploadFile(file);
+            /*string prefectureAccessPath = @"https://localhost:5004/api/Prefectures/LoadDataInDataBase?accessPath=";
+            string prefectureDirectory = "PrefectureFileUpload";
+            bool result = await _iWebRepository.UploadFile(file, prefectureDirectory, prefectureAccessPath);*/
+            if (result)
+            {
+                TempData["msg"] = "File Uploaded successfully.";                
+            }
+            else
+            {
+                TempData["msg"] = "Le type de fichier ne correspond.";  
+            }            
+            return View();
+        }
+            
+        [HttpPost]
+        public async Task<ActionResult> ZoneFileUpload(IFormFile file)
+        {
+            //bool result = await ZoneUploadFile(file);
+            bool result = await _iWebRepository.ZoneUploadFile(file);   
+            /*string zoneAccessPath = @"https://localhost:5004/api/Zones/LoadDataInDataBase?accessPath=";
+            string zoneDirectory = "ZoneFileUpload";
+            bool result = await _iWebRepository.UploadFile(file, zoneDirectory, zoneAccessPath);*/
+            if (result)
+            {
+                TempData["msg"] = "File Uploaded successfully.";                
+            }
+            else
+            {
+                TempData["msg"] = "Le type de fichier ne correspond.";  
+            }
+            return View();
+        }   
+
+        [HttpPost]        
+        public async Task<IActionResult> GetValVenal(long idPlace, int area, long prefect, double valAchat, int nbrePge)  
+        {
+            string accessPath = @"https://localhost:5004/api/Places/" + idPlace + "/" + area + "/" + valAchat + "/" + nbrePge ;
+            ValVenalDTO ValVenalDTO = new ValVenalDTO();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(accessPath))
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        ValVenalDTO = JsonConvert.DeserializeObject<ValVenalDTO>(apiResponse);   
+                    }
+                    else
+                    {
+                        ViewBag.StatusCode = response.StatusCode;
+                    }
+                }
+            }
+            //Recuperation de l'objet Prefecture correspondant à la place dont l'id est fournie
+            string accessPath2 = @"https://localhost:5004/api/Prefectures/" + prefect ;
+            Prefecture prefecture = new Prefecture();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync(accessPath2))
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        prefecture = JsonConvert.DeserializeObject<Prefecture>(apiResponse);   
+                    }
+                    else
+                    {
+                        ViewBag.StatusCode = response.StatusCode;
+                    }
+                }
+            }
+            ValVenalDTO.PrefectureName = prefecture.Name;
+            ValVenalDTO.Area = area;
+            return View(ValVenalDTO);
+        }        
     }
 }
      

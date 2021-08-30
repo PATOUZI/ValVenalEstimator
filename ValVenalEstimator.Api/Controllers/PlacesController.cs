@@ -107,7 +107,7 @@ namespace ValVenalEstimator.Api.Controllers
         public void LoadDataInDb(string accessPath)
         {
             _iPlaceRepository.LoadDataInDbWithCsvFile(accessPath);
-        }                    
+        }                        
 
         [HttpPost("LoadDataInDataBase")]      
         public void LoadDataInDb2(string accessPath)

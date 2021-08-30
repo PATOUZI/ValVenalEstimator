@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
+using ValVenalEstimator.Web.Contracts;
+using ValVenalEstimator.Web.Repositories;
 namespace ValVenalEstimator.Web
 {
     public class Startup
@@ -18,6 +19,7 @@ namespace ValVenalEstimator.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<IWebRepository, WebRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
