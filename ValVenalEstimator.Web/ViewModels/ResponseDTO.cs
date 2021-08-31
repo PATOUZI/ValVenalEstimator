@@ -1,6 +1,6 @@
 namespace ValVenalEstimator.Web.ViewModels
 {
-    public class ValVenalDTO
+    public class ResponseDTO
     {
         public double ValVenal { get; set; }
         public double ValEnregistrement { get; set; }

@@ -122,7 +122,7 @@ namespace ValVenalEstimator.Api.Controllers
         }                                    
         
         [HttpGet("{idPlace}/{area}/{valAchat}/{nbrePge}", Name = "GetValVenal")]
-        public async Task<ActionResult<ValVenalDTO>> GetPriceToPay(long idPlace, int area, double valAchat, int nbrePge)
+        public async Task<ActionResult<ResponseDTO>> GetPriceToPay(long idPlace, int area, double valAchat, int nbrePge)
         {
             try
             {

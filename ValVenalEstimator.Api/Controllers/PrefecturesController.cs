@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ValVenalEstimator.Api.Models;
-using ValVenalEstimator.Api.Mappers;
 using ValVenalEstimator.Api.Contracts;
 using ValVenalEstimator.Api.ViewModels;
 

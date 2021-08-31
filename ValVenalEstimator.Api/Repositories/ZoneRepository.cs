@@ -24,6 +24,9 @@ namespace ValVenalEstimator.Api.Repositories
             _valVenalEstDbContext = context;   
             _iprefectureRepository = iprefectureRepository;
         }
+
+        /*Cette méthode permet d'enrégistrer une zone à partir des informations 
+        relatives à une zone et de l'Id de la préfecture(ZoneCsvDTO)*/
         public async Task<Zone> AddZoneAsync(ZoneDTO zoneDTO)
         {
             var prefecture = await _iprefectureRepository.GetPrefectureAsync(zoneDTO.PrefectureId);

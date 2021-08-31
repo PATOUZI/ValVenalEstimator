@@ -13,7 +13,7 @@ namespace ValVenalEstimator.Web.Contracts
         public Task<bool> PlaceUploadFile(IFormFile file);
         public Task<bool> PrefectureUploadFile(IFormFile file);
         public Task<bool> ZoneUploadFile(IFormFile file);
-        //public Task<bool> UploadFile(IFormFile file, string directory, string accessPath);
+        public Task<bool> UploadFile(IFormFile file, string directory, string accessPath);
 
          
     }

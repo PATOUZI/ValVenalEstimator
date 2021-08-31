@@ -34,7 +34,6 @@ namespace ValVenalEstimator.Api
             services.AddScoped<IPlaceRepository, PlaceRepository>();
             services.AddScoped<IPrefectureRepository, PrefectureRepository>();
             services.AddScoped<IZoneRepository, ZoneRepository>();   
-            services.AddScoped<ICsvParserService, CsvParserService>();   
 
             var mapperConfig = new MapperConfiguration(mc =>
             {

@@ -26,6 +26,9 @@ namespace ValVenalEstimator.Api.Repositories
             _izoneRepository = izoneRepository;
             _mapper = mapper;
         }
+
+        /*Cette méthode permet d'enrégistrer une place à partir 
+        du nom du quartier et de l'Id de la zone(PlaceCsvDTO)*/
         public async Task<Place> AddPlaceAsync(PlaceDTO placeDTO)
         {
             Place p = placeDTO.ToPlace();
@@ -126,12 +129,12 @@ namespace ValVenalEstimator.Api.Repositories
                 }
             }
         }
-        public async Task<ActionResult<ValVenalDTO>> GetPriceToPayAsync(long idPlace, int area, double valAchat, int nbrePge)
-        {
+        public async Task<ActionResult<ResponseDTO>> GetPriceToPayAsync(long idPlace, int area, double valAchat, int nbrePge)
+        {            
             double bornContra;
             double priceOfOnePge = 1500;
             double depositFee = 3000;
-            ValVenalDTO venaleValue = new ValVenalDTO();
+            ResponseDTO response = new ResponseDTO();
             var place = await GetPlaceViewDTOAsync(idPlace);
             double valVenalTerrain = place.Zone.PricePerMeterSquare * area;
             double valTaxable = Math.Max(valAchat, valVenalTerrain);
@@ -162,16 +165,16 @@ namespace ValVenalEstimator.Api.Repositories
                     bornContra = 60000 + additionalMeterSquare * 2000;
                 }
             }
-            venaleValue.PriceOfBornageContradictoire = bornContra;
-            venaleValue.ValEnregistrement = valEnregisitrement;
-            venaleValue.DroitDeTimbre = droitDeTimbre;
-            venaleValue.ValVenal = valVenalTerrain;    
-            venaleValue.PriceToPay = priceToPay;             
-            venaleValue.PlaceName = place.Name;
-            venaleValue.ZoneName = place.Zone.Name;
-            venaleValue.ZoneType = place.Zone.Type;
-            venaleValue.Area = area;
-            return venaleValue;
+            response.PriceOfBornageContradictoire = bornContra;
+            response.ValEnregistrement = valEnregisitrement;
+            response.DroitDeTimbre = droitDeTimbre;
+            response.ValVenal = valVenalTerrain;    
+            response.PriceToPay = priceToPay;             
+            response.PlaceName = place.Name;
+            response.ZoneName = place.Zone.Name;
+            response.ZoneType = place.Zone.Type;
+            response.Area = area;
+            return response;
         }
         public async void SaveChanges()
         {

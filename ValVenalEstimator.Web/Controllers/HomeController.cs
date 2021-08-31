@@ -144,10 +144,10 @@ namespace ValVenalEstimator.Web.Controllers
         public async Task<ActionResult> PlaceFileUpload(IFormFile file)
         {
             //bool result = await PlaceUploadFile(file);
-            bool result = await _iWebRepository.PlaceUploadFile(file);
-            /*string placeAccessPath = @"https://localhost:5004/api/Places/LoadDataInDataBase?accessPath=";
+            //bool result = await _iWebRepository.PlaceUploadFile(file);
+            string placeAccessPath = @"https://localhost:5004/api/Places/LoadDataInDataBase?accessPath=";
             string placeDirectory = "PlaceFileUpload";
-            bool result = await _iWebRepository.UploadFile(file, placeDirectory, placeAccessPath);*/
+            bool result = await _iWebRepository.UploadFile(file, placeDirectory, placeAccessPath);
             if (result)
             {
                 TempData["msg"] = "File Uploaded successfully.";                
@@ -157,16 +157,16 @@ namespace ValVenalEstimator.Web.Controllers
                 TempData["msg"] = "Le type de fichier ne correspond.";  
             }            
             return View();
-        }
-
+        }     
+    
         [HttpPost]        
         public async Task<ActionResult> PrefectureFileUpload(IFormFile file)
         {
             //bool result = await PrefectureUploadFile(file);
-            bool result = await _iWebRepository.PrefectureUploadFile(file);
-            /*string prefectureAccessPath = @"https://localhost:5004/api/Prefectures/LoadDataInDataBase?accessPath=";
+            //bool result = await _iWebRepository.PrefectureUploadFile(file);
+            string prefectureAccessPath = @"https://localhost:5004/api/Prefectures/LoadDataInDataBase?accessPath=";
             string prefectureDirectory = "PrefectureFileUpload";
-            bool result = await _iWebRepository.UploadFile(file, prefectureDirectory, prefectureAccessPath);*/
+            bool result = await _iWebRepository.UploadFile(file, prefectureDirectory, prefectureAccessPath);
             if (result)
             {
                 TempData["msg"] = "File Uploaded successfully.";                
@@ -182,10 +182,10 @@ namespace ValVenalEstimator.Web.Controllers
         public async Task<ActionResult> ZoneFileUpload(IFormFile file)
         {
             //bool result = await ZoneUploadFile(file);
-            bool result = await _iWebRepository.ZoneUploadFile(file);   
-            /*string zoneAccessPath = @"https://localhost:5004/api/Zones/LoadDataInDataBase?accessPath=";
+            //bool result = await _iWebRepository.ZoneUploadFile(file);   
+            string zoneAccessPath = @"https://localhost:5004/api/Zones/LoadDataInDataBase?accessPath=";
             string zoneDirectory = "ZoneFileUpload";
-            bool result = await _iWebRepository.UploadFile(file, zoneDirectory, zoneAccessPath);*/
+            bool result = await _iWebRepository.UploadFile(file, zoneDirectory, zoneAccessPath);
             if (result)
             {
                 TempData["msg"] = "File Uploaded successfully.";                
@@ -201,7 +201,7 @@ namespace ValVenalEstimator.Web.Controllers
         public async Task<IActionResult> GetValVenal(long idPlace, int area, long prefect, double valAchat, int nbrePge)  
         {
             string accessPath = @"https://localhost:5004/api/Places/" + idPlace + "/" + area + "/" + valAchat + "/" + nbrePge ;
-            ValVenalDTO ValVenalDTO = new ValVenalDTO();
+            ResponseDTO responseDTO = new ResponseDTO();
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync(accessPath))
@@ -209,7 +209,7 @@ namespace ValVenalEstimator.Web.Controllers
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
-                        ValVenalDTO = JsonConvert.DeserializeObject<ValVenalDTO>(apiResponse);   
+                        responseDTO = JsonConvert.DeserializeObject<ResponseDTO>(apiResponse);   
                     }
                     else
                     {
@@ -233,11 +233,11 @@ namespace ValVenalEstimator.Web.Controllers
                     {
                         ViewBag.StatusCode = response.StatusCode;
                     }
-                }
+                }      
             }
-            ValVenalDTO.PrefectureName = prefecture.Name;
-            ValVenalDTO.Area = area;
-            return View(ValVenalDTO);
+            responseDTO.PrefectureName = prefecture.Name;
+            responseDTO.Area = area;
+            return View(responseDTO);    
         }        
     }
 }

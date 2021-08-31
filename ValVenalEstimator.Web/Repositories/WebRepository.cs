@@ -121,7 +121,7 @@ namespace ValVenalEstimator.Web.Repositories
             }
             return iscopied;
         }
-        /*public async Task<bool> UploadFile(IFormFile file, string directory, string accessPath)
+        public async Task<bool> UploadFile(IFormFile file, string directory, string accessPath)
         {
             string path = "";
             bool iscopied = false;
@@ -144,7 +144,7 @@ namespace ValVenalEstimator.Web.Repositories
                         new KeyValuePair<string, string>("field1", "value1"),
                         new KeyValuePair<string, string>("field2", "value2"),
                     });
-                        await httpClient.PostAsync(accessPath, stringContent);
+                        await httpClient.PostAsync(accessPath2, stringContent);
                 }
             }
             else
@@ -152,6 +152,6 @@ namespace ValVenalEstimator.Web.Repositories
                 iscopied = false;
             }
             return iscopied;
-        }*/
+        }
     }
 }

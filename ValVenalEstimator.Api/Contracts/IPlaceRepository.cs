@@ -17,7 +17,7 @@ namespace ValVenalEstimator.Api.Contracts
         public Task<IEnumerable<Place>> GetPlacesByZoneIdAsync(long idZone);
         public void LoadDataInDbWithCsvFile(string accessPath);   
         public void LoadData(string accessPath); 
-        public Task<ActionResult<ValVenalDTO>> GetPriceToPayAsync(long idPlace, int area, double valAchat, int nbrePge);  
+        public Task<ActionResult<ResponseDTO>> GetPriceToPayAsync(long idPlace, int area, double valAchat, int nbrePge);  
         public void SaveChanges();
         public bool PlaceExists(long id);
         public void Remove(Place place);
