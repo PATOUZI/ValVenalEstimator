@@ -1,33 +1,14 @@
 @if (Model != null)
 {
-    <table class="table table-sm table-striped table-bordered m-2">
-        <thead>
-            <tr>
-                <th>Préfecture</th>
-                <th>Quartier</th>
-                <th>Zone</th>
-                <th>Type de zone</th>
-                <th>Superficie</th>
-                <th>Prix du bornage contradictoire</th>
-                <th>Valeur venale du terrain</th>
-                <th>Valeur d'enregistrement</th>
-                <th>Droit de timbre</th>
-                <th>Prix à payer</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>@Model.PrefectureName</td>
-                <td>@Model.PlaceName</td>
-                <td>@Model.ZoneName</td>
-                <td>@Model.ZoneType</td>
-                <td>@Model.Area m2</td>
-                <td>@Model.priceO F</td>
-                <td>@Model.valV F</td>
-                <td>@Model.valE F</td>
-                <td>@Model.droitD F</td>
-                <td>@Model.priceT F</td>
-            </tr>
-        </tbody>
-    </table>
+    <p>Préfecture : <b>@Model.PrefectureName</b></p>
+    <p>Quartier : <b>@Model.PlaceName</b></p>
+    <p>Zone : <b>@Model.ZoneName</b></p>
+    <p>Type de zone : <b>@Model.ZoneType</b></p>
+    <p>Superficie : <b>@Model.aire m2</b></p>
+    <p>Prix du bornage contradictoire : <b>@Model.priceO F</b></p>
+    <p>Valeur venale du terrain : <b>@Model.valV F</b></p>
+    <p>Base de calcul : <b>@Model.calculationBase F</b></p>
+    <p>Valeur d'enregistrement : <b>@Model.valE F</b></p>
+    <p>Droit de timbre : <b>@Model.droitD F</b></p>
+    <p>Prix à payer : <b>@Model.priceT F</b></p>
 }

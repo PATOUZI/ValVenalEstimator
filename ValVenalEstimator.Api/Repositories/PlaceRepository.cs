@@ -165,6 +165,7 @@ namespace ValVenalEstimator.Api.Repositories
                     bornContra = 60000 + additionalMeterSquare * 2000;
                 }
             }
+            response.CalculationBasis = valTaxable;
             response.PriceOfBornageContradictoire = bornContra;
             response.ValEnregistrement = valEnregisitrement;
             response.DroitDeTimbre = droitDeTimbre;

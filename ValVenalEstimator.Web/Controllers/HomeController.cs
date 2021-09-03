@@ -198,8 +198,9 @@ namespace ValVenalEstimator.Web.Controllers
         }   
 
         [HttpPost]        
-        public async Task<IActionResult> GetValues(long idPlace, int area, long prefect, double valAchat, int nbrePge)  
+        public async Task<IActionResult> GetValues(long idPlace, int hectare, int are, int centiare, long prefect, double valAchat, int nbrePge)  
         {
+            int area = (hectare * 10000) + (are * 100) + centiare;
             string accessPath = @"https://localhost:5004/api/Places/" + idPlace + "/" + area + "/" + valAchat + "/" + nbrePge ;
             ResponseDTO responseDTO = new ResponseDTO();
             using (var httpClient = new HttpClient())
