@@ -4,6 +4,9 @@
 }
 
 <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="GetValues">
+    <div>
+        
+    </div>
     <div class="form-group row">
         <label for="Prefecture" class="col-sm-2 col-form-label">Préfecture : </label>
         <div class="form-group col-md-6">
@@ -23,13 +26,6 @@
             </select>
         </div>
     </div>
-    <!--div class="form-group row">
-        <label for="area" class="col-sm-2 col-form-label">Superficie (en m2) : </label>
-        <div class="form-group col-md-6">
-            <input name="area" type="number" class="form-control" min="1" required="required" />
-        </div>
-    </div-->
-
     <div class="form-row">
         <div class="form-group col-md-2">
             <label for="area" class="col-form-label">Superficie : </label>
@@ -47,14 +43,6 @@
             <input name="centiare" type="number" class="form-control" min="0" max="99" />
         </div>
     </div>
-
-    <!--div class="form-group row">
-        <label for="area" class="col-sm-2 col-form-label">Valeur d'achat du terrain : </label>
-        <div class="form-group col-md-6">
-            <input name="valAchat" type="number" class="form-control" min="1" required="required" />
-        </div>
-    </div-->
-
     <div class="form-group row">
         <label for="valAchat" class="col-sm-2 col-form-label">Valeur d'achat du terrain : </label>
         <div class="col-auto">
@@ -68,18 +56,22 @@
             </div>
         </div>
     </div>
-
     <div class="form-group row">
         <label for="area" class="col-sm-2 col-form-label">Nombres de pages de l'acte notarial : </label>
         <div class="form-group col-md-6">
             <input name="nbrePge" type="number" class="form-control" min="1" required="required" />
         </div>
     </div>
-
     <div class="form-group">
         <input type="submit" value="Envoyer" class="btn btn-primary mb-2" />
     </div>
+    <div>
+
+    </div>
 </form>
+
+
+
 
 @section Scripts {
 <script type="text/javascript">

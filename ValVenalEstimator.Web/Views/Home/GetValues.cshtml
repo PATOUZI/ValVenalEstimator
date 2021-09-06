@@ -1,14 +1,84 @@
 @if (Model != null)
 {
-    <p>Préfecture : <b>@Model.PrefectureName</b></p>
-    <p>Quartier : <b>@Model.PlaceName</b></p>
-    <p>Zone : <b>@Model.ZoneName</b></p>
-    <p>Type de zone : <b>@Model.ZoneType</b></p>
-    <p>Superficie : <b>@Model.aire m2</b></p>
-    <p>Prix du bornage contradictoire : <b>@Model.priceO F</b></p>
-    <p>Valeur venale du terrain : <b>@Model.valV F</b></p>
-    <p>Base de calcul : <b>@Model.calculationBase F</b></p>
-    <p>Valeur d'enregistrement : <b>@Model.valE F</b></p>
-    <p>Droit de timbre : <b>@Model.droitD F</b></p>
-    <p>Prix à payer : <b>@Model.priceT F</b></p>
+    <!--p>Préfecture : <b>@Model.PrefectureName</b></p>
+        <p>Quartier : <b>@Model.PlaceName</b></p>
+        <p>Zone : <b>@Model.ZoneName</b></p>
+        <p>Type de zone : <b>@Model.ZoneType</b></p>
+        <p>Superficie : <b>@Model.aire m2</b></p>
+        <p>Prix du bornage contradictoire : <b>@Model.priceO F</b></p>
+        <p>Valeur venale du terrain : <b>@Model.valV F</b></p>
+        <p>Base de calcul : <b>@Model.calculationBase F</b></p>
+        <p>Valeur d'enregistrement : <b>@Model.valE F</b></p>
+        <p>Droit de timbre : <b>@Model.droitD F</b></p>
+        <p>Prix à payer : <b>@Model.priceT F</b></p-->
+
+    <div class="card-block">
+        <div class="view-info">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="general-info">
+                        <div class="row">
+                            <div class="col-lg-12 col-xl-6">
+                                <div class="table-responsive">
+                                    <table class="table m-0">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Préfecture : </th>
+                                                <td>@Model.PrefectureName</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Quartier : </th>
+                                                <td>@Model.PlaceName</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Zone : </th>
+                                                <td>@Model.ZoneName</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Superficie : </th>
+                                                <td>@Model.aire m2</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Prix du bornage contradictoire : </th>
+                                                <td>@Model.priceO F</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-xl-6">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Valeur venale du terrain : </th>
+                                                <td>@Model.valV F</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Base de calcul : </th>
+                                                <td>@Model.calculationBase F</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Valeur d'enregistrement : </th>
+                                                <td>@Model.valE F</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Droit de timbre : </th>
+                                                <td>@Model.droitD F</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Prix à payer : </th>
+                                                <td>@Model.priceT F</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
