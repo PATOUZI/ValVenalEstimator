@@ -18,7 +18,6 @@ namespace ValVenalEstimator.Api.Controllers
         private readonly IZoneRepository _iZoneRepository;  
         private readonly IPrefectureRepository _iPrefectureRepository;  
         private readonly IMapper _mapper;
-
         public ZonesController(IZoneRepository iZoneRepository, IMapper mapper, IPrefectureRepository iPrefectureRepository)
         {
             _iZoneRepository = iZoneRepository;

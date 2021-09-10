@@ -3,75 +3,79 @@
     ViewData["Title"] = "Home Page";
 }
 
-<form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="GetValues">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Index</title>
+</head>
+<body>
     <div>
-        
+        <img src="~/wwwroot/img/terrain.jpg" alt="terrain">
+        <p>L'application NeNeYo vous permet d'estimer les frais de vos différents formalités administratifs.</p>
     </div>
-    <div class="form-group row">
-        <label for="Prefecture" class="col-sm-2 col-form-label">Préfecture : </label>
-        <div class="form-group col-md-6">
-            <select name="prefect" id="prefect" required="required" class="custom-select my-1 mr-sm-2">
-                <option value="">Choisisez la préfecture</option>
-                @foreach (Prefecture p in Model)
-                {
-                    <option value="@p.Id">@p.Name</option>
-                }
-            </select>
+    <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="GetValues">
+        <div class="form-group row">
+            <label for="Prefecture" class="col-sm-2 col-form-label">Préfecture : </label>
+            <div class="form-group col-md-6">
+                <select name="prefect" id="prefect" required="required" class="custom-select my-1 mr-sm-2">
+                    <option value="">Choisisez la préfecture</option>
+                    @foreach (Prefecture p in Model)
+                    {
+                        <option value="@p.Id">@p.Name</option>
+                    }
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="Place" class="col-sm-2 col-form-label">Quartier : </label>
-        <div class="form-group col-md-6">
-            <select name="idPlace" id="idPlace" required="required" class="custom-select">
-            </select>
+        <div class="form-group row">
+            <label for="Place" class="col-sm-2 col-form-label">Quartier : </label>
+            <div class="form-group col-md-6">
+                <select name="idPlace" id="idPlace" required="required" class="custom-select">
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-2">
-            <label for="area" class="col-form-label">Superficie : </label>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="area" class="col-form-label">Superficie : </label>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="hectare">Hectare</label>
+                <input name="hectare" type="number" class="form-control" min="0" />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="are">Are</label>
+                <input name="are" type="number" class="form-control" min="0" max="99" />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="centiare">Centiare</label>
+                <input name="centiare" type="number" class="form-control" min="0" max="99" />
+            </div>
         </div>
-        <div class="form-group col-md-2">
-            <label for="hectare">Hectare</label>
-            <input name="hectare" type="number" class="form-control" min="0" />
-        </div>
-        <div class="form-group col-md-2">
-            <label for="are">Are</label>
-            <input name="are" type="number" class="form-control" min="0" max="99" />
-        </div>
-        <div class="form-group col-md-1.7">
-            <label for="centiare">Centiare</label>
-            <input name="centiare" type="number" class="form-control" min="0" max="99" />
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="valAchat" class="col-sm-2 col-form-label">Valeur d'achat du terrain : </label>
-        <div class="col-auto">
-            <div class="form-group col-md-16">
-                <div class="input-group">
-                    <input name="valAchat" type="number" class="form-control" min="1" required="required" />
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">FCFA</div>
+        <div class="form-group row">
+            <label for="valAchat" class="col-sm-2 col-form-label">Valeur d'achat du terrain : </label>
+            <div class="col-auto">
+                <div class="form-group col-md-16">
+                    <div class="input-group">
+                        <input name="valAchat" type="text" class="number-separator" required="required" />
+                        <div class="input-group-prepend">
+                            <div class="form-group col-md-6" class="input-group-text">FCFA</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="area" class="col-sm-2 col-form-label">Nombres de pages de l'acte notarial : </label>
-        <div class="form-group col-md-6">
-            <input name="nbrePge" type="number" class="form-control" min="1" required="required" />
+        <div class="form-group row">
+            <label for="area" class="col-sm-2 col-form-label">Nombres de pages de l'acte notarial : </label>
+            <div class="form-group col-md-6">
+                <input name="nbrePge" type="number" class="form-control" min="1" required="required" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Envoyer" class="btn btn-primary mb-2" />
-    </div>
-    <div>
-
-    </div>
-</form>
-
-
-
+        <div class="form-group">
+            <input type="submit" value="Envoyer" class="btn btn-primary mb-2" />
+        </div>
+    </form>
+</body>
+</html>
 
 @section Scripts {
 <script type="text/javascript">
@@ -99,50 +103,24 @@
                 });
             }
         });
-
     });
 </script>
+
 <script type="text/javascript">
-    (function ($, undefined) {
-        "use strict";
-        // When ready.
-        $(function () {
-            var $form = $("#form");
-            var $input = $form.find("input");
-            $input.on("keyup", function (event) {
-                // When user select text in the document, also abort.
-                var selection = window.getSelection().toString();
-                if (selection !== '') {
-                    return;
-                }
-                // When the arrow keys are pressed, abort.
-                if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) {
-                    return;
-                }
-                var $this = $(this);
-                // Get the value.
-                var input = $this.val();
-                var input = input.replace(/[\D\s\._\-]+/g, "");
-                input = input ? parseInt(input, 10) : 0;
-                $this.val(function () {
-                    return (input === 0) ? "" : input.toLocaleString("en-US");
-                });
-            });
-            /**
-             * ==================================
-             * When Form Submitted
-             * ==================================
-             */
-            $form.on("submit", function (event) {
-                var $this = $(this);
-                var arr = $this.serializeArray();
-                for (var i = 0; i < arr.length; i++) {
-                    arr[i].value = arr[i].value.replace(/[($)\s\._\-]+/g, ''); // Sanitize the values.
-                };
-                console.log(arr);
-                event.preventDefault();
-            });
+    $(document).ready(function () {
+        $(document).on('input', '.number-separator', function (e) {
+            if (/^[0-9.,]+$/.test($(this).val())) {
+                $(this).val(
+                    parseFloat($(this).val().replace(/,/g, '')).toLocaleString('en')
+                );
+            } else {
+                $(this).val(
+                    $(this)
+                        .val()
+                        .substring(0, $(this).val().length - 1)
+                );
+            }
         });
-    })(jQuery);
+    });
 </script>
 }

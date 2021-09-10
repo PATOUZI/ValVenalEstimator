@@ -25,7 +25,7 @@ namespace ValVenalEstimator.Api.Repositories
             _iprefectureRepository = iprefectureRepository;
         }
 
-        /*Cette méthode permet d'enrégistrer une zone à partir des informations 
+        /*Cette méthode permet d'enregistrer une zone à partir des informations 
         relatives à une zone et de l'Id de la préfecture(ZoneCsvDTO)*/
         public async Task<Zone> AddZoneAsync(ZoneDTO zoneDTO)
         {
@@ -45,7 +45,7 @@ namespace ValVenalEstimator.Api.Repositories
             }  
         }
 
-        /*Cette méthode permet d'enrégistrer une zone à partir des informations 
+        /*Cette méthode permet d'enregistrer une zone à partir des informations 
         relatives à une zone et du nom de la prefecture(ZoneCsv2DTO)*/
         public async Task<Zone> AddZoneAsync2(ZoneCsvDTO2 zoneCsvDTO)
         {           
@@ -113,7 +113,7 @@ namespace ValVenalEstimator.Api.Repositories
             }
         }
 
-        /*Cette méthode permet d'enrégistrer des zones grace à un fichier csv contenant 
+        /*Cette méthode permet d'enregistrer des zones grace à un fichier csv contenant 
         des informations relatives à une zone et du nom de la prefecture(ZoneCsv2DTO)*/
         public async void LoadData(string accessPath)
         {

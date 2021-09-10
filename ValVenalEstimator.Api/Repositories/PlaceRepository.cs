@@ -27,7 +27,7 @@ namespace ValVenalEstimator.Api.Repositories
             _mapper = mapper;
         }
 
-        /*Cette méthode permet d'enrégistrer une place à partir 
+        /*Cette méthode permet d'enregistrer une place à partir 
         du nom du quartier et de l'Id de la zone(PlaceCsvDTO)*/
         public async Task<Place> AddPlaceAsync(PlaceDTO placeDTO)
         {
@@ -46,7 +46,7 @@ namespace ValVenalEstimator.Api.Repositories
             }
         }
 
-        /*Cette méthode permet d'enrégistrer une place à partir 
+        /*Cette méthode permet d'enregistrer une place à partir 
         du nom du quartier, de la zone et de la prefecture(PlaceCsv2DTO)*/
         public async Task<Place> AddPlaceAsync2(PlaceCsv2DTO placeDTO)
         {
@@ -115,7 +115,7 @@ namespace ValVenalEstimator.Api.Repositories
             }
         }
 
-        /*Cette méthode permet d'enrégistrer des places grace à un fichier csv 
+        /*Cette méthode permet d'enregistrer des places grace à un fichier csv 
         contenant les noms des quartiers, des zones et des prefectures(PlaceCsv2DTO)*/
         public async void LoadData(string accessPath)
         {
@@ -133,7 +133,7 @@ namespace ValVenalEstimator.Api.Repositories
         {            
             double bornContra;
             double priceOfOnePge = 1500;
-            double depositFee = 3000;
+            double depositFee = 2000;
             ResponseDTO response = new ResponseDTO();
             var place = await GetPlaceViewDTOAsync(idPlace);
             double valVenalTerrain = place.Zone.PricePerMeterSquare * area;
@@ -146,23 +146,27 @@ namespace ValVenalEstimator.Api.Repositories
                 if (area <= 10000)
                 {
                     bornContra = 70000;
+                    //bornContra = 70000 + depositFee;
                 }
                 else
                 {
                     double additionalHectare = Math.Ceiling((double)(area - 10000) / 10000);
                     bornContra = 70000 + additionalHectare * 10000;
+                    //bornContra = 70000 + additionalHectare * 10000 + depositFee;
                 }
             }
             else
             {
                 if (area <= 600)
                 {
-                    bornContra = 60000 + depositFee;
+                    bornContra = 60000;
+                    //bornContra = 60000 + depositFee;
                 }
                 else
                 {
                     double additionalMeterSquare = Math.Ceiling((double)(area - 600) / 600);
                     bornContra = 60000 + additionalMeterSquare * 2000;
+                    //bornContra = 60000 + additionalMeterSquare * 2000 + depositFee;
                 }
             }
             response.CalculationBasis = valTaxable;

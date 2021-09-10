@@ -17,13 +17,6 @@ namespace ValVenalEstimator.Api.Repositories
     public class PrefectureRepository : IPrefectureRepository
     {
         readonly ValVenalEstimatorDbContext _valVenalEstDbContext;
-
-        /*readonly IZoneRepository _iZoneRepository; 
-        public PrefectureRepository(ValVenalEstimatorDbContext context, IZoneRepository iZoneRepository)
-        {  
-            _valVenalEstDbContext = context;  
-            _iZoneRepository = iZoneRepository;
-        }*/
         public PrefectureRepository(ValVenalEstimatorDbContext context)
         {
             _valVenalEstDbContext = context;
@@ -72,7 +65,7 @@ namespace ValVenalEstimator.Api.Repositories
             return resList;
         }*/
         
-        /*Cette méthode permet d'enrégistrer des préfectures grace à un fichier csv 
+        /*Cette méthode permet d'enregistrer des préfectures grace à un fichier csv 
         contenant les noms des prefectures avec gestion des exceptions. Mais la 
         gestion des exceptions ne marchent pas pour le moment*/
         public async void LoadDataInDbWithCsvFile(string accessPath)

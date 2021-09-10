@@ -1,17 +1,7 @@
 @if (Model != null)
 {
-    <!--p>Préfecture : <b>@Model.PrefectureName</b></p>
-        <p>Quartier : <b>@Model.PlaceName</b></p>
-        <p>Zone : <b>@Model.ZoneName</b></p>
-        <p>Type de zone : <b>@Model.ZoneType</b></p>
-        <p>Superficie : <b>@Model.aire m2</b></p>
-        <p>Prix du bornage contradictoire : <b>@Model.priceO F</b></p>
-        <p>Valeur venale du terrain : <b>@Model.valV F</b></p>
-        <p>Base de calcul : <b>@Model.calculationBase F</b></p>
-        <p>Valeur d'enregistrement : <b>@Model.valE F</b></p>
-        <p>Droit de timbre : <b>@Model.droitD F</b></p>
-        <p>Prix à payer : <b>@Model.priceT F</b></p-->
-
+    <h3 style="text-align: center;"><u>RESULTATS DE L'ESTIMATION DES FRAIS</u></h3>
+    <br />
     <div class="card-block">
         <div class="view-info">
             <div class="row">
@@ -46,17 +36,16 @@
                                     </table>
                                 </div>
                             </div>
-
                             <div class="col-lg-12 col-xl-6">
                                 <div class="table-responsive">
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <th scope="row">Valeur venale du terrain : </th>
+                                                <th scope="row">Valeur vénale du terrain : </th>
                                                 <td>@Model.valV F</td>
                                             </tr>
                                             <tr>
-                                                <th scope="row">Base de calcul : </th>
+                                                <th scope="row">Base de calcul pour le prix à payer : </th>
                                                 <td>@Model.calculationBase F</td>
                                             </tr>
                                             <tr>
@@ -81,4 +70,67 @@
             </div>
         </div>
     </div>
+    <br />
+    <h3 style="text-align: center;"><u>BORNAGE CONTRADICTOIRE</u></h3>
+    <br />
+    <table class="table table-bordered" style="text-align: center;">
+        <thead>
+            <tr>
+                <th scope="col">Code du droits</th>
+                <th scope="col">Droits</th>
+                <th scope="col">Montant</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>FD</td>
+                <td>Frais de Depot</td>
+                <td>2.000 F</td>
+            </tr>
+            <tr>
+                <td>DE</td>
+                <td>Droit d'Enregistrement</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>TA</td>
+                <td>Taxe Additionnelle</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>DI</td>
+                <td>Droit d'Immatriculation</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>JO</td>
+                <td>JORT</td>
+                <td>10.000 F</td>
+            </tr>
+            <tr>
+                <td>DFI</td>
+                <td>Droit Fixe d'Immatriculation</td>
+                <td>1.000 F</td>
+            </tr>
+            <tr>
+                <td>FB</td>
+                <td>Frais de Bornage</td>
+                <td>@Model.priceO F</td>
+            </tr>
+            <tr>
+                <td>DT</td>
+                <td>Droit de Tirage</td>
+                <td>5.000 F</td>
+            </tr>
+            <tr>
+                <td>FT</td>
+                <td>Frais de transport</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td colspan="2"><b>Montant Total</b></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
 }

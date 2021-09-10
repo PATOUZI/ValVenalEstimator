@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+
 namespace ValVenalEstimator.Api.Models
 {
     public class Place

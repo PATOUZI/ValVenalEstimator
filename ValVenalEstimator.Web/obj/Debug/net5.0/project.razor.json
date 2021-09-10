@@ -15619,11 +15619,6 @@
   "RootNamespace": "ValVenalEstimator.Web",
   "Documents": [
     {
-      "FilePath": "f:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Web\\Views\\Home\\Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "f:\\ASP.NET Core projects\\ValVenalEstimator\\ValVenalEstimator.Web\\Views\\Home\\GetValues.cshtml",
       "TargetPath": "Views\\Home\\GetValues.cshtml",
       "FileKind": "mvc"

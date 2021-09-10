@@ -102,7 +102,7 @@ namespace ValVenalEstimator.Api.Controllers
             return StatusCode(202);
         }
     
-        //Les 2 méthodes suivantes font la meme chose. Elles diffèrent seulement par leur URI
+        //Les 2 méthodes suivantes font la meme chose. Elles sont diffèrentes par leur URI
         [HttpPost("{accessPath}", Name = "LoadDataInDb")]
         public void LoadDataInDb(string accessPath)
         {
